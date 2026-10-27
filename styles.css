@@ -1,0 +1,53 @@
+/* Genrivreality — Custom Stylesheet (styles.css) */
+:root {
+      --glass-bg: rgba(255, 255, 255, 0.86);
+      --glass-border: rgba(255, 255, 255, 0.35);
+    }
+    .dark {
+      --glass-bg: rgba(15, 23, 42, 0.86);
+      --glass-border: rgba(148, 163, 184, 0.18);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+    }
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(15, 10, 40, 0.65) 0%, rgba(15, 10, 40, 0.78) 65%, rgba(15, 23, 42, 0.96) 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(132, 61, 255, 0.35);
+      border-radius: 9999px;
+    }
+    .map-pin-pulse {
+      animation: pinPulse 2.4s infinite ease-in-out;
+    }
+    @keyframes pinPulse {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.06); }
+    }
+    .card-hover {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 38px -12px rgba(97, 4, 235, 0.16), 0 8px 16px -8px rgba(0, 120, 219, 0.12);
+    }
+    input[type="range"] {
+      accent-color: #7316ff;
+    }

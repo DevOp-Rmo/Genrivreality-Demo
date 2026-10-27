@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genrivreality — Next-Gen Verified Real Estate & Locality Intelligence</title>
+  <!-- Tailwind CSS v3.4.17 -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Chart.js v4.4.1 for 99acres-style Price Trends & Locality Intelligence -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            genriv: {
+              50: '#f3f1ff',
+              100: '#ebe5ff',
+              200: '#d9ceff',
+              300: '#bea6ff',
+              400: '#9f75ff',
+              500: '#843dff',
+              600: '#7316ff',
+              700: '#6104eb',
+              800: '#5105c5',
+              900: '#4306a1',
+              950: '#27016d',
+            },
+            acres: {
+              50: '#eef8ff',
+              100: '#d9eeff',
+              500: '#0078db',
+              600: '#005ca8',
+              700: '#004785',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom External Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-genriv-600 selection:text-white pb-20 lg:pb-0">
+
+  <!-- TOP ANNOUNCEMENT RIBBON (Fusion of Housing Edge + 99acres RERA Intelligence) -->
+  <div class="bg-gradient-to-r from-genriv-900 via-indigo-900 to-acres-700 text-white text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-400 text-slate-950">Genriv AI 2.0</span>
+        <span class="font-medium">India's First Hybrid Discovery Engine: Visual 360° Tours + RERA & Locality Price Intelligence</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-slate-200">
+        <button type="button" onclick="openServiceModal('rent-pay')" class="hover:text-amber-300 transition flex items-center gap-1">
+          <span>💳 Pay Rent on Credit Card (0% Convenience Promo)</span>
+        </button>
+        <span>•</span>
+        <button type="button" onclick="scrollToSection('insights-section')" class="hover:text-amber-300 transition flex items-center gap-1">
+          <span>📈 Live Q4 2026 Price Index</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER / NAVIGATION -->
+  <header class="sticky top-0 z-40 glass-panel shadow-sm transition-colors">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 lg:gap-3 flex-nowrap">
+      <!-- Brand Logo -->
+      <a href="#top-hero" class="flex items-center gap-2 sm:gap-2.5 group focus:outline-none shrink-0 whitespace-nowrap">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-genriv-600 via-indigo-600 to-acres-500 flex items-center justify-center text-white shadow-lg shadow-genriv-600/30 group-hover:scale-105 transition shrink-0">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 19.5v-9z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 21V12h6v9" />
+          </svg>
+        </div>
+        <div class="whitespace-nowrap">
+          <div class="flex items-center gap-1 whitespace-nowrap">
+            <span class="font-display font-extrabold text-lg sm:text-xl xl:text-2xl tracking-tight bg-gradient-to-r from-genriv-700 via-indigo-600 to-acres-500 dark:from-genriv-300 dark:via-indigo-300 dark:to-sky-400 bg-clip-text text-transparent">Genrivreality</span>
+            <span class="hidden sm:inline-block text-[9px] xl:text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">VERIFIED</span>
+          </div>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 -mt-0.5 whitespace-nowrap">Next-Gen Living • Real Insights</p>
+        </div>
+      </a>
+
+      <!-- City Quick Selector Pill -->
+      <div class="hidden xl:flex items-center bg-slate-100 dark:bg-slate-800/90 rounded-full p-1 border border-slate-200/80 dark:border-slate-700 shrink-0 whitespace-nowrap">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 pl-2.5 pr-1 flex items-center gap-1 whitespace-nowrap">
+          <svg class="w-3.5 h-3.5 text-genriv-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          City:
+        </span>
+        <select id="header-city-select" aria-label="Select City" onchange="syncCityFilter(this.value)" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-100 pr-2.5 py-1 focus:outline-none cursor-pointer whitespace-nowrap">
+          <option value="All">All India (6 Metros)</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Bengaluru">Bengaluru</option>
+          <option value="Gurugram">Gurugram (NCR)</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Pune">Pune</option>
+        </select>
+      </div>
+
+      <!-- Desktop Nav Links (Strictly 1 Line with whitespace-nowrap) -->
+      <nav class="hidden lg:flex items-center gap-3 xl:gap-5 text-xs xl:text-sm font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap shrink-0">
+        <a href="#listings-section" class="hover:text-genriv-600 dark:hover:text-genriv-400 transition whitespace-nowrap shrink-0">Explore Properties</a>
+        <a href="#edge-services-section" class="hover:text-genriv-600 dark:hover:text-genriv-400 transition flex items-center gap-1 whitespace-nowrap shrink-0">
+          <span class="whitespace-nowrap">Genriv Edge</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300 font-bold whitespace-nowrap shrink-0">Pay Rent</span>
+        </a>
+        <a href="#insights-section" class="hover:text-genriv-600 dark:hover:text-genriv-400 transition whitespace-nowrap shrink-0">Price Trends</a>
+        <a href="#emi-section" class="hover:text-genriv-600 dark:hover:text-genriv-400 transition whitespace-nowrap shrink-0">Smart EMI &amp; ROI</a>
+      </nav>
+
+      <!-- Action Buttons (Saved, Dark Mode, Contact & Login replacing Post Property) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap">
+        <!-- Shortlist Drawer Trigger -->
+        <button type="button" onclick="toggleShortlistDrawer()" class="relative p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition shrink-0" aria-label="Saved Properties">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-rose-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span id="shortlist-badge" class="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center">2</span>
+        </button>
+
+        <!-- Dark Mode Toggle -->
+        <button type="button" onclick="toggleTheme()" class="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition shrink-0" aria-label="Toggle Dark or Light Mode">
+          <svg id="theme-icon-sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          <svg id="theme-icon-moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+
+        <!-- Contact Button (Placed in Header instead of Post Property) -->
+        <button type="button" onclick="switchMainTab('contact')" id="nav-tab-contact" class="main-portal-tab inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-genriv-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 font-bold text-xs sm:text-sm whitespace-nowrap shrink-0 transition">
+          <span>Contact</span>
+        </button>
+
+        <!-- Login Button (Placed in Header instead of Post Property) -->
+        <button type="button" onclick="switchMainTab('login')" id="nav-tab-login" class="main-portal-tab inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-genriv-600/25 whitespace-nowrap shrink-0 transition">
+          <span id="nav-login-label">Login</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button type="button" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0" aria-label="Open Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Slide-Down Navigation -->
+    <div id="mobile-menu-drawer" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Select Metro City</span>
+        <select id="mobile-city-select" aria-label="Select City Mobile" onchange="syncCityFilter(this.value)" class="bg-slate-100 dark:bg-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg">
+          <option value="All">All India (6 Metros)</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Bengaluru">Bengaluru</option>
+          <option value="Gurugram">Gurugram (NCR)</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Pune">Pune</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1 text-sm font-semibold">
+        <a href="#listings-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">🏠 Explore Listings</a>
+        <a href="#edge-services-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">💳 Genriv Edge</a>
+        <a href="#insights-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">📈 Price Trends</a>
+        <a href="#emi-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">🧮 EMI &amp; ROI Hub</a>
+      </div>
+      <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Portal Navigation Tabs</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-bold">
+          <button type="button" onclick="switchMainTab('home'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Home</button>
+          <button type="button" onclick="switchMainTab('sellers'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Sellers</button>
+          <button type="button" onclick="switchMainTab('buyers'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Buyers</button>
+          <button type="button" onclick="switchMainTab('owners'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Owners</button>
+          <button type="button" onclick="switchMainTab('tenants'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Tenants</button>
+          <button type="button" onclick="switchMainTab('listing-property'); toggleMobileMenu()" class="p-2 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-left">Listing your Property</button>
+          <button type="button" onclick="switchMainTab('customer-support'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Customer Support</button>
+          <button type="button" onclick="switchMainTab('bank-loan'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Bank Loan</button>
+          <button type="button" onclick="switchMainTab('legal-support'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Legal Support</button>
+          <button type="button" onclick="switchMainTab('publication'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Publication</button>
+          <button type="button" onclick="switchMainTab('contact'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Contact</button>
+          <button type="button" onclick="switchMainTab('login'); toggleMobileMenu()" class="p-2 rounded-lg bg-amber-400/20 text-amber-700 dark:text-amber-300 text-left">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTAL NAVIGATION TABS BAR (Strictly 1-Line Unnumbered Tabs) -->
+    <div class="border-t border-slate-200/80 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/95 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div id="main-12-tabs-nav" class="flex items-center lg:justify-between gap-1.5 py-2 overflow-x-auto flex-nowrap custom-scrollbar">
+          <button type="button" onclick="switchMainTab('home')" id="nav-tab-home" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap shrink-0 transition bg-gradient-to-r from-genriv-600 to-acres-500 text-white shadow-sm flex items-center gap-1.5">
+            <span>Home</span>
+          </button>
+          <button type="button" onclick="switchMainTab('sellers')" id="nav-tab-sellers" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Sellers</span>
+          </button>
+          <button type="button" onclick="switchMainTab('buyers')" id="nav-tab-buyers" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Buyers</span>
+          </button>
+          <button type="button" onclick="switchMainTab('owners')" id="nav-tab-owners" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Owners</span>
+          </button>
+          <button type="button" onclick="switchMainTab('tenants')" id="nav-tab-tenants" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Tenants</span>
+          </button>
+          <button type="button" onclick="switchMainTab('listing-property')" id="nav-tab-listing-property" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Listing your Property</span>
+            <span class="px-1.5 py-0.2 rounded bg-emerald-500 text-white text-[9px] font-extrabold uppercase">FREE</span>
+          </button>
+          <button type="button" onclick="switchMainTab('customer-support')" id="nav-tab-customer-support" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Customer Support</span>
+          </button>
+          <button type="button" onclick="switchMainTab('bank-loan')" id="nav-tab-bank-loan" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Bank Loan</span>
+          </button>
+          <button type="button" onclick="switchMainTab('legal-support')" id="nav-tab-legal-support" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Legal Support</span>
+          </button>
+          <button type="button" onclick="switchMainTab('publication')" id="nav-tab-publication" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Publication</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION WITH HYBRID COMMAND SEARCH ENGINE -->
+  <section id="top-hero" class="relative overflow-hidden">
+    <!-- Hero Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img src="images/hero.jpg" alt="Genrivreality Luxury Skyline" class="w-full h-full object-cover object-center" />
+      <div class="absolute inset-0 hero-overlay"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 sm:pt-16 sm:pb-20">
+      <!-- Top Hero Trust Badge -->
+      <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium mb-5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>100% RERA-Verified Projects • AI Price Valuation • Zero-Brokerage Owner Connect</span>
+        </div>
+
+        <h1 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.12]">
+          Where Next-Gen Living Meets <span class="bg-gradient-to-r from-amber-300 via-purple-300 to-sky-300 bg-clip-text text-transparent">Verified Reality.</span>
+        </h1>
+        <p class="mt-4 text-sm sm:text-lg text-slate-200 max-w-2xl leading-relaxed">
+          Experience the visual warmth of <strong class="text-white">Housing-style 360° discovery</strong> fused with <strong class="text-white">99acres-grade locality intelligence</strong>, live transaction price trends, and verified owner listings.
+        </p>
+      </div>
+
+      <!-- MULTI-MODE SEARCH COMMAND CONSOLE -->
+      <div class="mt-8 max-w-5xl mx-auto">
+        <!-- Intent Tabs (Buy, Rent, New Projects, PG/Co-Living, Commercial, Plots) -->
+        <div class="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar pb-2">
+          <button type="button" onclick="setIntentTab('Buy')" id="intent-tab-Buy" class="intent-tab px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm whitespace-nowrap transition bg-white text-genriv-700 shadow-lg">
+            🏠 Buy Home
+          </button>
+          <button type="button" onclick="setIntentTab('Rent')" id="intent-tab-Rent" class="intent-tab px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm whitespace-nowrap transition bg-white/15 text-white hover:bg-white/25 backdrop-blur-md">
+            🔑 Rent / Lease
+          </button>
+          <button type="button" onclick="setIntentTab('New Projects')" id="intent-tab-New Projects" class="intent-tab px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm whitespace-nowrap transition bg-white/15 text-white hover:bg-white/25 backdrop-blur-md flex items-center gap-1.5">
+            <span>🏗️ New Projects</span>
+            <span class="px-1.5 py-0.2 text-[10px] rounded bg-emerald-400 text-slate-950 font-extrabold">RERA</span>
+          </button>
+          <button type="button" onclick="setIntentTab('PG / Co-Living')" id="intent-tab-PG / Co-Living" class="intent-tab px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm whitespace-nowrap transition bg-white/15 text-white hover:bg-white/25 backdrop-blur-md">
+            🛋️ PG / Co-Living
+          </button>
+          <button type="button" onclick="setIntentTab('Commercial')" id="intent-tab-Commercial" class="intent-tab px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm whitespace-nowrap transition bg-white/15 text-white hover:bg-white/25 backdrop-blur-md">
+            🏢 Commercial
+          </button>
+        </div>
+
+        <!-- Main Search Card -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl rounded-tl-none sm:rounded-tl-2xl p-4 sm:p-6 shadow-2xl border border-white/20 dark:border-slate-800">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 items-center">
+            <!-- City Dropdown -->
+            <div class="md:col-span-3 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-3 md:pb-0 md:pr-3">
+              <label for="search-city" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">City / Metro Corridor</label>
+              <select id="search-city" onchange="syncCityFilter(this.value)" class="w-full bg-transparent font-bold text-sm sm:text-base text-slate-900 dark:text-white focus:outline-none cursor-pointer">
+                <option value="All">All Cities (Pan-India)</option>
+                <option value="Mumbai">Mumbai (Worli, Bandra, Powai)</option>
+                <option value="Bengaluru">Bengaluru (Whitefield, Indiranagar)</option>
+                <option value="Gurugram">Gurugram (Golf Course Rd, DLF)</option>
+                <option value="Hyderabad">Hyderabad (HITEC City, Gachibowli)</option>
+                <option value="Kolkata">Kolkata (New Town, Salt Lake)</option>
+                <option value="Pune">Pune (Koregaon Park, Baner)</option>
+              </select>
+            </div>
+
+            <!-- Locality / Project Search Input + Voice Search -->
+            <div class="md:col-span-5 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-3 md:pb-0 md:pr-3">
+              <label for="search-query" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Locality, Builder, Project or Landmark</label>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-genriv-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input id="search-query" type="text" oninput="applyFilters()" placeholder="Search 'Worli Sea Face', 'Sky Villa', 'HITEC'..." class="w-full bg-transparent text-sm sm:text-base font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none" />
+                <button type="button" onclick="triggerVoiceSearch()" title="Smart Voice Search" class="p-1.5 rounded-lg bg-genriv-50 dark:bg-slate-800 text-genriv-600 dark:text-genriv-400 hover:bg-genriv-100 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Configuration & Max Budget -->
+            <div class="md:col-span-2 pb-2 md:pb-0">
+              <label for="search-bhk" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Configuration</label>
+              <select id="search-bhk" onchange="applyFilters()" class="w-full bg-transparent font-bold text-sm sm:text-base text-slate-900 dark:text-white focus:outline-none cursor-pointer">
+                <option value="All">Any BHK / Space</option>
+                <option value="1 BHK">1 BHK / Studio</option>
+                <option value="3 BHK">3 BHK Luxury</option>
+                <option value="4 BHK">4 BHK Sky Residence</option>
+                <option value="5 BHK">5 BHK Villa / Penthouse</option>
+                <option value="Commercial">Grade-A Office</option>
+              </select>
+            </div>
+
+            <!-- Search CTA -->
+            <div class="md:col-span-2">
+              <button type="button" onclick="executeHeroSearch()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-bold text-sm shadow-lg shadow-genriv-600/30 flex items-center justify-center gap-2 transition">
+                <span>Search</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Filter Strip: AI Lifestyle Mood Tags + RERA & Zero Brokerage Toggles -->
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1">✨ AI Lifestyle Match:</span>
+              <button type="button" onclick="toggleTagFilter('Zero Brokerage')" id="tag-btn-Zero Brokerage" class="tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+                🤝 Zero Brokerage
+              </button>
+              <button type="button" onclick="toggleTagFilter('Ready to Move')" id="tag-btn-Ready to Move" class="tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+                ⚡ Ready to Move
+              </button>
+              <button type="button" onclick="toggleTagFilter('Metro < 500m')" id="tag-btn-Metro < 500m" class="tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+                🚇 Metro &lt; 500m
+              </button>
+              <button type="button" onclick="toggleTagFilter('Sea / Lake View')" id="tag-btn-Sea / Lake View" class="tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+                🌊 Sea / Lake View
+              </button>
+              <button type="button" onclick="toggleTagFilter('Vastu Compliant')" id="tag-btn-Vastu Compliant" class="tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+                🧭 100% Vastu
+              </button>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <input type="checkbox" id="rera-only-toggle" onchange="applyFilters()" checked class="rounded text-genriv-600 focus:ring-genriv-500" />
+                <span class="flex items-center gap-1">🛡️ RERA Verified Only</span>
+              </label>
+              <button type="button" onclick="resetAllFilters()" class="text-xs font-bold text-genriv-600 dark:text-genriv-400 hover:underline">Reset Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Live Platform Stats Strip -->
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl p-3 text-white">
+            <div class="font-display font-extrabold text-xl sm:text-2xl text-amber-300">1.42M+</div>
+            <div class="text-xs text-slate-200">Verified Listings Pan-India</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl p-3 text-white">
+            <div class="font-display font-extrabold text-xl sm:text-2xl text-emerald-300">100% RERA</div>
+            <div class="text-xs text-slate-200">Legal & Title Document Check</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl p-3 text-white">
+            <div class="font-display font-extrabold text-xl sm:text-2xl text-sky-300">₹0 Brokerage</div>
+            <div class="text-xs text-slate-200">Direct Owner Connect Option</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl p-3 text-white">
+            <div class="font-display font-extrabold text-xl sm:text-2xl text-purple-300">360° Spatial</div>
+            <div class="text-xs text-slate-200">Interactive Sun-Path & Vastu Tours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENRIV EDGE SUPER-APP SERVICES BAR (Inspired by Housing Edge + 99acres Smart Tools) -->
+  <section id="edge-services-section" class="py-10 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-genriv-600 dark:text-genriv-400">Genriv Edge Ecosystem</span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-0.5">Everything Beyond the Search</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Click any tool below to launch an instant interactive workflow</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <button type="button" onclick="openServiceModal('rent-pay')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-genriv-100 dark:bg-genriv-900/50 text-genriv-600 dark:text-genriv-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">💳</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">Pay Rent via Card</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Earn airline miles & 45-day interest-free credit</p>
+        </button>
+
+        <button type="button" onclick="openServiceModal('rent-agreement')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-900/50 text-acres-600 dark:text-sky-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">📜</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">e-Stamped Agreement</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Aadhaar e-Sign legal rental contract in 5 mins</p>
+        </button>
+
+        <button type="button" onclick="openServiceModal('ai-valuation')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">🤖</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">Genriv AI Estimator</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Instant fair-market valuation & rental yield check</p>
+        </button>
+
+        <button type="button" onclick="openServiceModal('rera-Verify')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">🛡️</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">RERA & Title Radar</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Check builder escrow, completion & litigation history</p>
+        </button>
+
+        <button type="button" onclick="scrollToSection('emi-section')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">🏦</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">Smart Home Loans</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Compare pre-approved rates from 8.35% p.a.</p>
+        </button>
+
+        <button type="button" onclick="openServiceModal('zero-brokerage')" class="group text-left p-4 rounded-2xl bg-slate-50 hover:bg-genriv-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 transition card-hover">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">🤝</div>
+          <div class="font-display font-bold text-sm text-slate-900 dark:text-white">Owner Direct Pack</div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Unlock verified owner contacts with 100% moneyback</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 12-TAB INTERACTIVE PORTAL COMMAND HUB (Switches dynamically for Tabs 1 to 12) -->
+  <section id="tab-portal-section" class="py-10 bg-slate-100/90 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 shadow-xl border border-slate-200/90 dark:border-slate-800">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300 text-xs font-extrabold uppercase tracking-wider">
+              <span id="portal-active-tab-pill">Home Portal</span>
+            </div>
+            <h2 id="portal-tab-heading" class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-2">
+              Genrivreality Unified Real Estate &amp; Hospitality Portal
+            </h2>
+            <p id="portal-tab-subtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Navigate seamlessly across all 12 dedicated modules — Sellers, Buyers, Owners, Tenants, Free Property Listing, Support, Bank Loans, Legal, Publications, Contact &amp; Member Login.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('requisition')" class="px-3.5 py-2 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white text-xs font-bold shadow-sm transition">
+              📋 Customer Requisition Form
+            </button>
+            <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition">
+              📢 PROPERTY ADVERTISEMENT FORM (FREE)
+            </button>
+            <button type="button" onclick="scrollToSection('hospitality-booking-section')" class="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold shadow-sm transition">
+              🏛️ Marriage Hall / Picnic / Hotel Booking
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Content Container for the 12 Tabs -->
+        <div id="portal-tab-body" class="pt-6">
+          <!-- Populated dynamically by switchMainTab() -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE ADVERTISEMENT & HOSPITALITY / EVENT VENUE BOOKING HUB (Marriage Hall, Picnic Spot, Hotel / Guest House) -->
+  <section id="hospitality-booking-section" class="py-12 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Top Section Header -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-700 dark:text-amber-300 text-xs font-extrabold uppercase tracking-wider border border-amber-400/30">
+            <span>✨ Expanded Hospitality, Celebrations &amp; Zero-Cost Property Ad Suite</span>
+          </div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white mt-2">
+            Free Property Ads • Marriage Halls • Picnic Spots • Hotels &amp; Guest Houses
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Publish your property advertisement 100% free or book verified venues for weddings, family picnics, and guest stays with instant confirmation.
+          </p>
+        </div>
+
+        <!-- 4 Category Filter Pills -->
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="filterVenueCategory('All')" id="venue-tab-All" class="venue-cat-btn px-3.5 py-2 rounded-xl text-xs font-extrabold bg-genriv-600 text-white shadow-sm transition">
+            All Services (6)
+          </button>
+          <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 transition">
+            📢 Free Advertisement of your Properties
+          </button>
+          <button type="button" onclick="filterVenueCategory('Marriage Hall')" id="venue-tab-Marriage Hall" class="venue-cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+            💒 Booking for Marriage Hall
+          </button>
+          <button type="button" onclick="filterVenueCategory('Picnic Spot')" id="venue-tab-Picnic Spot" class="venue-cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+            🌳 Booking for Picnic Spot
+          </button>
+          <button type="button" onclick="filterVenueCategory('Hotel / Guest House')" id="venue-tab-Hotel / Guest House" class="venue-cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">
+            🏨 Booking for Hotel / Guest House
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Highlight Service Banners (Free Ad + Marriage Hall + Picnic Spot + Hotel/Guest House) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <!-- Service Card 1: Free Advertisement of your Properties -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">100% Free Forever</span>
+              <span class="text-2xl">📢</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg mt-3">Free Advertisement of your Properties</h3>
+            <p class="text-xs text-emerald-100 mt-1 leading-relaxed">
+              List residential, commercial, land, or hospitality properties at ₹0 listing fee with direct buyer/tenant leads.
+            </p>
+          </div>
+          <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="mt-4 w-full py-2.5 px-3 rounded-xl bg-white text-emerald-800 font-extrabold text-xs shadow hover:bg-emerald-50 transition">
+            Launch Free Property Ad Form →
+          </button>
+        </div>
+
+        <!-- Service Card 2: Booking for Marriage Hall -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-genriv-700 to-indigo-800 text-white shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">200–1,500 Guests</span>
+              <span class="text-2xl">💒</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg mt-3">Booking for Marriage Hall</h3>
+            <p class="text-xs text-indigo-100 mt-1 leading-relaxed">
+              Grand AC banquet halls, royal wedding lawns, bridal suites, valet parking &amp; customizable catering packages.
+            </p>
+          </div>
+          <button type="button" onclick="filterVenueCategory('Marriage Hall'); openVenueBookingModal('venue-1')" class="mt-4 w-full py-2.5 px-3 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs shadow hover:bg-amber-300 transition">
+            Book Marriage Hall Now →
+          </button>
+        </div>
+
+        <!-- Service Card 3: Booking for Picnic Spot -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-sky-600 to-acres-700 text-white shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">Day Outing &amp; Lawns</span>
+              <span class="text-2xl">🌳</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg mt-3">Booking for Picnic Spot</h3>
+            <p class="text-xs text-sky-100 mt-1 leading-relaxed">
+              Private riverside gardens, eco-farmhouses, BBQ gazebos &amp; day-outing cottages for families and corporate teams.
+            </p>
+          </div>
+          <button type="button" onclick="filterVenueCategory('Picnic Spot'); openVenueBookingModal('venue-3')" class="mt-4 w-full py-2.5 px-3 rounded-xl bg-white text-acres-700 font-extrabold text-xs shadow hover:bg-sky-50 transition">
+            Book Picnic Spot Now →
+          </button>
+        </div>
+
+        <!-- Service Card 4: Booking for Hotel / Guest House -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-600 to-orange-600 text-white shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">Instant Check-In</span>
+              <span class="text-2xl">🏨</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg mt-3">Booking for Hotel / Guest House</h3>
+            <p class="text-xs text-rose-100 mt-1 leading-relaxed">
+              Verified boutique hotels, corporate transit suites, and family guest houses with flexible nightly or weekly stays.
+            </p>
+          </div>
+          <button type="button" onclick="filterVenueCategory('Hotel / Guest House'); openVenueBookingModal('venue-5')" class="mt-4 w-full py-2.5 px-3 rounded-xl bg-white text-rose-700 font-extrabold text-xs shadow hover:bg-rose-50 transition">
+            Book Hotel / Guest House →
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Venue & Hospitality Cards Grid -->
+      <div id="hospitality-venues-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated dynamically via renderHospitalityVenues() -->
+      </div>
+    </div>
+  </section>
+
+  <!-- DUAL INTERACTIVE FORMS HUB: CUSTOMER REQUISITION FORM & PROPERTY ADVERTISEMENT FORM -->
+  <section id="forms-hub-section" class="py-14 bg-slate-100/90 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="px-3.5 py-1 rounded-full bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300 text-xs font-extrabold uppercase tracking-wider">
+          Direct Verified Submissions • Instant Live Matching
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white mt-2">
+          Customer Requisition Form &amp; PROPERTY ADVERTISEMENT FORM
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+          Submit your custom buying, renting, or event booking requirement on the left, or publish a 100% Free Property / Venue Advertisement on the right.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- FORM 1: CUSTOMER REQUISITION FORM -->
+        <div id="requisition-form-card" class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-xl border-2 border-genriv-500/30 dark:border-genriv-500/30 transition-all duration-300">
+          <div class="p-5 sm:p-6 bg-gradient-to-r from-genriv-700 via-indigo-700 to-acres-600 text-white">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">For Buyers, Tenants &amp; Event Guests</span>
+              <span class="text-xs font-bold text-amber-300">⚡ Priority AI Match</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1">Customer Requisition Form</h3>
+            <p class="text-xs text-slate-200 mt-0.5">Tell us what property, flat, plot, marriage hall, picnic spot, or guest house you need.</p>
+          </div>
+
+          <form id="customer-requisition-form" onsubmit="handleRequisitionSubmit(event)" class="p-5 sm:p-6 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="req-name" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Customer Full Name *</label>
+                <input id="req-name" type="text" required placeholder="e.g. Anirban Chatterjee" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-genriv-500" />
+              </div>
+              <div>
+                <label for="req-phone" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Mobile / WhatsApp Number *</label>
+                <input id="req-phone" type="tel" required placeholder="+91 98300 XXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-genriv-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="req-email" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Email ID *</label>
+                <input id="req-email" type="email" required placeholder="you@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-genriv-500" />
+              </div>
+              <div>
+                <label for="req-role" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Customer Profile *</label>
+                <select id="req-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="Buyer">Home / Property Buyer</option>
+                  <option value="Tenant">Residential / Commercial Tenant</option>
+                  <option value="Wedding / Event Host">Marriage Hall / Event Organizer</option>
+                  <option value="Picnic Group">Picnic / Day-Outing Group</option>
+                  <option value="Hotel / Guest Traveler">Hotel / Guest House Traveler</option>
+                  <option value="Corporate Investor">Corporate / NRI Investor</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="req-category" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Requirement Type *</label>
+                <select id="req-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="Residential Buy">Buy Apartment / Villa / Plot</option>
+                  <option value="Residential Rent">Rent Apartment / House / PG</option>
+                  <option value="Commercial Space">Commercial Office / Retail Shop</option>
+                  <option value="Booking for Marriage Hall">Booking for Marriage Hall</option>
+                  <option value="Booking for Picnic Spot">Booking for Picnic Spot</option>
+                  <option value="Booking for Hotel / Guest House">Booking for Hotel / Guest House</option>
+                </select>
+              </div>
+              <div>
+                <label for="req-location" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Preferred City &amp; Locality *</label>
+                <input id="req-location" type="text" required placeholder="e.g. Salt Lake &amp; New Town, Kolkata" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-genriv-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div>
+                <label for="req-specs" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">BHK / Guest Capacity *</label>
+                <input id="req-specs" type="text" required placeholder="e.g. 3 BHK or 500 Guests" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label for="req-budget" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Target Budget (₹) *</label>
+                <input id="req-budget" type="text" required placeholder="e.g. ₹1.2 Cr or ₹1.5L/day" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label for="req-date" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Required Date / Timeline</label>
+                <input id="req-date" type="date" value="2026-11-15" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+            </div>
+
+            <div>
+              <label for="req-notes" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Specific Amenities / Requisition Details</label>
+              <textarea id="req-notes" rows="2" placeholder="Mention Vastu preference, metro proximity, bank loan needed, AC banquet catering, or parking requirements..." class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-genriv-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-sm shadow-lg transition">
+              Submit Customer Requisition &amp; Get Instant Verified Matches →
+            </button>
+          </form>
+
+          <!-- Live Customer Requisitions Feed -->
+          <div class="px-5 sm:px-6 pb-6 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Live Verified Customer Requisitions</span>
+              <span id="req-count-badge" class="px-2 py-0.5 rounded-full bg-genriv-100 dark:bg-genriv-900/50 text-genriv-700 dark:text-genriv-300 text-[10px] font-bold">3 Active</span>
+            </div>
+            <div id="live-requisitions-list" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+              <!-- Populated dynamically via renderRequisitionsList() -->
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM 2: PROPERTY ADVERTISEMENT FORM (100% FREE ADVERTISEMENT OF YOUR PROPERTIES) -->
+        <div id="advertisement-form-card" class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-xl border-2 border-emerald-500/40 dark:border-emerald-500/40 transition-all duration-300">
+          <div class="p-5 sm:p-6 bg-gradient-to-r from-emerald-700 via-teal-700 to-acres-700 text-white">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">100% FREE Advertisement of your Properties</span>
+              <span class="text-xs font-bold text-emerald-200">🛡️ Zero Brokerage Fee</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1">PROPERTY ADVERTISEMENT FORM</h3>
+            <p class="text-xs text-emerald-100 mt-0.5">Advertise flats, houses, commercial spaces, marriage halls, picnic spots, or guest houses for FREE.</p>
+          </div>
+
+          <form id="property-advertisement-form" onsubmit="handleAdvertisementFormSubmit(event)" class="p-5 sm:p-6 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="adv-owner-name" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Owner / Advertiser Name *</label>
+                <input id="adv-owner-name" type="text" required placeholder="e.g. Debashis Sen / Royal Estates" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+              <div>
+                <label for="adv-phone" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Contact Mobile / WhatsApp *</label>
+                <input id="adv-phone" type="tel" required placeholder="+91 98310 XXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="adv-role" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Advertiser Category *</label>
+                <select id="adv-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="Owner">Direct Property Owner (Zero Brokerage)</option>
+                  <option value="Seller">Individual Seller / Landowner</option>
+                  <option value="Builder">RERA Registered Developer / Builder</option>
+                  <option value="Venue Host">Marriage Hall / Picnic / Hotel Host</option>
+                </select>
+              </div>
+              <div>
+                <label for="adv-category" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Advertisement Type *</label>
+                <select id="adv-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="Buy">Residential Property for Sale</option>
+                  <option value="Rent">Residential Property for Rent / Lease</option>
+                  <option value="Commercial">Commercial Office / Retail / Warehouse</option>
+                  <option value="Marriage Hall">Marriage Hall / Banquet Lawn</option>
+                  <option value="Picnic Spot">Picnic Spot / Farmhouse / Resort</option>
+                  <option value="Hotel / Guest House">Hotel / Guest House / Service Apt</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="adv-title" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Property / Venue Title *</label>
+                <input id="adv-title" type="text" required placeholder="e.g. Genriv Emerald Greens 3BHK / Royal Banquet" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+              <div>
+                <label for="adv-city" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">City *</label>
+                <select id="adv-city" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Gurugram">Gurugram</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div>
+                <label for="adv-locality" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Locality / Address *</label>
+                <input id="adv-locality" type="text" required placeholder="e.g. New Town Action Area I" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label for="adv-bhk" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Config / Capacity *</label>
+                <select id="adv-bhk" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                  <option value="3 BHK">3 BHK Luxury</option>
+                  <option value="4 BHK">4 BHK Sky Residence</option>
+                  <option value="1 BHK">1 BHK / Studio</option>
+                  <option value="5 BHK">5 BHK Villa / Bungalow</option>
+                  <option value="Commercial">Commercial / Venue</option>
+                </select>
+              </div>
+              <div>
+                <label for="adv-area" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Area (sq.ft.) *</label>
+                <input id="adv-area" type="number" required placeholder="1950" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="adv-price" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Price (in ₹ Cr) or Tariff *</label>
+                <input id="adv-price" type="number" step="0.05" min="0.05" max="29" required placeholder="1.65" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label for="adv-plan" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Advertisement Package</label>
+                <select id="adv-plan" class="w-full px-3.5 py-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm font-extrabold">
+                  <option value="FREE">₹0 — Free Advertisement of your Properties (Forever)</option>
+                  <option value="FREE-360">₹0 — Free Ad + AI 360° Virtual Tour Badge</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="adv-highlights" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Property / Venue Highlights &amp; Amenities</label>
+              <input id="adv-highlights" type="text" placeholder="e.g. East-facing Vastu, Covered Parking, Metro 300m, Lawn &amp; AC Banquet..." class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:border-emerald-500" />
+            </div>
+
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-acres-600 hover:from-emerald-700 hover:to-acres-700 text-white font-extrabold text-sm shadow-lg transition">
+              Publish Free Property Advertisement Live Now (₹0) →
+            </button>
+          </form>
+
+          <!-- Live Published Advertisements Feed -->
+          <div class="px-5 sm:px-6 pb-6 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Recently Published Free Property Ads</span>
+              <span id="adv-count-badge" class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">Live Feed</span>
+            </div>
+            <div id="live-advertisements-list" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+              <!-- Populated dynamically via renderAdvertisementsList() -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN PROPERTY EXPLORER: GRID / LIST / INTERACTIVE SPLIT-MAP VIEW -->
+  <section id="listings-section" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header + View Controls -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300" id="active-intent-badge">Buy Mode</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400" id="results-count-label">Showing 6 Verified Properties</span>
+        </div>
+        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">Curated Properties & Verified Projects</h2>
+      </div>
+
+      <!-- Toolbar: Budget Slider + Sort + View Mode Switcher (Grid / Split Map) -->
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- Budget Range Filter -->
+        <div class="flex items-center gap-2 bg-white dark:bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <label for="budget-range" class="text-xs font-bold text-slate-500 dark:text-slate-400 whitespace-nowrap">Max Budget:</label>
+          <input id="budget-range" type="range" min="1" max="30" step="0.5" value="30" oninput="updateBudgetLabel(this.value)" class="w-24 sm:w-28 cursor-pointer" />
+          <span id="budget-value-label" class="text-xs font-extrabold text-genriv-700 dark:text-genriv-300 min-w-[64px] text-right">₹30 Cr</span>
+        </div>
+
+        <!-- Posted By Filter (99acres signature: All / Owner / Builder) -->
+        <select id="posted-by-filter" aria-label="Filter by Posted By" onchange="applyFilters()" class="bg-white dark:bg-slate-900 text-xs font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer">
+          <option value="All">Posted By: Anyone</option>
+          <option value="Owner">Direct Owner (Zero Brokerage)</option>
+          <option value="Builder">RERA Platinum Builder</option>
+        </select>
+
+        <!-- Sort Select -->
+        <select id="sort-select" aria-label="Sort Properties" onchange="applyFilters()" class="bg-white dark:bg-slate-900 text-xs font-bold px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer">
+          <option value="featured">Sort: Genriv AI Relevance</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="yield-desc">Highest Rental Yield %</option>
+          <option value="score-desc">Locality Livability Score</option>
+        </select>
+
+        <!-- Layout Switcher (Grid vs Interactive Split Map) -->
+        <div class="inline-flex rounded-xl bg-slate-200/80 dark:bg-slate-800 p-1">
+          <button type="button" id="view-btn-grid" onclick="setLayoutMode('grid')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm transition flex items-center gap-1">
+            <span>⊞ Grid</span>
+          </button>
+          <button type="button" id="view-btn-split" onclick="setLayoutMode('split')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition flex items-center gap-1">
+            <span>🗺️ Split Map</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPLIT CONTAINER (Cards + Interactive Spatial Map when Split Map is active) -->
+    <div id="explorer-layout-wrapper" class="grid grid-cols-1 gap-6">
+      <!-- Property Cards Grid -->
+      <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated dynamically via JS -->
+      </div>
+
+      <!-- INTERACTIVE SPATIAL MAP PANEL (Hidden in full-grid mode, shown side-by-side in Split Map mode or toggled) -->
+      <div id="interactive-map-panel" class="hidden lg:sticky lg:top-24 h-[540px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900 relative">
+        <!-- Stylized Interactive Vector Radar Map of Indian Metro Hubs -->
+        <div class="absolute inset-0 bg-[#0b132b] overflow-hidden">
+          <!-- Subtle SVG Grid & Coastal/Metro Corridors -->
+          <svg class="w-full h-full opacity-35" viewBox="0 0 800 600" preserveAspectRatio="none">
+            <defs>
+              <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.7" />
+              </pattern>
+            </defs>
+            <rect width="800" height="600" fill="url(#mapGrid)" />
+            <!-- Metro Transit Corridors -->
+            <path d="M 80 480 Q 250 320 420 280 T 720 120" fill="none" stroke="#843dff" stroke-width="3" stroke-dasharray="8 6" />
+            <path d="M 140 120 Q 340 240 520 440" fill="none" stroke="#0078db" stroke-width="3" stroke-dasharray="6 6" />
+            <!-- Water Bodies / Green Belts -->
+            <circle cx="160" cy="420" r="95" fill="#0ea5e9" fill-opacity="0.12" />
+            <circle cx="620" cy="210" r="80" fill="#10b981" fill-opacity="0.12" />
+          </svg>
+
+          <!-- Map Top Overlay Bar -->
+          <div class="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
+            <div class="glass-panel px-3.5 py-2 rounded-xl text-xs font-bold text-slate-900 dark:text-white shadow-md pointer-events-auto flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Genriv Spatial Radar • Click any price pin to inspect</span>
+            </div>
+            <button type="button" onclick="setLayoutMode('grid')" class="pointer-events-auto px-3 py-1.5 rounded-xl bg-slate-900/90 text-white text-xs font-bold border border-white/15 hover:bg-slate-800">
+              Close Map ✕
+            </button>
+          </div>
+
+          <!-- Dynamic Pin Container -->
+          <div id="map-pins-container" class="absolute inset-0"></div>
+
+          <!-- Selected Map Property Mini Card -->
+          <div id="map-preview-card" class="absolute bottom-4 left-4 right-4 glass-panel p-4 rounded-2xl shadow-2xl border border-white/20">
+            <p class="text-xs text-slate-500 dark:text-slate-300">Click any glowing price marker on the map to preview locality metrics, metro distance, and 360° tour.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 99ACRES-STYLE LOCALITY PRICE INTELLIGENCE & DEMAND HUB -->
+  <section id="insights-section" class="py-14 bg-slate-100/80 dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-acres-50 dark:bg-sky-950/80 text-acres-600 dark:text-sky-400 text-xs font-bold border border-acres-500/20">
+            <span>📊 99acres-Grade Market Intelligence + Genriv AI</span>
+          </div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white mt-2">
+            Live Locality Price Trends & Livability Index
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Verified registration data from Q1 2023 to Q4 2026 across India's top high-growth residential corridors.
+          </p>
+        </div>
+
+        <!-- Corridor Switcher Tabs -->
+        <div class="flex flex-wrap gap-2" id="locality-chart-tabs">
+          <button type="button" onclick="updateLocalityChart('Worli, Mumbai')" data-loc="Worli, Mumbai" class="loc-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-genriv-600 text-white shadow-sm transition">Worli, Mumbai</button>
+          <button type="button" onclick="updateLocalityChart('Whitefield, Bengaluru')" data-loc="Whitefield, Bengaluru" class="loc-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">Whitefield, Bengaluru</button>
+          <button type="button" onclick="updateLocalityChart('Golf Course Rd, Gurugram')" data-loc="Golf Course Rd, Gurugram" class="loc-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">Golf Course Rd, Gurugram</button>
+          <button type="button" onclick="updateLocalityChart('HITEC City, Hyderabad')" data-loc="HITEC City, Hyderabad" class="loc-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">HITEC City, Hyderabad</button>
+          <button type="button" onclick="updateLocalityChart('New Town, Kolkata')" data-loc="New Town, Kolkata" class="loc-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition">New Town, Kolkata</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- Chart Card -->
+        <div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 id="chart-locality-title" class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-white">Worli, Mumbai — Avg. Capital Values (₹ / sq.ft.)</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Based on registered sale deeds & RERA filings</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span id="chart-yoy-badge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">+18.4% 3-Yr Growth</span>
+              <span id="chart-current-rate" class="font-display font-extrabold text-lg text-genriv-600 dark:text-genriv-400">₹68,500 / sq.ft.</span>
+            </div>
+          </div>
+
+          <!-- Fixed Height Container for Chart.js per Web App Rules -->
+          <div class="relative h-72 w-full">
+            <canvas id="priceTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Locality Scorecard & Resident Reviews Card -->
+        <div class="lg:col-span-4 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Genriv Locality Score</span>
+                <h4 id="scorecard-name" class="font-display font-bold text-lg text-slate-900 dark:text-white">Worli Sea Face</h4>
+              </div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex flex-col items-center justify-center shadow-md">
+                <span id="scorecard-overall" class="font-display font-extrabold text-xl leading-none">9.4</span>
+                <span class="text-[9px] uppercase font-bold opacity-90">/ 10</span>
+              </div>
+            </div>
+
+            <!-- Rating Bars -->
+            <div class="space-y-3.5 my-5">
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span>🚇 Metro & Coastal Road Connectivity</span>
+                  <span id="score-conn" class="font-bold text-emerald-600 dark:text-emerald-400">9.6 / 10</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div id="bar-conn" class="h-full bg-emerald-500 rounded-full" style="width: 96%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span>🏥 Schools, Hospitals & Lifestyle Malls</span>
+                  <span id="score-infra" class="font-bold text-genriv-600 dark:text-genriv-400">9.5 / 10</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div id="bar-infra" class="h-full bg-genriv-600 rounded-full" style="width: 95%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span>🌳 Green Cover, Air Quality & Safety</span>
+                  <span id="score-safety" class="font-bold text-sky-600 dark:text-sky-400">9.1 / 10</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div id="bar-safety" class="h-full bg-sky-500 rounded-full" style="width: 91%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span>💰 Avg. Gross Rental Yield (Annual)</span>
+                  <span id="score-yield" class="font-bold text-amber-600 dark:text-amber-400">4.2% p.a.</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div id="bar-yield" class="h-full bg-amber-500 rounded-full" style="width: 84%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resident Verdict Box -->
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">💬 Verified Resident Pulse:</div>
+            <p id="scorecard-review" class="text-xs text-slate-600 dark:text-slate-400 italic leading-relaxed">
+              "Coastal Road & Aqua Line Metro have slashed commute times to BKC & Nariman Point to under 12 minutes."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SMART HOME LOAN EMI & BUY-VS-RENT CALCULATOR SECTION -->
+  <section id="emi-section" class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-gradient-to-br from-slate-900 via-genriv-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-white/10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Sliders Column -->
+        <div class="lg:col-span-7 space-y-6">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold uppercase tracking-wider">Financial Intelligence</span>
+            <h2 class="font-display font-extrabold text-2xl sm:text-3xl mt-2">Smart Home Loan EMI & Wealth Planner</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">Plan your acquisition with live amortization and 5-year equity appreciation projection.</p>
+          </div>
+
+          <!-- Property Price Slider -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <label for="calc-price" class="font-semibold text-slate-200">Property Value</label>
+              <span id="calc-price-display" class="font-display font-bold text-amber-300">₹2.50 Cr</span>
+            </div>
+            <input id="calc-price" type="range" min="25" max="1500" step="5" value="250" oninput="calculateEMI()" class="w-full cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>₹25 Lakhs</span>
+              <span>₹5 Cr</span>
+              <span>₹15 Cr</span>
+            </div>
+          </div>
+
+          <!-- Down Payment % Slider -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <label for="calc-down" class="font-semibold text-slate-200">Down Payment (%)</label>
+              <span id="calc-down-display" class="font-display font-bold text-emerald-300">20% (₹50.0 L)</span>
+            </div>
+            <input id="calc-down" type="range" min="10" max="60" step="5" value="20" oninput="calculateEMI()" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Interest Rate & Tenure -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm">
+                <label for="calc-rate" class="font-semibold text-slate-200">Interest Rate (% p.a.)</label>
+                <span id="calc-rate-display" class="font-display font-bold text-sky-300">8.50%</span>
+              </div>
+              <input id="calc-rate" type="range" min="7.0" max="11.5" step="0.05" value="8.5" oninput="calculateEMI()" class="w-full cursor-pointer" />
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm">
+                <label for="calc-tenure" class="font-semibold text-slate-200">Loan Tenure (Years)</label>
+                <span id="calc-tenure-display" class="font-display font-bold text-purple-300">20 Yrs</span>
+              </div>
+              <input id="calc-tenure" type="range" min="5" max="30" step="1" value="20" oninput="calculateEMI()" class="w-full cursor-pointer" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Breakdown Card -->
+        <div class="lg:col-span-5 bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/15 space-y-5">
+          <div class="text-center border-b border-white/15 pb-4">
+            <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold">Estimated Monthly EMI</span>
+            <div id="emi-monthly-result" class="font-display font-extrabold text-3xl sm:text-4xl text-amber-300 mt-1">₹1,73,565 / mo</div>
+            <p id="emi-loan-amount-sub" class="text-xs text-slate-300 mt-1">Principal Loan Amount: ₹2.00 Cr</p>
+          </div>
+
+          <div class="space-y-2.5 text-xs sm:text-sm">
+            <div class="flex justify-between">
+              <span class="text-slate-300">Total Principal Payable:</span>
+              <span id="emi-principal-total" class="font-bold text-white">₹2.00 Cr</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-300">Total Interest Payable:</span>
+              <span id="emi-interest-total" class="font-bold text-rose-300">₹2.17 Cr</span>
+            </div>
+            <div class="flex justify-between pt-2 border-t border-white/10">
+              <span class="text-emerald-300 font-semibold">Projected 5-Yr Property Value (@9% CAGR):</span>
+              <span id="emi-projected-worth" class="font-extrabold text-emerald-300">₹3.85 Cr</span>
+            </div>
+          </div>
+
+          <!-- Visual Principal vs Interest Bar -->
+          <div>
+            <div class="w-full h-3 rounded-full bg-rose-500/50 overflow-hidden flex">
+              <div id="emi-principal-bar" class="h-full bg-emerald-400 transition-all duration-300" style="width: 48%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-300 mt-1.5">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Principal Share</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-400"></span> Interest Share</span>
+            </div>
+          </div>
+
+          <button type="button" onclick="showToast('Pre-approved sanction letter request initiated with SBI, HDFC & ICICI Home Loans!')" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-extrabold text-sm shadow-lg transition">
+            Get Instant Pre-Approved Loan Offer →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-genriv-600 to-acres-500 flex items-center justify-center text-white font-bold">G</div>
+            <span class="font-display font-extrabold text-xl text-white">Genrivreality</span>
+          </div>
+          <p class="text-xs leading-relaxed">
+            Blending Housing.com's visual spatial discovery with 99acres.com's deep RERA & locality price intelligence. Built for mobile, tablet, laptop, and desktop.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Top Metro Corridors</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button type="button" onclick="syncCityFilter('Mumbai'); scrollToSection('listings-section')" class="hover:text-white">Properties in Mumbai (Worli, Bandra)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Bengaluru'); scrollToSection('listings-section')" class="hover:text-white">Properties in Bengaluru (Whitefield)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Gurugram'); scrollToSection('listings-section')" class="hover:text-white">Properties in Gurugram (Golf Course Rd)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Hyderabad'); scrollToSection('listings-section')" class="hover:text-white">Properties in Hyderabad (HITEC City)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Kolkata'); scrollToSection('listings-section')" class="hover:text-white">Properties in Kolkata (New Town)</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Genriv Edge & Intelligence</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button type="button" onclick="openServiceModal('rent-pay')" class="hover:text-white">Pay Rent on Credit Card</button></li>
+            <li><button type="button" onclick="openServiceModal('rent-agreement')" class="hover:text-white">Online Aadhaar Rent Agreement</button></li>
+            <li><button type="button" onclick="openServiceModal('ai-valuation')" class="hover:text-white">AI Fair Property Valuation</button></li>
+            <li><button type="button" onclick="openServiceModal('rera-Verify')" class="hover:text-white">RERA Project Compliance Check</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Instant Price Alert Newsletter</h4>
+          <p class="text-xs mb-3">Receive weekly RERA new-launch alerts & locality price appreciation digests.</p>
+          <form onsubmit="handleNewsletterSubmit(event)" class="flex gap-2">
+            <input id="newsletter-email" type="email" required placeholder="Enter your email" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-genriv-500" />
+            <button type="submit" class="px-4 py-2 rounded-xl bg-genriv-600 hover:bg-genriv-500 text-white text-xs font-bold shrink-0">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs gap-2">
+        <p>© 2026 Genrivreality Technologies Pvt. Ltd. All RERA IDs verified against state portals.</p>
+        <div class="flex gap-4">
+          <button type="button" onclick="showToast('All listings comply with state RERA transparency mandates.')" class="hover:text-white">RERA Compliance</button>
+          <button type="button" onclick="showToast('Zero-Spam Privacy Shield is active on your session.')" class="hover:text-white">Privacy Shield</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING COMPARE TRAY (99acres + Housing side-by-side comparison bar) -->
+  <div id="compare-floating-bar" class="hidden fixed bottom-16 lg:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-3xl glass-panel rounded-2xl p-3 sm:p-4 shadow-2xl border border-genriv-500/40">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-1 rounded-lg bg-genriv-600 text-white text-xs font-extrabold" id="compare-count-pill">0 / 3</span>
+        <span class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Compare Properties Side-by-Side</span>
+      </div>
+      <div id="compare-items-preview" class="flex items-center gap-2 flex-wrap"></div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="clearCompareList()" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800">Clear</button>
+        <button type="button" onclick="openCompareModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white text-xs font-bold shadow-md">Compare Now →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR (Responsive App-Like Experience on Phones/Tablets) -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 flex items-center justify-around text-[11px] font-semibold">
+    <a href="#top-hero" class="flex flex-col items-center py-1 px-2 text-genriv-600 dark:text-genriv-400">
+      <span>🔍</span>
+      <span>Search</span>
+    </a>
+    <button type="button" onclick="setLayoutMode('split'); scrollToSection('listings-section')" class="flex flex-col items-center py-1 px-2 text-slate-600 dark:text-slate-300">
+      <span>🗺️</span>
+      <span>Map Radar</span>
+    </button>
+    <button type="button" onclick="openPostPropertyModal()" class="flex flex-col items-center py-1 px-3 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-bold -mt-3 shadow-lg">
+      <span>➕</span>
+      <span>Post Free</span>
+    </button>
+    <a href="#insights-section" class="flex flex-col items-center py-1 px-2 text-slate-600 dark:text-slate-300">
+      <span>📈</span>
+      <span>Trends</span>
+    </a>
+    <button type="button" onclick="toggleShortlistDrawer()" class="flex flex-col items-center py-1 px-2 text-slate-600 dark:text-slate-300">
+      <span>❤️</span>
+      <span>Saved</span>
+    </button>
+  </nav>
+
+  <!-- MODAL 1: 360° VIRTUAL SPATIAL WALKTHROUGH & VASTU / SUN-PATH INSPECTOR -->
+  <div id="virtual-tour-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[92vh] flex flex-col">
+      <!-- Modal Top Header -->
+      <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-genriv-600 text-white text-[10px] font-extrabold uppercase">Genriv 360° Spatial Twin</span>
+            <span id="tour-rera-badge" class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold"></span>
+          </div>
+          <h3 id="tour-property-title" class="font-display font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white mt-0.5">Property Title</h3>
+        </div>
+        <button type="button" onclick="closeVirtualTourModal()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200">✕</button>
+      </div>
+
+      <!-- Interactive Viewport -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5">
+        <div id="tour-viewport-box" class="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 group">
+          <img id="tour-main-image" src="" alt="Virtual Tour Viewport" class="w-full h-full object-cover transition-all duration-700 transform scale-105" />
+          <div id="tour-lighting-overlay" class="absolute inset-0 transition-all duration-500 pointer-events-none"></div>
+
+          <!-- Compass & Vastu Overlay -->
+          <div class="absolute top-3 left-3 glass-panel px-3 py-1.5 rounded-xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span>🧭 Entry: North-East (100% Vastu Compliant)</span>
+          </div>
+          <div class="absolute top-3 right-3 glass-panel px-3 py-1.5 rounded-xl text-xs font-bold text-slate-900 dark:text-white">
+            <span id="tour-room-label">Viewing: Grand Living Deck</span>
+          </div>
+
+          <!-- Interactive Room Switcher & Daylight Simulator Bar -->
+          <div class="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 glass-panel p-1.5 rounded-xl">
+              <button type="button" onclick="switchTourRoom('Grand Living Deck', 'scale-105')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-genriv-600 text-white">Living Deck</button>
+              <button type="button" onclick="switchTourRoom('Master Suite & Sky Balcony', 'scale-110 translate-x-2')" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-genriv-100 dark:hover:bg-slate-800">Master Suite</button>
+              <button type="button" onclick="switchTourRoom('Modular Chef Kitchen', 'scale-110 -translate-x-2')" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-genriv-100 dark:hover:bg-slate-800">Kitchen</button>
+            </div>
+
+            <div class="flex items-center gap-1.5 glass-panel p-1.5 rounded-xl">
+              <span class="text-[10px] font-bold px-1.5">☀️ Sun-Path:</span>
+              <button type="button" onclick="setTourSunPath('morning')" class="px-2 py-1 rounded text-[11px] font-semibold bg-amber-400/20 text-amber-900 dark:text-amber-200">Morning</button>
+              <button type="button" onclick="setTourSunPath('noon')" class="px-2 py-1 rounded text-[11px] font-semibold hover:bg-white/40">Noon</button>
+              <button type="button" onclick="setTourSunPath('dusk')" class="px-2 py-1 rounded text-[11px] font-semibold bg-indigo-500/20 text-indigo-900 dark:text-indigo-200">Twilight</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Property Key Specs & Instant Site Visit Booking -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+          <div class="md:col-span-7 space-y-2">
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+                <div class="text-[11px] text-slate-400">Price</div>
+                <div id="tour-price" class="font-display font-extrabold text-sm sm:text-base text-genriv-600 dark:text-genriv-400"></div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+                <div class="text-[11px] text-slate-400">Carpet Area</div>
+                <div id="tour-area" class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white"></div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+                <div class="text-[11px] text-slate-400">Rental Yield</div>
+                <div id="tour-yield" class="font-display font-extrabold text-sm sm:text-base text-emerald-600"></div>
+              </div>
+            </div>
+            <p id="tour-description" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1"></p>
+          </div>
+
+          <form onsubmit="submitSiteVisit(event)" class="md:col-span-5 bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
+            <div class="font-display font-bold text-sm text-slate-900 dark:text-white">📅 Schedule Free Chauffeur Site Visit / Video Call</div>
+            <input type="text" required placeholder="Your Full Name" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs" />
+            <div class="grid grid-cols-2 gap-2">
+              <input type="tel" required placeholder="Mobile (+91)" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs" />
+              <input type="date" required value="2026-10-30" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs" />
+            </div>
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-bold text-xs shadow-md">
+              Confirm Zero-Brokerage Visit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SIDE-BY-SIDE PROPERTY COMPARISON MATRIX -->
+  <div id="compare-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[90vh] flex flex-col">
+      <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <h3 class="font-display font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white">⚖️ Genriv Intelligence Side-by-Side Comparison</h3>
+        <button type="button" onclick="closeCompareModal()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800">✕</button>
+      </div>
+      <div id="compare-table-container" class="p-4 sm:p-6 overflow-x-auto overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: POST PROPERTY FREE WIZARD (Adds Live Listing to Page!) -->
+  <div id="post-property-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-5 bg-gradient-to-r from-genriv-700 to-acres-600 text-white flex items-center justify-between">
+        <div>
+          <span class="px-2 py-0.5 rounded bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase">Zero Listing Fee</span>
+          <h3 class="font-display font-extrabold text-xl mt-1">Post Your Property on Genrivreality</h3>
+        </div>
+        <button type="button" onclick="closePostPropertyModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25">✕</button>
+      </div>
+
+      <form onsubmit="handleNewPropertySubmit(event)" class="p-5 sm:p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="new-prop-title" class="block text-xs font-bold text-slate-500 mb-1">Project / Property Title</label>
+            <input id="new-prop-title" type="text" required placeholder="e.g. Oberoi Sky Heights" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+          <div>
+            <label for="new-prop-city" class="block text-xs font-bold text-slate-500 mb-1">City</label>
+            <select id="new-prop-city" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Gurugram">Gurugram</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Kolkata">Kolkata</option>
+              <option value="Pune">Pune</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label for="new-prop-intent" class="block text-xs font-bold text-slate-500 mb-1">Listing Mode</label>
+            <select id="new-prop-intent" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+              <option value="Buy">Sell (Buy Mode)</option>
+              <option value="Rent">Rent / Lease</option>
+              <option value="New Projects">New Project</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-prop-bhk" class="block text-xs font-bold text-slate-500 mb-1">Configuration</label>
+            <select id="new-prop-bhk" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+              <option value="3 BHK">3 BHK Luxury</option>
+              <option value="4 BHK">4 BHK Sky Residence</option>
+              <option value="1 BHK">1 BHK / Studio</option>
+              <option value="5 BHK">5 BHK Villa</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-prop-price" class="block text-xs font-bold text-slate-500 mb-1">Price (in ₹ Cr)</label>
+            <input id="new-prop-price" type="number" step="0.05" min="0.1" max="29" required placeholder="2.45" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="new-prop-locality" class="block text-xs font-bold text-slate-500 mb-1">Micro-Market / Locality</label>
+            <input id="new-prop-locality" type="text" required placeholder="e.g. Bandra West / Salt Lake" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+          <div>
+            <label for="new-prop-area" class="block text-xs font-bold text-slate-500 mb-1">Carpet Area (sq.ft.)</label>
+            <input id="new-prop-area" type="number" required placeholder="1850" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-bold text-sm shadow-lg">
+          Publish Verified Listing Instantly →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: GENRIV EDGE INTERACTIVE SERVICE WORKFLOW MODAL -->
+  <div id="edge-service-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 id="edge-modal-title" class="font-display font-extrabold text-xl text-slate-900 dark:text-white">Genriv Edge Service</h3>
+        <button type="button" onclick="closeServiceModal()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800">✕</button>
+      </div>
+      <div id="edge-modal-body" class="space-y-4 text-sm text-slate-600 dark:text-slate-300"></div>
+    </div>
+  </div>
+
+
+  <!-- MODAL 5: HOSPITALITY & EVENT VENUE BOOKING MODAL (Marriage Hall, Picnic Spot, Hotel / Guest House) -->
+  <div id="venue-booking-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-5 bg-gradient-to-r from-genriv-700 via-indigo-700 to-acres-600 text-white flex items-center justify-between">
+        <div>
+          <span id="venue-modal-category-badge" class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase">Instant Venue Booking</span>
+          <h3 id="venue-modal-title" class="font-display font-extrabold text-lg sm:text-xl mt-1">Book Verified Venue</h3>
+        </div>
+        <button type="button" onclick="closeVenueBookingModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25">✕</button>
+      </div>
+
+      <form onsubmit="handleVenueBookingSubmit(event)" class="p-5 sm:p-6 space-y-4">
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <div id="venue-modal-location" class="text-xs text-slate-500 dark:text-slate-400">Locality</div>
+            <div id="venue-modal-tariff" class="font-display font-extrabold text-base text-genriv-600 dark:text-genriv-400">Tariff</div>
+          </div>
+          <span id="venue-modal-capacity" class="px-3 py-1 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">Capacity</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="venue-book-name" class="block text-xs font-bold text-slate-500 mb-1">Guest / Organizer Name *</label>
+            <input id="venue-book-name" type="text" required placeholder="Your Full Name" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+          </div>
+          <div>
+            <label for="venue-book-phone" class="block text-xs font-bold text-slate-500 mb-1">Mobile / WhatsApp *</label>
+            <input id="venue-book-phone" type="tel" required placeholder="+91 98300 XXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label for="venue-book-checkin" class="block text-xs font-bold text-slate-500 mb-1">Event / Check-In Date *</label>
+            <input id="venue-book-checkin" type="date" required value="2026-11-22" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+          </div>
+          <div>
+            <label for="venue-book-guests" class="block text-xs font-bold text-slate-500 mb-1">Expected Guests / Rooms *</label>
+            <input id="venue-book-guests" type="text" required placeholder="e.g. 350 Guests / 3 Rooms" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+          </div>
+          <div>
+            <label for="venue-book-package" class="block text-xs font-bold text-slate-500 mb-1">Package Option</label>
+            <select id="venue-book-package" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+              <option value="Standard Venue / Stay">Standard Venue / Room Only</option>
+              <option value="All-Inclusive (Catering + Decor)">All-Inclusive (Catering + Decor)</option>
+              <option value="VIP Royal Package">VIP Royal Concierge Package</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-extrabold text-sm shadow-lg">
+          Confirm Instant Booking &amp; Generate e-Voucher →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 6: UNIFIED LOGIN & REGISTRATION PORTAL (Tab 12) -->
+  <div id="login-portal-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-5 bg-gradient-to-r from-genriv-800 via-indigo-800 to-acres-700 text-white flex items-center justify-between">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase">Genriv One-ID</span>
+          <h3 class="font-display font-extrabold text-xl mt-1">Member Login &amp; Sign Up</h3>
+        </div>
+        <button type="button" onclick="closeLoginModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25">✕</button>
+      </div>
+
+      <form onsubmit="handleLoginSubmit(event)" class="p-5 sm:p-6 space-y-4">
+        <div>
+          <label for="login-role" class="block text-xs font-bold text-slate-500 mb-1">Select Your Account Role</label>
+          <select id="login-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold">
+            <option value="Buyer">Buyer Account</option>
+            <option value="Seller">Seller Account</option>
+            <option value="Owner">Property / Venue Owner Account</option>
+            <option value="Tenant">Tenant Account</option>
+            <option value="Builder / Partner">RERA Builder / Channel Partner</option>
+          </select>
+        </div>
+        <div>
+          <label for="login-identifier" class="block text-xs font-bold text-slate-500 mb-1">Registered Email or Mobile Number *</label>
+          <input id="login-identifier" type="text" required placeholder="e.g. anirban@genrivreality.com or +91 9830012345" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+        </div>
+        <div>
+          <label for="login-secret" class="block text-xs font-bold text-slate-500 mb-1">Password or 6-Digit Instant OTP *</label>
+          <input id="login-secret" type="password" required value="123456" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm" />
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-extrabold text-sm shadow-lg">
+          Sign In to Genrivreality Dashboard →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SHORTLIST SLIDE-OVER DRAWER -->
+  <div id="shortlist-drawer" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex justify-end">
+    <div class="w-full max-w-md bg-white dark:bg-slate-900 h-full p-5 sm:p-6 shadow-2xl flex flex-col justify-between border-l border-slate-200 dark:border-slate-800">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
+          <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">❤️ Saved Shortlist</h3>
+          <button type="button" onclick="toggleShortlistDrawer()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800">✕</button>
+        </div>
+        <div id="shortlist-items-container" class="mt-4 space-y-3 overflow-y-auto max-h-[72vh]"></div>
+      </div>
+      <button type="button" onclick="toggleShortlistDrawer()" class="w-full py-3 rounded-xl bg-genriv-600 text-white font-bold text-xs">Continue Exploring</button>
+    </div>
+  </div>
+
+  <!-- IN-PAGE TOAST NOTIFICATION -->
+  <div id="toast-container" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- Main Application External Script -->
+  <script src="script.js"></script>
+</body>
+</html>
