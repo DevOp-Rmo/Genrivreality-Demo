@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <link rel="icon" type="image/png" href="images/genriv_logo-Photoroom.png" />
+  <link rel="apple-touch-icon" href="images/genriv_logo-Photoroom.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Admin Dashboard — Genrivreality | Submissions Hub & Governance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          },
+          colors: {
+            genriv: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#843dff',
+              600: '#7022f7',
+              700: '#5c12dc',
+              800: '#4c0eb8',
+              900: '#3c0a96'
+            },
+            housing: { 500: '#0078db', 600: '#0062b3' },
+            magic: { 500: '#e60023', 600: '#cc001f' },
+            acres: { 500: '#0d9488', 600: '#0f766e' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP EXECUTIVE NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <!-- Left: Logo & Portal Badge -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="images/genriv_logo-Photoroom.png" alt="Genrivreality Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-contain bg-white p-1 border border-slate-200 shadow-sm shrink-0" />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-display font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight">Genrivreality</span>
+              <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] font-extrabold uppercase">Super Admin</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">Platform Governance, Creative Submissions Hub & Subscriptions Switch</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center: Status -->
+      <div class="hidden md:flex items-center gap-2 text-xs font-bold">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          ← Return to Public Website
+        </a>
+        <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>REST API & Persistent Database Online</span>
+        </span>
+      </div>
+
+      <!-- Right: User Profile, Theme & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Theme Toggle -->
+        <button type="button" onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition" aria-label="Toggle Theme">
+          <span id="theme-btn-text">🌙</span>
+        </button>
+
+        <!-- Admin Profile Pill -->
+        <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div class="w-7 h-7 rounded-full bg-rose-600 text-white font-extrabold text-xs flex items-center justify-center">
+            A
+          </div>
+          <div class="text-left hidden sm:block">
+            <div class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Super Admin</div>
+            <div class="text-[10px] text-rose-600 dark:text-rose-400 font-bold">Full Executive Access</div>
+          </div>
+        </div>
+
+        <!-- Logout CTA -->
+        <button type="button" onclick="logoutAdmin()" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-300 border border-rose-200 dark:border-rose-800 text-xs font-bold transition">
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT WRAPPER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+    <!-- ============================================================== -->
+    <!-- MASTER CONTROL: BUYER SUBSCRIPTIONS SYSTEM ON/OFF SWITCH -->
+    <!-- ============================================================== -->
+    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-slate-800 shadow-2xl">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Monetization Engine Control</span>
+            <span id="admin-sub-status-pill" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
+              FREE ACCESS MODE ENABLED (OFF)
+            </span>
+          </div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white">
+            Buyer Subscriptions System Master Switch
+          </h2>
+          <p id="admin-sub-explainer-text" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Buyer subscription plans are currently <strong>HIDDEN & NOT APPLICABLE</strong> to any buyers. All direct owner contact unlocks and inquiries are 100% free with ₹0 fee. Toggle ON whenever you are ready to enforce MB Prime paid subscription plans.
+          </p>
+        </div>
+
+        <!-- Master Switch Button -->
+        <div class="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-3 shrink-0">
+          <button type="button" id="admin-buyer-sub-toggle-btn" onclick="toggleBuyerSubscriptions()" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl transition flex items-center gap-3">
+            <span id="admin-toggle-icon" class="w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs">🟢</span>
+            <span id="admin-toggle-btn-label">Buyer Subscriptions: OFF (Free Mode)</span>
+          </button>
+          <span class="text-[11px] text-slate-400">Instant propagation to Express backend & all sessions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATFORM KPI METRICS -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Customer Requisitions</div>
+        <div id="kpi-admin-reqs" class="text-2xl sm:text-3xl font-extrabold text-genriv-600 dark:text-genriv-400">2</div>
+        <div class="text-[11px] text-slate-500">Submitted by registered buyers</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Property Advertisements</div>
+        <div id="kpi-admin-ads" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">6</div>
+        <div class="text-[11px] text-slate-500">Live & RERA verified listings</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Registered Users</div>
+        <div id="kpi-admin-users" class="text-2xl sm:text-3xl font-extrabold text-housing-500">4</div>
+        <div class="text-[11px] text-slate-500">Buyers, Sellers, and Builders</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Lead Contact Unlocks</div>
+        <div class="text-2xl sm:text-3xl font-extrabold text-amber-500">128</div>
+        <div class="text-[11px] text-slate-500">Total inquiries facilitated</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SECTION TABS -->
+    <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto flex-nowrap">
+      <button type="button" onclick="switchAdminTab('submissions')" id="btn-admin-tab-submissions" class="admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-rose-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap">
+        <span>✨</span>
+        <span>Creative Submissions Hub</span>
+      </button>
+      <button type="button" onclick="switchAdminTab('users')" id="btn-admin-tab-users" class="admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>👥</span>
+        <span>User Accounts & Roles (<span id="admin-users-count">4</span>)</span>
+      </button>
+      <button type="button" onclick="switchAdminTab('audit')" id="btn-admin-tab-audit" class="admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>📋</span>
+        <span>Real-Time Audit Log</span>
+      </button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: CREATIVE SUBMISSIONS HUB (BUYER & SELLER FORMS DESIGN) -->
+    <!-- ============================================================== -->
+    <section id="section-admin-submissions" class="space-y-6">
+      <!-- Sub-Tab Switcher -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            Creative Submissions Inspection Console
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Admin oversight: Filled-out forms from Buyers and Sellers rendered in an interactive, visual card layout.
+          </p>
+        </div>
+        <div class="inline-flex rounded-2xl bg-slate-100 dark:bg-slate-800 p-1.5 shrink-0 flex-wrap gap-1">
+          <button type="button" onclick="switchSubmissionsSubTab('crm')" id="sub-tab-btn-crm" class="px-4 py-2 rounded-xl text-xs font-extrabold transition bg-rose-600 text-white shadow-sm flex items-center gap-2">
+            <span>🏢 Agent CRM &amp; Property Approval</span>
+            <span id="sub-badge-crm" class="px-2 py-0.5 rounded-full bg-white/20 text-[10px]">8</span>
+          </button>
+          <button type="button" onclick="switchSubmissionsSubTab('reqs')" id="sub-tab-btn-reqs" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 dark:text-slate-300 hover:text-slate-900 flex items-center gap-2">
+            <span>📋 Customer Requisitions</span>
+            <span id="sub-badge-reqs" class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px]">2</span>
+          </button>
+                    <button type="button" onclick="switchSubmissionsSubTab('seller-kyc')" id="sub-tab-btn-seller-kyc" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 dark:text-slate-300 hover:text-slate-900 flex items-center gap-2">
+            <span>🛡️ Seller KYC Verification CRM</span>
+            <span id="sub-badge-seller-kyc" class="px-2 py-0.5 rounded-full bg-amber-500 text-white text-[10px]">1 Pending</span>
+          </button>
+<button type="button" onclick="switchSubmissionsSubTab('ads')" id="sub-tab-btn-ads" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 dark:text-slate-300 hover:text-slate-900 flex items-center gap-2">
+            <span>🏡 Property Advertisements</span>
+            <span id="sub-badge-ads" class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px]">6</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- VIEW C: AGENT-WISE CRM & APPROVAL WORKFLOW (Requirement 7) -->
+      <div id="admin-view-crm" class="space-y-6">
+        <!-- Populated via renderAgentCrm() -->
+      </div>
+
+      <!-- VIEW A: CUSTOMER REQUISITIONS CARDS -->
+      <div id="admin-view-reqs" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- VIEW B: SELLER PROPERTY ADVERTISEMENTS CARDS -->
+      <div id="admin-view-ads" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- VIEW D: SELLER KYC VERIFICATION CRM (Point 4) -->
+      <div id="admin-view-seller-kyc" class="hidden space-y-6">
+        <!-- Populated via renderSellerKycCrm() -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: USER ACCOUNTS & ROLES MANAGEMENT -->
+    <!-- ============================================================== -->
+    <section id="section-admin-users" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            Platform Users & Role Permissions
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Control Buyer and Seller permissions, adjust contact unlock credits, and toggle user status.
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200 dark:border-slate-800">
+              <tr>
+                <th class="p-4">User Name & ID</th>
+                <th class="p-4">Email & Phone</th>
+                <th class="p-4">Platform Role</th>
+                <th class="p-4">Plan / Quota</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Admin Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: REAL-TIME AUDIT LOG -->
+    <!-- ============================================================== -->
+    <section id="section-admin-audit" class="hidden space-y-6">
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+          Platform Activity & Security Audit
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500">
+          Live stream of API actions, subscription toggles, and form submissions.
+        </p>
+      </div>
+
+      <div id="admin-audit-log-container" class="space-y-3 font-mono text-xs">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- SCRIPT ENGINE FOR ADMIN DASHBOARD -->
+  <script>
+    let adminDb = {
+      buyerSubscriptionsEnabled: false,
+      users: [
+        {
+          id: 'usr-buyer-1',
+          name: 'Anirban Chatterjee',
+          email: 'anirban.buyer@genrivreality.com',
+          phone: '+91 98301-44210',
+          role: 'Buyer',
+          planName: 'MB Prime Silver',
+          contactCredits: 20,
+          status: 'Active'
+        },
+        {
+          id: 'usr-seller-1',
+          name: 'Pinnacle Developers',
+          email: 'sales@pinnacle.com',
+          phone: '+91 98201-11001',
+          role: 'Seller',
+          planName: 'Seller Silver Boost Pack',
+          contactCredits: 20,
+          status: 'Active'
+        },
+        {
+          id: 'usr-owner-1',
+          name: 'Meera Deshmukh',
+          email: 'meera.owner@gmail.com',
+          phone: '+91 98450-22002',
+          role: 'Owner',
+          planName: 'Verified Direct Owner',
+          contactCredits: 10,
+          status: 'Active'
+        },
+        {
+          id: 'usr-admin-1',
+          name: 'Super Admin',
+          email: 'admin@genrivreality.com',
+          phone: '+91 98000-00001',
+          role: 'Admin',
+          planName: 'Master Admin',
+          contactCredits: 9999,
+          status: 'Active'
+        }
+      ]
+    };
+
+    let requisitionsList = [
+      {
+        id: 'REQ-2026-8412',
+        name: 'Sourav Mukherjee',
+        phone: '+91 98301-44210',
+        email: 'sourav.m@gmail.com',
+        role: 'Direct Homebuyer',
+        purpose: 'Buy',
+        specs: '3 BHK (~1,750 sq.ft.)',
+        category: 'Residential Buy • Luxury Apartment',
+        location: 'New Town Action Area II, Kolkata',
+        city: 'Kolkata',
+        budget: '₹1.35 Cr – ₹1.55 Cr',
+        notes: 'East-facing Vastu compliant, near upcoming Metro station, SBI Bank Loan pre-approved.',
+        matchedCount: 3
+      },
+      {
+        id: 'REQ-2026-8419',
+        name: 'Priya & Arjun Nair',
+        phone: '+91 98450-88122',
+        email: 'priya.nair@corp.in',
+        role: 'NRI Investor',
+        purpose: 'Buy',
+        specs: '4 BHK Sky Penthouse',
+        category: 'Residential Buy • Sea Facing',
+        location: 'Worli Sea Face, South Mumbai',
+        city: 'Mumbai',
+        budget: '₹8.00 Cr – ₹9.00 Cr',
+        notes: 'Private plunge pool, 3 reserved car parkings, immediate registration.',
+        matchedCount: 2
+      }
+    ];
+
+    let advertisementsList = [
+      {
+        id: 'prop-1',
+        title: 'Genriv Celestia Sky Penthouse',
+        agent: 'Anirban Mukherjee',
+        agentRole: 'Certified Channel Partner',
+        agentEmail: 'anirban@genrivreality.com',
+        owner: 'Pinnacle Developers (Builder)',
+        ownerPhone: '+91 98201-11001',
+        city: 'Mumbai',
+        locality: 'Worli Sea Face, South Mumbai',
+        bhk: '4 BHK',
+        priceLabel: '₹8.40 Cr',
+        areaSqft: 3250,
+        reraId: 'P51900028491',
+        reraVerified: true,
+        subscriptionTier: 'Titanium Pro (Top 10 Spotlight)',
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        image: 'images/prop1.jpg'
+      },
+      {
+        id: 'prop-2',
+        title: 'The Solitaire Lakeview Retreat',
+        agent: 'Priya Sengupta',
+        agentRole: 'Direct Verified Owner',
+        agentEmail: 'priya.sengupta@outlook.com',
+        owner: 'Meera Deshmukh (Direct Owner)',
+        ownerPhone: '+91 98450-22002',
+        city: 'Bengaluru',
+        locality: 'Bellandur - ORR Tech Corridor',
+        bhk: '3 BHK',
+        priceLabel: '₹2.15 Cr',
+        areaSqft: 1890,
+        reraId: 'PRM/KA/RERA/1251/310/PR/171015/000412',
+        reraVerified: true,
+        subscriptionTier: 'Free Basic (1 Ad / 6 Mo)',
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        image: 'images/prop2.jpg'
+      },
+      {
+        id: 'prop-3',
+        title: 'Aura Horizon Sky Suites',
+        agent: 'Rajesh Sharma',
+        agentRole: 'Aura Infra Projects Head',
+        agentEmail: 'rajesh@aurainfra.in',
+        owner: 'Aura Infra Projects (Builder)',
+        ownerPhone: '+91 98110-33003',
+        city: 'Gurugram',
+        locality: 'Golf Course Extension Road',
+        bhk: '3 BHK',
+        priceLabel: '₹3.45 Cr',
+        areaSqft: 2450,
+        reraId: 'GGM/412/144/2020/28',
+        reraVerified: true,
+        subscriptionTier: 'Silver Boost Pack',
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        image: 'images/prop3.jpg'
+      },
+      {
+        id: 'prop-4',
+        title: 'CyberView Imperial Residences',
+        agent: 'Anirban Mukherjee',
+        agentRole: 'Certified Channel Partner',
+        agentEmail: 'anirban@genrivreality.com',
+        owner: 'CyberView Habitat LLP (Builder)',
+        ownerPhone: '+91 98490-44004',
+        city: 'Hyderabad',
+        locality: 'HITEC City - Financial District',
+        bhk: '3 BHK',
+        priceLabel: '₹1.85 Cr',
+        areaSqft: 2150,
+        reraId: 'P02400003891',
+        reraVerified: true,
+        subscriptionTier: 'Titanium Pro (Top 10 Spotlight)',
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        image: 'images/prop4.jpg'
+      },
+      {
+        id: 'prop-5',
+        title: 'Genriv Heritage Manor & Lawn',
+        agent: 'Godrej Properties Desk',
+        agentRole: 'Institutional Developer Desk',
+        agentEmail: 'corporate@godrejrealestate.in',
+        owner: 'Genriv Landmark Homes (Builder)',
+        ownerPhone: '+91 98310-77890',
+        city: 'Kolkata',
+        locality: 'New Town Action Area II, Kolkata',
+        bhk: '3 BHK',
+        priceLabel: '₹1.45 Cr',
+        areaSqft: 1750,
+        reraId: 'WBRERA/P/NOR/2023/000188',
+        reraVerified: true,
+        subscriptionTier: 'Gold Featured Pack',
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        image: 'images/prop5.jpg'
+      },
+      {
+        id: 'prop-new-pending',
+        title: 'Highland Luxury Suites (Newly Posted)',
+        agent: 'Priya Sengupta',
+        agentRole: 'Direct Verified Owner',
+        agentEmail: 'priya.sengupta@outlook.com',
+        owner: 'Priya Sengupta (Direct Owner)',
+        ownerPhone: '+91 98300-88112',
+        city: 'Kolkata',
+        locality: 'Rajarhat Expressway, Kolkata',
+        bhk: '3 BHK',
+        priceLabel: '₹1.15 Cr',
+        areaSqft: 1650,
+        reraId: 'WBRERA/P/NOR/2026/001420',
+        reraVerified: true,
+        subscriptionTier: 'Free Basic (1 Ad / 6 Mo)',
+        approvalStatus: 'Pending Approval',
+        isTopTen: false,
+        image: 'images/prop6.jpg'
+      }
+    ];
+
+    let auditLogs = [
+      { time: 'Just now', action: 'Admin Session Initialized', code: '200 OK' },
+      { time: '2 mins ago', action: 'POST /api/requisitions (REQ-2026-8491 registered)', code: '201 Created' },
+      { time: '14 mins ago', action: 'POST /api/leads/unlock-contact (Free Access)', code: '200 OK' },
+      { time: '1 hour ago', action: 'GET /api/properties (Filter: Kolkata 3 BHK)', code: '200 OK' }
+    ];
+
+    function initAdminDashboard() {
+      // Load Database from localStorage
+      let db = null;
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) db = JSON.parse(raw);
+      } catch (e) {}
+
+      if (db) {
+        adminDb.buyerSubscriptionsEnabled = Boolean(db.buyerSubscriptionsEnabled);
+        if (Array.isArray(db.users)) adminDb.users = db.users;
+      }
+
+      // Load Requisitions from storage
+      try {
+        const reqRaw = localStorage.getItem('genriv_requisitions_v1');
+        if (reqRaw) {
+          const parsed = JSON.parse(reqRaw);
+          if (Array.isArray(parsed) && parsed.length) {
+            requisitionsList = parsed;
+          }
+        }
+      } catch (e) {}
+
+      // Update counters
+      document.getElementById('kpi-admin-reqs').textContent = requisitionsList.length;
+      document.getElementById('kpi-admin-ads').textContent = advertisementsList.length;
+      document.getElementById('kpi-admin-users').textContent = adminDb.users.length;
+      document.getElementById('sub-badge-reqs').textContent = requisitionsList.length;
+      document.getElementById('sub-badge-ads').textContent = advertisementsList.length;
+      document.getElementById('admin-users-count').textContent = adminDb.users.length;
+
+      updateSubscriptionToggleUI();
+      renderAgentCrm();
+      renderAdminRequisitions();
+      renderAdminAdvertisements();
+      renderAdminUsers();
+      renderSellerKycCrm();
+      renderAuditLogs();
+    }
+
+    function updateSubscriptionToggleUI() {
+      const isEnabled = adminDb.buyerSubscriptionsEnabled;
+      const statusPill = document.getElementById('admin-sub-status-pill');
+      const explainer = document.getElementById('admin-sub-explainer-text');
+      const toggleBtn = document.getElementById('admin-buyer-sub-toggle-btn');
+      const toggleIcon = document.getElementById('admin-toggle-icon');
+      const btnLabel = document.getElementById('admin-toggle-btn-label');
+
+      if (!isEnabled) {
+        statusPill.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold';
+        statusPill.textContent = 'FREE ACCESS MODE ENABLED (OFF)';
+        explainer.innerHTML = 'Buyer subscription plans are currently <strong>HIDDEN & NOT APPLICABLE</strong> to any buyers. All direct owner contact unlocks and inquiries are 100% free with ₹0 fee. Toggle ON whenever you are ready to enforce MB Prime paid subscription plans.';
+        toggleBtn.className = 'px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl transition flex items-center gap-3';
+        toggleIcon.textContent = '🟢';
+        btnLabel.textContent = 'Buyer Subscriptions: OFF (Free Mode)';
+      } else {
+        statusPill.className = 'px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase';
+        statusPill.textContent = 'BUYER SUBSCRIPTIONS ACTIVE (ON)';
+        explainer.innerHTML = 'Buyer subscriptions are now <strong>ACTIVE PLATFORM-WIDE</strong>. Buyers require active MB Prime Credits to unlock direct owner contact numbers.';
+        toggleBtn.className = 'px-6 py-4 rounded-2xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl transition flex items-center gap-3';
+        toggleIcon.textContent = '🟡';
+        btnLabel.textContent = 'Buyer Subscriptions: ON (Paid Active)';
+      }
+    }
+
+    function toggleBuyerSubscriptions() {
+      adminDb.buyerSubscriptionsEnabled = !adminDb.buyerSubscriptionsEnabled;
+
+      // Persist to localStorage
+      try {
+        let db = {};
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) db = JSON.parse(raw);
+        db.buyerSubscriptionsEnabled = adminDb.buyerSubscriptionsEnabled;
+        localStorage.setItem('genriv_mb_db_v1', JSON.stringify(db));
+      } catch (e) {}
+
+      // Post to Express backend
+      try {
+        fetch('/api/admin/metrics', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ buyerSubscriptionsEnabled: adminDb.buyerSubscriptionsEnabled })
+        }).catch(() => {});
+      } catch (e) {}
+
+      updateSubscriptionToggleUI();
+      auditLogs.unshift({
+        time: 'Just now',
+        action: `Master Switch: Buyer Subscriptions set to ${adminDb.buyerSubscriptionsEnabled ? 'ON' : 'OFF'}`,
+        code: '200 OK'
+      });
+      renderAuditLogs();
+
+      showToast(`⚡ Buyer Subscriptions master switch set to: ${adminDb.buyerSubscriptionsEnabled ? 'ACTIVE (ON)' : 'FREE MODE (OFF)'}`);
+    }
+
+    function renderAdminRequisitions() {
+      const container = document.getElementById('admin-view-reqs');
+      if (!container) return;
+
+      container.innerHTML = requisitionsList.map(r => `
+        <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-md hover:shadow-xl transition space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300 font-mono text-xs font-extrabold">
+                ${r.id}
+              </span>
+              <span class="text-xs font-bold text-slate-400">${r.city || 'Kolkata'}</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-extrabold">
+              Active Buyer Lead
+            </span>
+          </div>
+
+          <div class="space-y-1">
+            <h4 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">${r.name}</h4>
+            <div class="text-xs text-slate-500">${r.role || 'Direct Homebuyer'} • 📞 ${r.phone} • ✉️ ${r.email || 'N/A'}</div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 text-xs space-y-1.5">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Target Locality:</span>
+              <strong class="text-slate-900 dark:text-white">${r.location}</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">BHK Specs:</span>
+              <strong class="text-slate-900 dark:text-white">${r.specs}</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Budget Range:</span>
+              <strong class="text-emerald-600 dark:text-emerald-400 font-extrabold">${r.budget}</strong>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-500 dark:text-slate-400 italic">
+            "${r.notes || '東 facing Vastu compliant, Metro connectivity desired.'}"
+          </p>
+
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-bold text-genriv-600 dark:text-genriv-400">
+              🎯 ${r.matchedCount || 3} Matched Inventory Items
+            </span>
+            <div class="flex gap-2">
+              <a href="https://wa.me/${(r.phone || '').replace(/[^0-9]/g, '')}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">
+                WhatsApp
+              </a>
+              <button type="button" onclick="showToast('Requisition marked verified.')" class="px-3 py-1.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold">
+                Verify
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminAdvertisements() {
+      const container = document.getElementById('admin-view-ads');
+      if (!container) return;
+
+      container.innerHTML = advertisementsList.map(p => `
+        <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-md flex flex-col justify-between">
+          <div>
+            <div class="relative h-40 bg-slate-800">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-extrabold">
+                ✓ RERA: ${p.reraVerified ? 'Verified' : 'Pending'}
+              </span>
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-xl bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </span>
+            </div>
+            <div class="p-4 space-y-2">
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight">${p.title}</h4>
+              <div class="text-xs text-slate-500">📍 ${p.locality} • ${p.city}</div>
+              <div class="text-[11px] text-slate-400">Owner: <strong class="text-slate-700 dark:text-slate-300">${p.owner}</strong></div>
+              <div class="text-[10px] font-mono text-slate-400">RERA ID: ${p.reraId}</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 grid grid-cols-2 gap-2">
+            <button type="button" onclick="showToast('Listing boosted to Homepage #1 Spotlight!')" class="py-2 rounded-xl bg-amber-400 text-slate-950 text-xs font-extrabold">
+              ⭐ Spotlight
+            </button>
+            <button type="button" onclick="showToast('RERA certificate verified!')" class="py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold">
+              ✓ Approve
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminUsers() {
+      const tbody = document.getElementById('admin-users-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = adminDb.users.map(u => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+          <td class="p-4">
+            <strong class="text-slate-900 dark:text-white block">${u.name}</strong>
+            <span class="text-slate-400 font-mono text-[10px]">${u.id}</span>
+          </td>
+          <td class="p-4">
+            <div class="text-slate-700 dark:text-slate-300">${u.email}</div>
+            <div class="text-slate-400 text-[11px]">${u.phone}</div>
+          </td>
+          <td class="p-4">
+            <span class="px-2.5 py-0.5 rounded-full ${
+              u.role === 'Admin' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300' :
+              u.role === 'Seller' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' :
+              'bg-genriv-100 text-genriv-700 dark:bg-genriv-900 dark:text-genriv-300'
+            } text-xs font-bold">
+              ${u.role}
+            </span>
+          </td>
+          <td class="p-4 text-slate-700 dark:text-slate-300">
+            ${u.planName || 'Standard'} (${u.contactCredits || 0} Credits)
+          </td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-bold">
+              ${u.status || 'Active'}
+            </span>
+          </td>
+          <td class="p-4 text-right">
+            <button type="button" onclick="showToast('User status updated.')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold">
+              Edit Role
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAuditLogs() {
+      const container = document.getElementById('admin-audit-log-container');
+      if (!container) return;
+
+      container.innerHTML = auditLogs.map(log => `
+        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-3">
+            <span class="text-slate-400 text-[11px]">${log.time}</span>
+            <span class="text-slate-800 dark:text-slate-200 font-bold">${log.action}</span>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold text-[10px]">${log.code}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderAgentCrm() {
+      const container = document.getElementById('admin-view-crm');
+      if (!container) return;
+
+      const agentMap = {};
+      advertisementsList.forEach(p => {
+        const key = p.agent || p.owner || 'Other Sellers';
+        if (!agentMap[key]) {
+          agentMap[key] = {
+            agentName: key,
+            agentRole: p.agentRole || 'Advertiser / Owner',
+            agentEmail: p.agentEmail || 'partner@genrivreality.com',
+            agentPhone: p.ownerPhone || '+91 98300-11111',
+            tier: p.subscriptionTier || 'Free Basic (1 Ad / 6 Mo)',
+            properties: []
+          };
+        }
+        agentMap[key].properties.push(p);
+      });
+
+      const agents = Object.values(agentMap);
+      const badgeCrm = document.getElementById('sub-badge-crm');
+      if (badgeCrm) badgeCrm.textContent = advertisementsList.length;
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span>🛡️</span>
+              <span><strong>Platform Governance Rule:</strong> Only listings marked as <strong>Approved</strong> are visible on the public front-end! Pending properties are withheld until moderation.</span>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            ${agents.map(ag => {
+              const isTopTier = ag.tier.includes('Titanium');
+              return `
+              <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-genriv-600 to-acres-500 text-white font-extrabold text-base flex items-center justify-center shadow-md">
+                      ${ag.agentName[0]}
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <h3 class="font-display font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">${ag.agentName}</h3>
+                        <span class="px-2.5 py-0.5 rounded-full ${
+                          isTopTier ? 'bg-amber-400 text-slate-950 font-extrabold' :
+                          ag.tier.includes('Gold') ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold' :
+                          ag.tier.includes('Silver') ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold' :
+                          'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold'
+                        } text-xs">
+                          ${ag.tier}
+                        </span>
+                      </div>
+                      <div class="text-xs text-slate-500 flex items-center gap-3 mt-0.5">
+                        <span>${ag.agentRole}</span>
+                        <span>•</span>
+                        <span>${ag.agentPhone}</span>
+                        <span>•</span>
+                        <span>${ag.agentEmail}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-slate-500">
+                    Total Properties: <strong class="text-slate-900 dark:text-white font-bold">${ag.properties.length}</strong>
+                  </div>
+                </div>
+
+                <!-- Properties under this agent -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  ${ag.properties.map(p => {
+                    const isApproved = p.approvalStatus === 'Approved';
+                    return `
+                    <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col justify-between">
+                      <div>
+                        <div class="relative h-36 bg-slate-800">
+                          <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" />
+                          <div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+                            <span class="px-2 py-0.5 rounded-full ${isApproved ? 'bg-emerald-500 text-white' : 'bg-amber-400 text-slate-950'} text-[10px] font-extrabold shadow-sm">
+                              ${isApproved ? '✓ Live & Approved' : '⏳ Pending Review'}
+                            </span>
+                            ${p.isTopTen ? `
+                              <span class="px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold shadow-sm">
+                                ⭐ Top 10 Spotlight
+                              </span>
+                            ` : ''}
+                          </div>
+                          <div class="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                            ${p.priceLabel}
+                          </div>
+                        </div>
+                        <div class="p-3.5 space-y-1.5">
+                          <h4 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate">${p.title}</h4>
+                          <p class="text-[11px] text-slate-500 truncate">📍 ${p.locality} • ${p.city}</p>
+                          <div class="text-[10px] font-mono text-slate-400 truncate">RERA: ${p.reraId}</div>
+                        </div>
+                      </div>
+                      <div class="p-3 pt-0 grid grid-cols-2 gap-2 border-t border-slate-200/60 dark:border-slate-700/60">
+                        <button type="button" onclick="updatePropertyApproval('${p.id}', '${isApproved ? 'Pending Approval' : 'Approved'}')" class="py-2 rounded-xl ${isApproved ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/40' : 'bg-emerald-600 text-white'} text-[11px] font-extrabold transition">
+                          ${isApproved ? 'Unpublish' : '✓ Approve & Publish'}
+                        </button>
+                        <button type="button" onclick="toggleTopTenPlacement('${p.id}')" class="py-2 rounded-xl ${p.isTopTen ? 'bg-amber-400 text-slate-950' : 'bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200'} text-[11px] font-extrabold border border-slate-200 dark:border-slate-600 transition">
+                          ${p.isTopTen ? '⭐ Top 10 Pinned' : 'Pin to Top 10'}
+                        </button>
+                      </div>
+                    </div>
+                  `}).join('')}
+                </div>
+              </div>
+            `}).join('')}
+          </div>
+        </div>
+      `;
+    }
+    window.renderAgentCrm = renderAgentCrm;
+
+    function updatePropertyApproval(propId, newStatus) {
+      const p = advertisementsList.find(x => x.id === propId);
+      if (p) {
+        p.approvalStatus = newStatus;
+      }
+
+      // Update in localStorage for front-end synchronization
+      try {
+        const raw = localStorage.getItem('genriv_properties_v2');
+        if (raw) {
+          let props = JSON.parse(raw);
+          const match = props.find(x => x.id === propId);
+          if (match) match.approvalStatus = newStatus;
+          localStorage.setItem('genriv_properties_v2', JSON.stringify(props));
+        }
+      } catch (e) {}
+
+      // Call backend API
+      fetch(`/api/admin/properties/${propId}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      }).catch(() => {});
+
+      renderAgentCrm();
+      renderAdminAdvertisements();
+      showToast(`Property status updated to: ${newStatus}. ${newStatus === 'Approved' ? 'It is now LIVE on public front-end!' : 'It is hidden from public portal.'}`);
+    }
+    window.updatePropertyApproval = updatePropertyApproval;
+
+    function toggleTopTenPlacement(propId) {
+      const p = advertisementsList.find(x => x.id === propId);
+      if (p) {
+        p.isTopTen = !p.isTopTen;
+      }
+      renderAgentCrm();
+      renderAdminAdvertisements();
+      showToast(`⭐ Property ${p?.isTopTen ? 'pinned to' : 'removed from'} Front-Page Top 10 Spotlight!`);
+    }
+    window.toggleTopTenPlacement = toggleTopTenPlacement;
+
+    function switchSubmissionsSubTab(subKey) {
+      const reqsView = document.getElementById('admin-view-reqs');
+      const adsView = document.getElementById('admin-view-ads');
+      const crmView = document.getElementById('admin-view-crm');
+      const kycView = document.getElementById('admin-view-seller-kyc');
+      const btnReqs = document.getElementById('sub-tab-btn-reqs');
+      const btnAds = document.getElementById('sub-tab-btn-ads');
+      const btnCrm = document.getElementById('sub-tab-btn-crm');
+      const btnKyc = document.getElementById('sub-tab-btn-seller-kyc');
+
+      [reqsView, adsView, crmView, kycView].forEach(v => v?.classList.add('hidden'));
+      [btnReqs, btnAds, btnCrm, btnKyc].forEach(b => {
+        if (b) b.className = 'px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 dark:text-slate-300 hover:text-slate-900 flex items-center gap-2';
+      });
+
+      if (subKey === 'crm') {
+        crmView?.classList.remove('hidden');
+        if (btnCrm) btnCrm.className = 'px-4 py-2 rounded-xl text-xs font-extrabold transition bg-rose-600 text-white shadow-sm flex items-center gap-2';
+      } else if (subKey === 'reqs') {
+        reqsView?.classList.remove('hidden');
+        if (btnReqs) btnReqs.className = 'px-4 py-2 rounded-xl text-xs font-extrabold transition bg-genriv-600 text-white shadow-sm flex items-center gap-2';
+      } else if (subKey === 'ads') {
+        adsView?.classList.remove('hidden');
+        if (btnAds) btnAds.className = 'px-4 py-2 rounded-xl text-xs font-extrabold transition bg-emerald-600 text-white shadow-sm flex items-center gap-2';
+      } else if (subKey === 'seller-kyc' || subKey === 'kyc') {
+        kycView?.classList.remove('hidden');
+        if (btnKyc) btnKyc.className = 'px-4 py-2 rounded-xl text-xs font-extrabold transition bg-amber-500 text-slate-950 shadow-sm flex items-center gap-2';
+        renderSellerKycCrm();
+      }
+    }
+    window.switchSubmissionsSubTab = switchSubmissionsSubTab;
+
+    function switchAdminTab(tabKey) {
+      const sections = {
+        'submissions': document.getElementById('section-admin-submissions'),
+        'users': document.getElementById('section-admin-users'),
+        'audit': document.getElementById('section-admin-audit')
+      };
+      const buttons = {
+        'submissions': document.getElementById('btn-admin-tab-submissions'),
+        'users': document.getElementById('btn-admin-tab-users'),
+        'audit': document.getElementById('btn-admin-tab-audit')
+      };
+
+      Object.keys(sections).forEach(k => {
+        if (k === tabKey) {
+          sections[k]?.classList.remove('hidden');
+          buttons[k].className = 'admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-rose-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap';
+        } else {
+          sections[k]?.classList.add('hidden');
+          buttons[k].className = 'admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap';
+        }
+      });
+    }
+
+    function logoutAdmin() {
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) {
+          const db = JSON.parse(raw);
+          db.isLoggedIn = false;
+          localStorage.setItem('genriv_mb_db_v1', JSON.stringify(db));
+        }
+      } catch (e) {}
+      window.location.href = 'index.html';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      document.getElementById('theme-btn-text').textContent = isDark ? '☀️' : '🌙';
+      try { localStorage.setItem('genriv_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const c = document.getElementById('toast-container');
+      const t = document.createElement('div');
+      t.className = 'px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-white/20 animate-bounce pointer-events-auto flex items-center gap-2';
+      t.innerHTML = `<span>✨</span><span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => { t.remove(); }, 4000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Auto-switch to Seller KYC CRM if requested in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tab') === 'seller-kyc' || urlParams.get('tab') === 'kyc') {
+        switchAdminTab('submissions');
+        switchSubmissionsSubTab('seller-kyc');
+      }
+
+      const savedTheme = localStorage.getItem('genriv_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-btn-text').textContent = '☀️';
+      }
+      initAdminDashboard();
+    });
+  </script>
+  <script src="header-nav.js"></script>
+  <script>
+    // ==============================================================
+    // SELLER KYC VERIFICATION CRM (Point 4)
+    // ==============================================================
+    function getPendingSellersList() {
+      let list = [];
+      try {
+        const raw = localStorage.getItem('genriv_pending_sellers');
+        if (raw) list = JSON.parse(raw);
+      } catch (e) {}
+
+      let currentProf = null;
+      try {
+        const rawProf = localStorage.getItem('genriv_seller_profile');
+        if (rawProf) currentProf = JSON.parse(rawProf);
+      } catch (e) {}
+
+      if (currentProf && !list.some(s => s.regId === currentProf.regId)) {
+        list.unshift(currentProf);
+      }
+
+      if (!list || list.length === 0) {
+        list = [
+          {
+            regId: 'REG-2026-9041',
+            companyName: 'Curated Proper (Pinnacle Group)',
+            reraId: 'WBRERA/A/KOL/2024/000188',
+            category: 'Builder / Developer',
+            pan: 'AACCS5489J',
+            gstin: '19AACCS5489J1ZM',
+            phone: '+91 98300-99110',
+            email: 'curated.proper@genrivreality.com',
+            status: 'pending',
+            reVerificationRequested: false,
+            planName: 'Free Basic (1 Ad / 6 Mo)',
+            quota: 1,
+            documents: ['RERA_Sanction_Certificate.pdf', 'PAN_Incorporation_Scan.jpg'],
+            submittedAt: 'Today, 11:45 AM'
+          },
+          {
+            regId: 'REG-2026-4819',
+            companyName: 'Sen Estates & Horizon Realty',
+            reraId: 'WBRERA/A/KOL/2025/000412',
+            category: 'Real Estate Agent / Broker',
+            pan: 'BHPPS9821K',
+            gstin: '19BHPPS9821K1ZN',
+            phone: '+91 98310-77890',
+            email: 'debashis.sen@genrivreality.com',
+            status: 'verified',
+            reVerificationRequested: false,
+            planName: 'Silver Boost Pack (5 Slots)',
+            quota: 5,
+            documents: ['RERA_Broker_License.pdf', 'PAN_Card.pdf'],
+            submittedAt: 'Yesterday'
+          }
+        ];
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(list));
+      }
+      return list;
+    }
+
+    function renderSellerKycCrm() {
+      const container = document.getElementById('admin-view-seller-kyc');
+      if (!container) return;
+
+      const sellers = getPendingSellersList();
+      const pendingCount = sellers.filter(s => s.status === 'pending').length;
+      const badge = document.getElementById('sub-badge-seller-kyc');
+      if (badge) {
+        badge.textContent = pendingCount > 0 ? `${pendingCount} Pending` : 'All Cleared';
+        badge.className = pendingCount > 0 ? 'px-2 py-0.5 rounded-full bg-amber-500 text-white text-[10px]' : 'px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px]';
+      }
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="p-5 rounded-3xl bg-amber-500/10 border-2 border-amber-500/30 text-xs text-amber-950 dark:text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-start sm:items-center gap-3">
+              <span class="text-2xl shrink-0">🛡️</span>
+              <div>
+                <strong class="text-sm font-extrabold text-amber-900 dark:text-amber-300">
+                  Seller KYC Verification Desk &amp; Advertiser Approval CRM
+                </strong>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+                  Platform Rule: Sellers cannot post properties until verified by Super Admin. Review company credentials, RERA filings, and sanction documents before approving.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-white font-bold text-xs border border-slate-200 dark:border-slate-700">
+                Pending Verification: <strong class="text-amber-600">${pendingCount}</strong>
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            ${sellers.map(s => {
+              const isPending = s.status === 'pending';
+              return `
+              <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border-2 ${isPending ? 'border-amber-400 dark:border-amber-500/40 shadow-lg' : 'border-slate-200 dark:border-slate-800 shadow-sm'} space-y-4 flex flex-col justify-between transition hover:shadow-xl">
+                <div class="space-y-4">
+                  <!-- Header: Reg ID & Status -->
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2">
+                      <span class="px-3 py-1 rounded-full bg-genriv-100 dark:bg-genriv-950 text-genriv-700 dark:text-genriv-300 font-mono text-xs font-extrabold">
+                        ${s.regId}
+                      </span>
+                      <span class="px-2.5 py-0.5 rounded-full ${s.category === 'Builder / Developer' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'} text-[10px] font-extrabold">
+                        ${s.category || 'Advertiser'}
+                      </span>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full ${isPending ? 'bg-amber-400 text-slate-950 font-extrabold' : 'bg-emerald-500 text-white font-bold'} text-[10px]">
+                      ${isPending ? '⏳ Pending Approval' : '✓ KYC Verified'}
+                    </span>
+                  </div>
+
+                  <!-- Advertiser Photo, Name & Contact -->
+                  <div class="flex items-center gap-3.5">
+                    <img src="${s.image || 'images/genriv_logo-Photoroom.png'}" alt="${s.companyName}" class="w-14 h-14 rounded-2xl object-cover border-2 border-indigo-500 shadow-sm shrink-0" onerror="this.src='images/genriv_logo-Photoroom.png'" />
+                    <div class="space-y-0.5 min-w-0">
+                      <h4 class="font-display font-extrabold text-base sm:text-lg text-slate-900 dark:text-white truncate">
+                        ${s.companyName}
+                      </h4>
+                      <div class="text-xs text-slate-500 flex flex-wrap items-center gap-2">
+                        <span>📞 <strong>${s.phone}</strong></span>
+                        <span>•</span>
+                        <span class="truncate">✉️ <strong>${s.email}</strong></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Details Grid -->
+                  <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-xs space-y-2">
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">RERA Registration:</span>
+                      <strong class="font-mono text-emerald-600 text-[11px]">${s.reraId || 'WBRERA/A/KOL/2024/000188'}</strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">PAN Number:</span>
+                      <strong class="font-mono text-slate-800 dark:text-slate-200">${s.pan || 'AACCS5489J'}</strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">GSTIN:</span>
+                      <strong class="font-mono text-slate-800 dark:text-slate-200">${s.gstin || '<span class="text-slate-400 font-normal">Exempt (Direct Owner)</span>'}</strong>
+                    </div>
+                    <div class="flex justify-between items-center pt-1 border-t border-slate-200/50 dark:border-slate-700/50">
+                      <span class="text-slate-400">Plan &amp; Quota:</span>
+                      <strong class="text-genriv-600 dark:text-genriv-400">${s.planName || 'Free Basic'} (${s.quota || 1} Slot)</strong>
+                    </div>
+                  </div>
+
+                  <!-- Uploaded Documents Preview -->
+                  <div class="space-y-1.5">
+                    <div class="text-[11px] font-bold text-slate-500 flex items-center justify-between">
+                      <span>Attached Verification Documents:</span>
+                      <span class="text-emerald-600 font-bold text-[10px]">2 Uploaded</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                      <button type="button" onclick="openAdminDocsModal('${s.regId}', 'rera')" class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[10px] flex items-center gap-1 cursor-pointer transition">
+                        📄 RERA_Sanction.pdf <span class="text-indigo-600 dark:text-indigo-400 font-bold">📥</span>
+                      </button>
+                      <button type="button" onclick="openAdminDocsModal('${s.regId}', 'pan')" class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[10px] flex items-center gap-1 cursor-pointer transition">
+                        💳 PAN_Card_Proof.jpg <span class="text-indigo-600 dark:text-indigo-400 font-bold">📥</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action CTAs -->
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+                  ${isPending ? `
+                    <button type="button" onclick="approveSellerKyc('${s.regId}')" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                      <span>✓</span>
+                      <span>Approve Seller KYC</span>
+                    </button>
+                    <button type="button" onclick="rejectSellerKyc('${s.regId}')" class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-300 font-bold text-xs border border-rose-200 dark:border-rose-800 transition">
+                      Reject
+                    </button>
+                  ` : `
+                    <button type="button" onclick="showToast('Seller ${s.regId} is already verified and active.')" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs transition">
+                      ✓ Approved &amp; Active
+                    </button>
+                    <button type="button" onclick="revertSellerKyc('${s.regId}')" class="px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 text-xs font-bold transition">
+                      Re-audit
+                    </button>
+                  `}
+                  <button type="button" onclick="openAdminDocsModal('${s.regId}')" class="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-md transition flex items-center gap-1.5 whitespace-nowrap">
+                    <span>📥</span>
+                    <span>Download Documents</span>
+                  </button>
+                </div>
+              </div>
+            `}).join('')}
+          </div>
+        </div>
+      `;
+    }
+    window.renderSellerKycCrm = renderSellerKycCrm;
+
+    function approveSellerKyc(regId) {
+      let list = getPendingSellersList();
+      const target = list.find(s => s.regId === regId);
+      if (target) {
+        target.status = 'verified';
+        target.reVerificationRequested = false;
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(list));
+
+        try {
+          const rawProf = localStorage.getItem('genriv_seller_profile');
+          if (rawProf) {
+            const p = JSON.parse(rawProf);
+            if (p.regId === regId) {
+              p.status = 'verified';
+              p.reVerificationRequested = false;
+              localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+            }
+          }
+        } catch (e) {}
+
+        auditLogs.unshift({
+          time: 'Just now',
+          action: `Super Admin Approved KYC for Advertiser ${regId} (${target.companyName})`,
+          code: '200 OK'
+        });
+        renderAuditLogs();
+        renderSellerKycCrm();
+        showToast(`🎉 Advertiser ${target.companyName} (${regId}) Approved! Property posting is now unlocked.`);
+      }
+    }
+    window.approveSellerKyc = approveSellerKyc;
+
+    function rejectSellerKyc(regId) {
+      let list = getPendingSellersList();
+      const target = list.find(s => s.regId === regId);
+      if (target) {
+        target.status = 'rejected';
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(list));
+
+        try {
+          const rawProf = localStorage.getItem('genriv_seller_profile');
+          if (rawProf) {
+            const p = JSON.parse(rawProf);
+            if (p.regId === regId) {
+              p.status = 'rejected';
+              localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+            }
+          }
+        } catch (e) {}
+
+        auditLogs.unshift({
+          time: 'Just now',
+          action: `Super Admin Rejected KYC for Advertiser ${regId} (Incomplete Documents)`,
+          code: '422 REJECTED'
+        });
+        renderAuditLogs();
+        renderSellerKycCrm();
+        showToast(`⚠️ Advertiser ${regId} KYC was rejected. Notification dispatched.`);
+      }
+    }
+    window.rejectSellerKyc = rejectSellerKyc;
+
+    function revertSellerKyc(regId) {
+      let list = getPendingSellersList();
+      const target = list.find(s => s.regId === regId);
+      if (target) {
+        target.status = 'pending';
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(list));
+
+        try {
+          const rawProf = localStorage.getItem('genriv_seller_profile');
+          if (rawProf) {
+            const p = JSON.parse(rawProf);
+            if (p.regId === regId) {
+              p.status = 'pending';
+              localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+            }
+          }
+        } catch (e) {}
+
+        renderSellerKycCrm();
+        showToast(`Account ${regId} set back to Pending Review.`);
+      }
+    }
+    window.revertSellerKyc = revertSellerKyc;
+
+    // ==============================================================
+    // ADMIN SELLER DOCUMENTS INSPECTION & DOWNLOAD ENGINE (Points 2 & 3)
+    // ==============================================================
+    let currentAdminDocRegId = 'REG-2026-9041';
+
+    function openAdminDocsModal(regId, targetDoc) {
+      currentAdminDocRegId = regId || 'REG-2026-9041';
+      const sellers = getPendingSellersList();
+      const s = sellers.find(x => x.regId === currentAdminDocRegId) || sellers[0] || {
+        regId: 'REG-2026-9041',
+        companyName: 'Curated Proper (Pinnacle Group)',
+        reraId: 'WBRERA/A/KOL/2024/000188',
+        category: 'Builder / Developer',
+        pan: 'AACCS5489J',
+        gstin: '19AACCS5489J1ZM',
+        status: 'pending'
+      };
+
+      const titleEl = document.getElementById('admin-docs-modal-title');
+      const subEl = document.getElementById('admin-docs-modal-subtitle');
+      if (titleEl) titleEl.textContent = `KYC Dossier — ${s.companyName}`;
+      if (subEl) subEl.textContent = `Registration ID: ${s.regId} • ${s.category || 'Advertiser'}`;
+
+      if (document.getElementById('admin-doc-rera-id')) document.getElementById('admin-doc-rera-id').textContent = s.reraId || 'WBRERA/A/KOL/2024/000188';
+      if (document.getElementById('admin-doc-pan-id')) document.getElementById('admin-doc-pan-id').textContent = `PAN: ${s.pan || 'AACCS5489J'} | GSTIN: ${s.gstin || 'Exempt'}`;
+      if (document.getElementById('admin-doc-pan-cat')) document.getElementById('admin-doc-pan-cat').textContent = s.category || 'Builder / Developer';
+
+      const sellerFolder = (s.companyName || 'Curated_Proper').replace(/[^a-zA-Z0-9_-]/g, '_');
+      if (document.getElementById('admin-doc-rera-path')) document.getElementById('admin-doc-rera-path').textContent = `images/sellers/${sellerFolder}/documents/DOC-${s.regId}-RERA_Sanction_Certificate.pdf`;
+      if (document.getElementById('admin-doc-pan-path')) document.getElementById('admin-doc-pan-path').textContent = `images/sellers/${sellerFolder}/documents/DOC-${s.regId}-PAN_Incorporation_Scan.jpg`;
+
+      const avatarSrc = s.image || `images/sellers/${sellerFolder}/documents/IMG-AVATAR-Curated_Proper.jpg`;
+      const avatarEl = document.getElementById('admin-doc-avatar-img');
+      if (avatarEl) avatarEl.src = avatarSrc;
+      const panImg = document.getElementById('admin-doc-pan-img');
+      if (panImg) panImg.src = avatarSrc;
+
+      const approveBtn = document.getElementById('admin-modal-approve-btn');
+      if (approveBtn) {
+        if (s.status === 'verified') {
+          approveBtn.className = 'px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-500 font-bold text-xs cursor-default';
+          approveBtn.innerHTML = '<span>✓</span> <span>KYC Already Verified</span>';
+          approveBtn.onclick = null;
+        } else {
+          approveBtn.className = 'px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs shadow-md transition flex items-center gap-1.5';
+          approveBtn.innerHTML = '<span>✓</span> <span>Approve Seller KYC</span>';
+          approveBtn.onclick = approveFromModal;
+        }
+      }
+
+      const modal = document.getElementById('modal-admin-seller-docs');
+      if (modal) modal.classList.remove('hidden');
+    }
+    window.openAdminDocsModal = openAdminDocsModal;
+
+    function closeAdminDocsModal() {
+      const modal = document.getElementById('modal-admin-seller-docs');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeAdminDocsModal = closeAdminDocsModal;
+
+    function triggerDocDownload(docType) {
+      const s = getPendingSellersList().find(x => x.regId === currentAdminDocRegId) || { regId: currentAdminDocRegId, companyName: 'Curated_Proper' };
+      const sellerFolder = (s.companyName || 'Curated_Proper').replace(/[^a-zA-Z0-9_-]/g, '_');
+      let filename = '';
+      let content = '';
+
+      if (docType === 'rera') {
+        filename = `DOC-${s.regId}-${Date.now()}-RERA_Sanction_Certificate.pdf`;
+        content = `%PDF-1.4 Official WB RERA Sanction Certificate\nRegistration: ${s.regId}\nSanction ID: ${s.reraId || 'WBRERA/A/KOL/2024/000188'}\nHolder: ${s.companyName}\nStatus: VERIFIED AND ACTIVE\nIssuance Authority: West Bengal Real Estate Regulatory Authority\nTimestamp: ${new Date().toISOString()}`;
+      } else if (docType === 'pan') {
+        filename = `DOC-${s.regId}-${Date.now()}-PAN_Incorporation_Scan.txt`;
+        content = `Official Government Income Tax PAN & Business Registration Proof\nRegistration ID: ${s.regId}\nHolder: ${s.companyName}\nPAN Number: ${s.pan || 'AACCS5489J'}\nGSTIN: ${s.gstin || '19AACCS5489J1ZM'}\nAudit Cleared by Super Admin at ${new Date().toISOString()}`;
+      } else {
+        filename = `IMG-AVATAR-${s.regId}-${Date.now()}.png`;
+        // Trigger download of logo/avatar
+        const link = document.createElement('a');
+        link.href = s.image || 'images/genriv_logo-Photoroom.png';
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showToast(`📥 Downloaded ${filename}`);
+        return;
+      }
+
+      // Download generated document blob
+      const blob = new Blob([content], { type: docType === 'rera' ? 'application/pdf' : 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast(`📥 Downloaded ${filename} successfully!`);
+    }
+    window.triggerDocDownload = triggerDocDownload;
+
+    function viewDocInNewTab(docType) {
+      const s = getPendingSellersList().find(x => x.regId === currentAdminDocRegId) || { regId: currentAdminDocRegId, companyName: 'Curated_Proper' };
+      showToast(`👁️ Viewing ${docType.toUpperCase()} Certificate for ${s.companyName} (${s.regId})`);
+    }
+    window.viewDocInNewTab = viewDocInNewTab;
+
+    function triggerDownloadAllDocs() {
+      triggerDocDownload('rera');
+      setTimeout(() => triggerDocDownload('pan'), 400);
+      setTimeout(() => triggerDocDownload('avatar'), 800);
+      showToast('📦 Initiated download bundle for all advertiser KYC documents!');
+    }
+    window.triggerDownloadAllDocs = triggerDownloadAllDocs;
+
+    function approveFromModal() {
+      approveSellerKyc(currentAdminDocRegId);
+      closeAdminDocsModal();
+    }
+    window.approveFromModal = approveFromModal;
+</script>
+
+  <!-- MODAL: ADMIN SELLER DOCUMENTS INSPECTION & DOWNLOAD (Points 2 & 3) -->
+  <div id="modal-admin-seller-docs" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 my-auto flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="p-5 bg-gradient-to-r from-indigo-700 via-genriv-700 to-acres-700 text-white flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center text-xl font-bold">📁</div>
+          <div>
+            <h3 class="font-display font-extrabold text-lg text-white" id="admin-docs-modal-title">
+              Verified Advertiser KYC Dossier
+            </h3>
+            <p class="text-xs text-indigo-100" id="admin-docs-modal-subtitle">
+              Registration ID: REG-2026-9041 • Curated Proper (Pinnacle Group)
+            </p>
+          </div>
+        </div>
+        <button type="button" onclick="closeAdminDocsModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25 font-bold">✕</button>
+      </div>
+
+      <!-- Body / Documents List -->
+      <div class="p-6 overflow-y-auto space-y-5 text-xs sm:text-sm">
+        
+        <!-- Document 1: RERA Sanction Certificate -->
+        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">📄</span>
+              <div>
+                <strong class="text-slate-900 dark:text-white block font-display text-sm">
+                  1. RERA Sanction / Regulatory Certificate
+                </strong>
+                <span class="text-[11px] font-mono text-emerald-600" id="admin-doc-rera-id">WBRERA/A/KOL/2024/000188</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold text-[10px] uppercase">
+              Official PDF
+            </span>
+          </div>
+
+          <!-- Document Preview Card -->
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs space-y-1.5 font-mono">
+            <div class="text-[10px] text-slate-400">File Path: <span id="admin-doc-rera-path" class="text-slate-700 dark:text-slate-300">images/sellers/Curated_Proper/documents/DOC-REG-2026-9041-RERA_Sanction_Certificate.pdf</span></div>
+            <div class="text-slate-600 dark:text-slate-300">Authority: <strong>West Bengal Real Estate Regulatory Authority</strong></div>
+            <div class="text-slate-600 dark:text-slate-300">Sanction Status: <strong class="text-emerald-600">✓ Audited &amp; Active</strong></div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <button type="button" onclick="triggerDocDownload('rera')" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5">
+              <span>📥</span> <span>Download RERA Certificate (.pdf)</span>
+            </button>
+            <button type="button" onclick="viewDocInNewTab('rera')" class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-300 transition">
+              👁️ View Full Screen
+            </button>
+          </div>
+        </div>
+
+        <!-- Document 2: PAN Card / Incorporation Proof -->
+        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">💳</span>
+              <div>
+                <strong class="text-slate-900 dark:text-white block font-display text-sm">
+                  2. PAN Card &amp; Business Incorporation Certificate
+                </strong>
+                <span class="text-[11px] font-mono text-slate-500" id="admin-doc-pan-id">PAN: AACCS5489J | GSTIN: 19AACCS5489J1ZM</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 font-extrabold text-[10px] uppercase">
+              Verified Scan
+            </span>
+          </div>
+
+          <!-- Document Preview Card -->
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+            <img id="admin-doc-pan-img" src="images/sellers/Curated_Proper/documents/IMG-AVATAR-Curated_Proper.jpg" alt="PAN Proof" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shadow-sm shrink-0" onerror="this.src='images/genriv_logo-Photoroom.png'" />
+            <div class="space-y-1 text-xs font-mono">
+              <div class="text-[10px] text-slate-400">File Path: <span id="admin-doc-pan-path" class="text-slate-700 dark:text-slate-300">images/sellers/Curated_Proper/documents/DOC-REG-2026-9041-PAN_Incorporation_Scan.jpg</span></div>
+              <div class="text-slate-600 dark:text-slate-300">Category: <strong id="admin-doc-pan-cat">Builder / Developer</strong></div>
+              <div class="text-slate-600 dark:text-slate-300">Verification: <strong class="text-emerald-600">✓ Government Income Tax Dept Verified</strong></div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <button type="button" onclick="triggerDocDownload('pan')" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5">
+              <span>📥</span> <span>Download PAN &amp; Incorporation Proof</span>
+            </button>
+            <button type="button" onclick="viewDocInNewTab('pan')" class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-300 transition">
+              👁️ View Full Screen
+            </button>
+          </div>
+        </div>
+
+        <!-- Document 3: Profile Photo / Company Logo -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <img id="admin-doc-avatar-img" src="images/sellers/Curated_Proper/documents/IMG-AVATAR-Curated_Proper.jpg" alt="Seller Photo" class="w-12 h-12 rounded-xl object-cover border-2 border-indigo-500 shadow-sm shrink-0" onerror="this.src='images/genriv_logo-Photoroom.png'" />
+            <div>
+              <strong class="text-xs font-bold text-slate-900 dark:text-white block">3. Advertiser Avatar / Corporate Logo</strong>
+              <span class="text-[10px] text-slate-400">Used for public showcase in Top Agents &amp; Preferred Agents</span>
+            </div>
+          </div>
+          <button type="button" onclick="triggerDocDownload('avatar')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold transition flex items-center gap-1">
+            <span>📥</span> <span>Download Photo</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="p-5 bg-slate-100 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 shrink-0">
+        <button type="button" onclick="triggerDownloadAllDocs()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md transition flex items-center gap-2">
+          <span>📦</span> <span>Download All Documents (ZIP Archive)</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" id="admin-modal-approve-btn" onclick="approveFromModal()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
+            <span>✓</span> <span>Approve Seller KYC</span>
+          </button>
+          <button type="button" onclick="closeAdminDocsModal()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-600 transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

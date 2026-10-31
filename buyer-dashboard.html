@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <link rel="icon" type="image/png" href="images/genriv_logo-Photoroom.png" />
+  <link rel="apple-touch-icon" href="images/genriv_logo-Photoroom.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buyer Dashboard — Genrivreality | Smart Requisitions & Matches</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          },
+          colors: {
+            genriv: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#843dff',
+              600: '#7022f7',
+              700: '#5c12dc',
+              800: '#4c0eb8',
+              900: '#3c0a96'
+            },
+            housing: { 500: '#0078db', 600: '#0062b3' },
+            magic: { 500: '#e60023', 600: '#cc001f' },
+            acres: { 500: '#0d9488', 600: '#0f766e' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP EXECUTIVE NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <!-- Left: Logo & Portal Badge -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="images/genriv_logo-Photoroom.png" alt="Genrivreality Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-contain bg-white p-1 border border-slate-200 shadow-sm shrink-0" />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-display font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight">Genrivreality</span>
+              <span class="px-2 py-0.5 rounded-full bg-genriv-100 dark:bg-genriv-900/50 text-genriv-700 dark:text-genriv-300 text-[10px] font-extrabold uppercase">Buyer Hub</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">Customer Requisitions & AI-Matched Properties</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center: Metro Selector & Nav Links -->
+      <div class="hidden md:flex items-center gap-4 text-xs font-bold">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          ← Return to Public Website
+        </a>
+        <a href="index.html#listings-section" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          Explore All Properties
+        </a>
+      </div>
+
+      <!-- Right: User Profile, Theme & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Theme Toggle -->
+        <button type="button" onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition" aria-label="Toggle Theme">
+          <span id="theme-btn-text">🌙</span>
+        </button>
+
+        <!-- User Profile Pill -->
+        <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div class="w-7 h-7 rounded-full bg-genriv-600 text-white font-extrabold text-xs flex items-center justify-center">
+            <span id="buyer-avatar-initial">B</span>
+          </div>
+          <div class="text-left hidden sm:block">
+            <div id="buyer-nav-name" class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Buyer Account</div>
+            <div id="buyer-nav-plan" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">100% Free Mode Active</div>
+          </div>
+        </div>
+
+        <!-- Logout CTA -->
+        <button type="button" onclick="logoutBuyer()" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-300 border border-rose-200 dark:border-rose-800 text-xs font-bold transition">
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- DYNAMIC FREE ACCESS / SUBSCRIPTION NOTICE -->
+  <div id="buyer-notice-banner" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs sm:text-sm py-2.5 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🎉</span>
+        <span id="buyer-notice-text">
+          <strong>Admin Free Access Active:</strong> All direct owner contact unlocks, phone numbers, and WhatsApp chats are currently <strong>100% FREE</strong> for all buyers. No subscription required!
+        </span>
+      </div>
+      <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-extrabold uppercase shrink-0">₹0 Brokerage & Fees</span>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD CONTENT WRAPPER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+    <!-- KPI STATS SUMMARY ROW -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Requisition Status</div>
+        <div id="kpi-req-status" class="text-lg sm:text-xl font-extrabold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Active Matching</span>
+        </div>
+        <div class="text-[11px] text-slate-500">Auto-syncing with verified listings</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Matched Properties</div>
+        <div id="kpi-matched-count" class="text-2xl sm:text-3xl font-extrabold text-genriv-600 dark:text-genriv-400">4</div>
+        <div class="text-[11px] text-slate-500">Properties fit your budget & BHK</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Unlocked Owner Contacts</div>
+        <div id="kpi-unlocked-count" class="text-2xl sm:text-3xl font-extrabold text-housing-500">3</div>
+        <div class="text-[11px] text-slate-500">Direct WhatsApp & phone numbers</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Saved Properties</div>
+        <div id="kpi-saved-count" class="text-2xl sm:text-3xl font-extrabold text-rose-500">2</div>
+        <div class="text-[11px] text-slate-500">Bookmarked for price alerts</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SECTION TABS -->
+    <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto flex-nowrap">
+      <button type="button" onclick="switchBuyerTab('requisition')" id="btn-tab-requisition" class="buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-genriv-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap">
+        <span>📋</span>
+        <span>My Requisition & AI Matches</span>
+      </button>
+      <button type="button" onclick="switchBuyerTab('unlocked')" id="btn-tab-unlocked" class="buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>📱</span>
+        <span>Unlocked Owner Contacts (<span id="unlocked-tab-badge">3</span>)</span>
+      </button>
+      <button type="button" onclick="switchBuyerTab('saved')" id="btn-tab-saved" class="buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>❤️</span>
+        <span>Saved Properties</span>
+      </button>
+      <button type="button" onclick="switchBuyerTab('loan')" id="btn-tab-loan" class="buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>🏦</span>
+        <span>Home Loan & EMI Assistant</span>
+      </button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: REQUISITION & AI PROPERTY MATCHES -->
+    <!-- ============================================================== -->
+    <section id="section-buyer-requisition" class="space-y-6">
+
+      <!-- GATED LOGIC CONTAINER: SHOWN WHEN BUYER ALREADY HAS FILLED FORM -->
+      <div id="buyer-active-req-container" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="active-req-id-badge" class="px-3 py-1 rounded-full bg-genriv-100 dark:bg-genriv-900/60 text-genriv-700 dark:text-genriv-300 font-mono text-xs font-extrabold">REQ-2026-8491</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>Active & Live Matching</span>
+              </span>
+            </div>
+            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+              Customer Requisition Summary
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Your property requirement is registered. We have matched verified RERA listings directly fitting your criteria.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="toggleEditRequisitionForm()" class="px-4 py-2.5 rounded-xl bg-genriv-50 hover:bg-genriv-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-genriv-700 dark:text-genriv-300 text-xs font-extrabold border border-genriv-200 dark:border-slate-700 transition flex items-center gap-1.5">
+              <span>✏️</span>
+              <span id="btn-toggle-req-form-text">Edit Requisition</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Requisition Parameters Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 text-xs">
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Registered Buyer</span>
+            <span id="summary-buyer-name" class="font-extrabold text-slate-900 dark:text-white text-sm">Anirban Chatterjee</span>
+            <span id="summary-buyer-contact" class="text-slate-500 block text-[11px]">+91 98301-44210</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Requirement & Purpose</span>
+            <span id="summary-req-purpose" class="font-extrabold text-slate-900 dark:text-white text-sm">Residential Buy (3 BHK)</span>
+            <span id="summary-req-category" class="text-slate-500 block text-[11px]">Flat / Luxury Penthouse</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Target Locality & City</span>
+            <span id="summary-req-location" class="font-extrabold text-slate-900 dark:text-white text-sm">New Town & Salt Lake</span>
+            <span id="summary-req-city" class="text-slate-500 block text-[11px]">Kolkata / Mumbai</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Budget & Financing</span>
+            <span id="summary-req-budget" class="font-extrabold text-emerald-600 dark:text-emerald-400 text-sm">₹1.20 Cr – ₹2.50 Cr</span>
+            <span id="summary-req-loan" class="text-slate-500 block text-[11px]">Bank Pre-Approved (SBI)</span>
+          </div>
+        </div>
+
+        <!-- Curated Property Matches Header -->
+        <div class="space-y-4 pt-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <span>🎯</span>
+                <span>Curated Smart Matches Based on Your Requisition</span>
+              </h3>
+              <p class="text-xs text-slate-500">Filtered automatically by preferred BHK, budget range, and location score</p>
+            </div>
+            <span id="matched-count-pill" class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-extrabold text-xs">
+              4 Properties Found
+            </span>
+          </div>
+
+          <!-- Matched Properties Grid -->
+          <div id="buyer-matched-properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- BLANK / EDIT CUSTOMER REQUISITION FORM (Toggled or shown if buyer hasn't filled yet) -->
+      <div id="buyer-requisition-form-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-2 border-genriv-500/40 transition-all duration-300">
+        <div class="p-5 sm:p-7 bg-gradient-to-r from-genriv-800 via-indigo-800 to-acres-700 text-white flex items-center justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Official Word-Doc Template</span>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1">CUSTOMER REQUISITION FORM</h3>
+            <p class="text-xs text-slate-200">Customer Registration & Property Requirement Details</p>
+          </div>
+          <button type="button" onclick="toggleEditRequisitionForm()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+            Close ✕
+          </button>
+        </div>
+
+        <form id="buyer-page-requisition-form" onsubmit="handleBuyerRequisitionSave(event)" class="p-4 sm:p-7 space-y-6 text-xs sm:text-sm">
+          <!-- 1. Customer Information -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">1. Customer Information</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label for="buyer-req-name" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Customer Name *</label>
+                <input id="buyer-req-name" type="text" required placeholder="Full Name" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-phone" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Contact No. (Mobile) *</label>
+                <input id="buyer-req-phone" type="tel" required placeholder="+91 98300-12345" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-whatsapp" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">WhatsApp No. *</label>
+                <input id="buyer-req-whatsapp" type="tel" placeholder="+91 98300-12345" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-email" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Email ID *</label>
+                <input id="buyer-req-email" type="email" required placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-role" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Client Profile</label>
+                <select id="buyer-req-role" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                  <option value="Direct Homebuyer">Direct Homebuyer (Individual)</option>
+                  <option value="Corporate / Company">Corporate / Company Investor</option>
+                  <option value="NRI Investor">NRI / Global Indian</option>
+                </select>
+              </div>
+              <div>
+                <label for="buyer-req-purpose" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Purpose of Requisition *</label>
+                <select id="buyer-req-purpose" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                  <option value="Buy">Outright Purchase (Self Use / Investment)</option>
+                  <option value="Rent">Rental / Long-Term Lease</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Requisition Specifications & Property Type -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">2. Property Specifications & Criteria</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label for="buyer-req-specs" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">BHK Configuration *</label>
+                <select id="buyer-req-specs" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                  <option value="2 BHK">2 BHK Luxury Home</option>
+                  <option value="3 BHK" selected>3 BHK Premium Residence</option>
+                  <option value="4 BHK">4 BHK Sky Villa / Penthouse</option>
+                  <option value="5+ BHK">5+ BHK Grand Estate</option>
+                </select>
+              </div>
+              <div>
+                <label for="buyer-req-location" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Preferred Locality / Area *</label>
+                <input id="buyer-req-location" type="text" required placeholder="e.g. New Town, Salt Lake, Worli" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-city" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Metro City *</label>
+                <select id="buyer-req-city" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Gurugram">Gurugram</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+              <div>
+                <label for="buyer-req-budget-min" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Min Budget (₹)</label>
+                <input id="buyer-req-budget-min" type="text" placeholder="e.g. ₹95 Lakh" value="₹1.20 Cr" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-budget-max" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Max Budget (₹) *</label>
+                <input id="buyer-req-budget-max" type="text" required placeholder="e.g. ₹1.80 Cr" value="₹2.20 Cr" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-extrabold text-emerald-600" />
+              </div>
+              <div>
+                <label for="buyer-req-possession" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Possession Timeline</label>
+                <select id="buyer-req-possession" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                  <option value="Ready to Move">Ready to Move In</option>
+                  <option value="Within 6 Months">Within 6 Months</option>
+                  <option value="Under Construction">Under Construction (1-2 Years)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-sm sm:text-base shadow-xl transition">
+            Save Requisition & Update Smart Matches →
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: UNLOCKED OWNER CONTACTS VAULT -->
+    <!-- ============================================================== -->
+    <section id="section-buyer-unlocked" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            Unlocked Direct Owner Contacts Vault
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Verified direct contacts of property sellers & builders unlocked with zero broker interference.
+          </p>
+        </div>
+        <span class="px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+          100% Free Contact Access
+        </span>
+      </div>
+
+      <div id="unlocked-contacts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: SAVED PROPERTIES -->
+    <!-- ============================================================== -->
+    <section id="section-buyer-saved" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            My Shortlisted Properties
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Properties you have favorited for price drop alerts and comparative evaluation.
+          </p>
+        </div>
+        <a href="index.html#listings-section" class="px-4 py-2 rounded-xl bg-genriv-600 text-white text-xs font-bold hover:bg-genriv-700 transition">
+          + Explore More Properties
+        </a>
+      </div>
+
+      <div id="saved-properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: HOME LOAN & EMI ASSISTANT -->
+    <!-- ============================================================== -->
+    <section id="section-buyer-loan" class="hidden space-y-6">
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            Smart Home Loan & EMI Pre-Approval Desk
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Compare official rates from India's leading banks with instant pre-approval assistance.
+          </p>
+        </div>
+
+        <!-- Bank Partners Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-blue-500 text-white text-[10px] font-extrabold">SBI Home Loan</span>
+            <div class="text-xl font-extrabold text-slate-900 dark:text-white">8.40% p.a.</div>
+            <div class="text-xs text-slate-500">Zero Processing Fee on RERA Projects</div>
+            <button type="button" onclick="applyBankLoan('State Bank of India', 8.40)" class="w-full py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-extrabold mt-2">
+              Apply Pre-Approval →
+            </button>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white text-[10px] font-extrabold">HDFC Bank</span>
+            <div class="text-xl font-extrabold text-slate-900 dark:text-white">8.50% p.a.</div>
+            <div class="text-xs text-slate-500">Sanction letter in 48 working hours</div>
+            <button type="button" onclick="applyBankLoan('HDFC Bank', 8.50)" class="w-full py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-extrabold mt-2">
+              Apply Pre-Approval →
+            </button>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-orange-500 text-white text-[10px] font-extrabold">ICICI Bank</span>
+            <div class="text-xl font-extrabold text-slate-900 dark:text-white">8.60% p.a.</div>
+            <div class="text-xs text-slate-500">Flexible repayment with overdraft facility</div>
+            <button type="button" onclick="applyBankLoan('ICICI Bank', 8.60)" class="w-full py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-extrabold mt-2">
+              Apply Pre-Approval →
+            </button>
+          </div>
+        </div>
+
+        <!-- Calculator Form -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="font-display font-extrabold text-base text-slate-900 dark:text-white">Interactive EMI Calculator</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1">Loan Amount (₹)</label>
+              <input id="loan-amount-input" type="number" value="12000000" oninput="calculateBuyerEMI()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-extrabold text-genriv-600" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1">Tenure (Years)</label>
+              <input id="loan-tenure-input" type="number" value="20" min="1" max="30" oninput="calculateBuyerEMI()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1">Interest Rate (% p.a.)</label>
+              <input id="loan-rate-input" type="number" step="0.05" value="8.40" oninput="calculateBuyerEMI()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold" />
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-genriv-50 dark:bg-genriv-950/40 border border-genriv-200 dark:border-genriv-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <span class="text-xs text-genriv-700 dark:text-genriv-300 font-bold uppercase">Estimated Monthly EMI</span>
+              <div id="loan-emi-output" class="text-2xl sm:text-3xl font-extrabold text-genriv-700 dark:text-genriv-300">₹1,03,386 / mo</div>
+            </div>
+            <div class="text-right text-xs text-slate-500">
+              <div>Total Interest: <strong id="loan-total-interest">₹1.28 Cr</strong></div>
+              <div>Total Payable: <strong id="loan-total-payable">₹2.48 Cr</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- SCRIPT ENGINE FOR BUYER DASHBOARD -->
+  <script>
+    // Shared initial database bootstrap
+    const DEFAULT_PROPERTIES = [
+      {
+        id: 'prop-1',
+        title: 'Genriv Celestia Sky Penthouse',
+        city: 'Mumbai',
+        locality: 'Worli Sea Face, South Mumbai',
+        bhk: '4 BHK',
+        priceCr: 8.40,
+        priceLabel: '₹8.40 Cr',
+        areaSqft: 3250,
+        reraId: 'P51900028491',
+        reraVerified: true,
+        postedBy: 'Genriv Pinnacle Developers',
+        ownerPhone: '+91 98201-11001',
+        ownerEmail: 'sales@pinnacle.com',
+        image: 'images/prop1.jpg',
+        score: 9.6
+      },
+      {
+        id: 'prop-2',
+        title: 'The Solitaire Lakeview Retreat',
+        city: 'Bengaluru',
+        locality: 'Bellandur - ORR Tech Corridor',
+        bhk: '3 BHK',
+        priceCr: 2.15,
+        priceLabel: '₹2.15 Cr',
+        areaSqft: 1890,
+        reraId: 'PRM/KA/RERA/1251/310/PR/171015/000412',
+        reraVerified: true,
+        postedBy: 'Meera Deshmukh (Owner)',
+        ownerPhone: '+91 98450-22002',
+        ownerEmail: 'meera.owner@gmail.com',
+        image: 'images/prop2.jpg',
+        score: 9.3
+      },
+      {
+        id: 'prop-3',
+        title: 'Aura Horizon Sky Suites',
+        city: 'Gurugram',
+        locality: 'Golf Course Extension Road',
+        bhk: '3 BHK',
+        priceCr: 3.45,
+        priceLabel: '₹3.45 Cr',
+        areaSqft: 2450,
+        reraId: 'GGM/412/144/2020/28',
+        reraVerified: true,
+        postedBy: 'Aura Infra Projects',
+        ownerPhone: '+91 98110-33003',
+        ownerEmail: 'leads@aurainfra.com',
+        image: 'images/prop3.jpg',
+        score: 9.1
+      },
+      {
+        id: 'prop-4',
+        title: 'CyberView Imperial Residences',
+        city: 'Hyderabad',
+        locality: 'HITEC City - Financial District',
+        bhk: '3 BHK',
+        priceCr: 1.85,
+        priceLabel: '₹1.85 Cr',
+        areaSqft: 2150,
+        reraId: 'P02400003891',
+        reraVerified: true,
+        postedBy: 'CyberView Habitat LLP',
+        ownerPhone: '+91 98490-44004',
+        ownerEmail: 'connect@cyberview.in',
+        image: 'images/prop4.jpg',
+        score: 9.4
+      },
+      {
+        id: 'prop-5',
+        title: 'Genriv Heritage Manor & Lawn',
+        city: 'Kolkata',
+        locality: 'New Town Action Area II, Kolkata',
+        bhk: '3 BHK',
+        priceCr: 1.45,
+        priceLabel: '₹1.45 Cr',
+        areaSqft: 1750,
+        reraId: 'WBRERA/P/NOR/2023/000188',
+        reraVerified: true,
+        postedBy: 'Genriv Landmark Homes',
+        ownerPhone: '+91 98310-77890',
+        ownerEmail: 'kolkata@genrivreality.com',
+        image: 'images/prop5.jpg',
+        score: 9.5
+      },
+      {
+        id: 'prop-6',
+        title: 'Pinnacle Crest View Residences',
+        city: 'Pune',
+        locality: 'Baner - Pashan Link Road',
+        bhk: '2 BHK',
+        priceCr: 1.15,
+        priceLabel: '₹1.15 Cr',
+        areaSqft: 1320,
+        reraId: 'P52100024881',
+        reraVerified: true,
+        postedBy: 'Rajesh Kulkarni (Owner)',
+        ownerPhone: '+91 98220-66006',
+        ownerEmail: 'rajesh.owner@outlook.com',
+        image: 'images/prop6.jpg',
+        score: 9.0
+      }
+    ];
+
+    let currentBuyer = null;
+    let buyerRequisition = null;
+    let unlockedList = ['prop-5', 'prop-2', 'prop-4'];
+    let savedList = ['prop-5', 'prop-1'];
+
+    function initBuyerDashboard() {
+      // Load Database from localStorage
+      let db = null;
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) db = JSON.parse(raw);
+      } catch (e) {}
+
+      // Identify or default user
+      if (db && db.users) {
+        currentBuyer = db.users.find(u => u.id === db.currentUserId) || db.users.find(u => u.role === 'Buyer') || db.users[0];
+      }
+      if (!currentBuyer) {
+        currentBuyer = {
+          id: 'usr-buyer-1',
+          name: 'Anirban Chatterjee',
+          email: 'anirban.buyer@genrivreality.com',
+          phone: '+91 98301-44210',
+          role: 'Buyer',
+          planName: 'MB Prime Free Access',
+          contactCredits: 20
+        };
+      }
+
+      // Check Subscriptions status (OFF by default = Free Mode)
+      const subsEnabled = db ? Boolean(db.buyerSubscriptionsEnabled) : false;
+      const noticeBanner = document.getElementById('buyer-notice-banner');
+      const noticeText = document.getElementById('buyer-notice-text');
+      const navPlan = document.getElementById('buyer-nav-plan');
+
+      if (!subsEnabled) {
+        if (noticeBanner) noticeBanner.className = 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs sm:text-sm py-2.5 px-4 shadow-sm';
+        if (noticeText) noticeText.innerHTML = '<strong>Admin Free Access Active:</strong> All direct owner contact unlocks, phone numbers, and WhatsApp chats are currently <strong>100% FREE</strong> for all buyers. No subscription required!';
+        if (navPlan) navPlan.textContent = '100% Free Mode Active';
+      } else {
+        if (noticeBanner) noticeBanner.className = 'bg-gradient-to-r from-amber-600 to-orange-600 text-white text-xs sm:text-sm py-2.5 px-4 shadow-sm';
+        if (noticeText) noticeText.innerHTML = `<strong>MB Prime Active:</strong> You have <strong>${currentBuyer.contactCredits || 15} Prime Credits</strong> for instant verified owner contact unlocks.`;
+        if (navPlan) navPlan.textContent = `${currentBuyer.contactCredits || 15} Prime Credits`;
+      }
+
+      // Load Requisitions
+      let requisitions = [];
+      try {
+        const reqRaw = localStorage.getItem('genriv_requisitions_v1');
+        if (reqRaw) requisitions = JSON.parse(reqRaw);
+      } catch (e) {}
+
+      // Find buyer's active requisition
+      buyerRequisition = requisitions.find(r => 
+        (r.customerEmail && r.customerEmail.toLowerCase() === currentBuyer.email.toLowerCase()) ||
+        (r.id === currentBuyer.lastRequisitionId)
+      );
+
+      // If no requisition found yet, load default Kolkata 3 BHK
+      if (!buyerRequisition) {
+        buyerRequisition = {
+          id: 'REQ-2026-8491',
+          name: currentBuyer.name,
+          phone: currentBuyer.phone,
+          whatsapp: currentBuyer.phone,
+          email: currentBuyer.email,
+          role: 'Direct Homebuyer',
+          purpose: 'Buy',
+          specs: '3 BHK',
+          category: 'Residential Buy • Flat / Apartment',
+          location: 'New Town Action Area II, Kolkata',
+          city: 'Kolkata',
+          budgetMin: '₹1.20 Cr',
+          budget: '₹1.60 Cr',
+          possession: 'Ready to Move',
+          loan: 'Pre-Approved (SBI)'
+        };
+      }
+
+      // Populate UI with current buyer details
+      document.getElementById('buyer-nav-name').textContent = currentBuyer.name;
+      document.getElementById('buyer-avatar-initial').textContent = (currentBuyer.name[0] || 'B').toUpperCase();
+
+      renderRequisitionSummary();
+      renderMatchedProperties();
+      renderUnlockedContacts();
+      renderSavedProperties();
+      calculateBuyerEMI();
+    }
+
+    function renderRequisitionSummary() {
+      const activeContainer = document.getElementById('buyer-active-req-container');
+      const formCard = document.getElementById('buyer-requisition-form-card');
+
+      if (buyerRequisition) {
+        activeContainer.classList.remove('hidden');
+        formCard.classList.add('hidden');
+
+        document.getElementById('active-req-id-badge').textContent = buyerRequisition.id || 'REQ-2026-8491';
+        document.getElementById('summary-buyer-name').textContent = buyerRequisition.name || currentBuyer.name;
+        document.getElementById('summary-buyer-contact').textContent = buyerRequisition.phone || currentBuyer.phone;
+        document.getElementById('summary-req-purpose').textContent = `${buyerRequisition.purpose || 'Buy'} (${buyerRequisition.specs || '3 BHK'})`;
+        document.getElementById('summary-req-category').textContent = buyerRequisition.category || 'Residential Flat';
+        document.getElementById('summary-req-location').textContent = buyerRequisition.location || 'New Town, Kolkata';
+        document.getElementById('summary-req-city').textContent = buyerRequisition.city || 'Kolkata';
+        document.getElementById('summary-req-budget').textContent = `${buyerRequisition.budgetMin || '₹1.20 Cr'} – ${buyerRequisition.budget || '₹1.60 Cr'}`;
+      } else {
+        activeContainer.classList.add('hidden');
+        formCard.classList.remove('hidden');
+      }
+    }
+
+    function toggleEditRequisitionForm() {
+      const activeContainer = document.getElementById('buyer-active-req-container');
+      const formCard = document.getElementById('buyer-requisition-form-card');
+      const btnText = document.getElementById('btn-toggle-req-form-text');
+
+      if (formCard.classList.contains('hidden')) {
+        formCard.classList.remove('hidden');
+        activeContainer.classList.add('hidden');
+        if (btnText) btnText.textContent = 'View Summary';
+
+        // Pre-fill form
+        if (buyerRequisition) {
+          document.getElementById('buyer-req-name').value = buyerRequisition.name || currentBuyer.name;
+          document.getElementById('buyer-req-phone').value = buyerRequisition.phone || currentBuyer.phone;
+          document.getElementById('buyer-req-whatsapp').value = buyerRequisition.whatsapp || currentBuyer.phone;
+          document.getElementById('buyer-req-email').value = buyerRequisition.email || currentBuyer.email;
+          document.getElementById('buyer-req-specs').value = buyerRequisition.specs || '3 BHK';
+          document.getElementById('buyer-req-location').value = buyerRequisition.location || 'New Town, Kolkata';
+          document.getElementById('buyer-req-budget-max').value = buyerRequisition.budget || '₹1.80 Cr';
+        }
+      } else {
+        formCard.classList.add('hidden');
+        activeContainer.classList.remove('hidden');
+        if (btnText) btnText.textContent = 'Edit Requisition';
+      }
+    }
+
+    function handleBuyerRequisitionSave(e) {
+      e.preventDefault();
+      const reqId = buyerRequisition ? buyerRequisition.id : ('REQ-2026-' + Math.floor(1000 + Math.random() * 9000));
+      const name = document.getElementById('buyer-req-name').value.trim();
+      const phone = document.getElementById('buyer-req-phone').value.trim();
+      const whatsapp = document.getElementById('buyer-req-whatsapp').value.trim() || phone;
+      const email = document.getElementById('buyer-req-email').value.trim();
+      const specs = document.getElementById('buyer-req-specs').value;
+      const location = document.getElementById('buyer-req-location').value.trim();
+      const city = document.getElementById('buyer-req-city').value;
+      const budgetMin = document.getElementById('buyer-req-budget-min').value.trim();
+      const budgetMax = document.getElementById('buyer-req-budget-max').value.trim();
+      const possession = document.getElementById('buyer-req-possession').value;
+
+      buyerRequisition = {
+        id: reqId,
+        name,
+        phone,
+        whatsapp,
+        email,
+        role: 'Direct Homebuyer',
+        purpose: 'Buy',
+        specs,
+        category: `Residential Buy • Flat (${specs})`,
+        location,
+        city,
+        budgetMin,
+        budget: budgetMax,
+        possession,
+        loan: 'Bank Pre-Approved'
+      };
+
+      // Save to localStorage
+      let requisitions = [];
+      try {
+        const raw = localStorage.getItem('genriv_requisitions_v1');
+        if (raw) requisitions = JSON.parse(raw);
+      } catch (err) {}
+      const existingIdx = requisitions.findIndex(r => r.id === reqId || r.email === email);
+      if (existingIdx >= 0) {
+        requisitions[existingIdx] = buyerRequisition;
+      } else {
+        requisitions.unshift(buyerRequisition);
+      }
+      try {
+        localStorage.setItem('genriv_requisitions_v1', JSON.stringify(requisitions));
+      } catch (err) {}
+
+      // Update backend user reference
+      try {
+        const dbRaw = localStorage.getItem('genriv_mb_db_v1');
+        if (dbRaw) {
+          const db = JSON.parse(dbRaw);
+          const u = db.users.find(x => x.id === currentBuyer.id);
+          if (u) u.lastRequisitionId = reqId;
+          localStorage.setItem('genriv_mb_db_v1', JSON.stringify(db));
+        }
+      } catch (err) {}
+
+      renderRequisitionSummary();
+      renderMatchedProperties();
+      showToast('✅ Customer Requisition updated! Smart property matches refreshed.');
+    }
+
+    function renderMatchedProperties() {
+      const grid = document.getElementById('buyer-matched-properties-grid');
+      if (!grid) return;
+
+      // Filter properties loosely matching BHK or city
+      const targetBhk = buyerRequisition ? buyerRequisition.specs : '3 BHK';
+      const targetCity = buyerRequisition ? buyerRequisition.city : 'Kolkata';
+
+      let matched = DEFAULT_PROPERTIES.filter(p => p.bhk === targetBhk || p.city === targetCity);
+      if (matched.length === 0) matched = DEFAULT_PROPERTIES.slice(0, 4);
+
+      document.getElementById('kpi-matched-count').textContent = matched.length;
+      document.getElementById('matched-count-pill').textContent = `${matched.length} Verified Matches Found`;
+
+      grid.innerHTML = matched.map(p => {
+        const isUnlocked = unlockedList.includes(p.id);
+        return `
+          <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-xl transition flex flex-col justify-between">
+            <div>
+              <div class="relative h-44 overflow-hidden bg-slate-800">
+                <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-amber-300 text-[10px] font-extrabold">
+                  98% AI Match
+                </span>
+                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-extrabold flex items-center gap-1">
+                  ✓ RERA Verified
+                </span>
+                <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-xl bg-slate-950/80 text-white text-xs font-bold">
+                  ${p.priceLabel}
+                </div>
+              </div>
+              <div class="p-4 space-y-2">
+                <div class="flex items-center justify-between text-[11px] text-slate-500">
+                  <span>${p.bhk} • ${p.areaSqft} sq.ft.</span>
+                  <span>Livability: <strong class="text-emerald-600">${p.score}/10</strong></span>
+                </div>
+                <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug">
+                  ${p.title}
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  📍 ${p.locality}
+                </p>
+                <div class="pt-2 text-[11px] text-slate-400 border-t border-slate-100 dark:border-slate-800">
+                  Posted by: <strong class="text-slate-700 dark:text-slate-300">${p.postedBy}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 pt-0">
+              ${isUnlocked ? `
+                <div class="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 block uppercase">Contact Unlocked</span>
+                    <strong class="text-xs text-slate-900 dark:text-white">${p.ownerPhone}</strong>
+                  </div>
+                  <a href="https://wa.me/${p.ownerPhone.replace(/[^0-9]/g, '')}?text=Hi,%20I%20am%20interested%20in%20${encodeURIComponent(p.title)}" target="_blank" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700">
+                    WhatsApp
+                  </a>
+                </div>
+              ` : `
+                <button type="button" onclick="unlockPropertyContact('${p.id}')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                  <span>🔓 Unlock Owner Contact</span>
+                  <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full uppercase">100% Free</span>
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function unlockPropertyContact(propId) {
+      if (!unlockedList.includes(propId)) {
+        unlockedList.push(propId);
+      }
+      document.getElementById('kpi-unlocked-count').textContent = unlockedList.length;
+      document.getElementById('unlocked-tab-badge').textContent = unlockedList.length;
+      renderMatchedProperties();
+      renderUnlockedContacts();
+      showToast('🎉 Direct Owner Contact unlocked! 100% Free - direct WhatsApp and calling ready.');
+    }
+
+    function renderUnlockedContacts() {
+      const grid = document.getElementById('unlocked-contacts-grid');
+      if (!grid) return;
+
+      const unlockedProps = DEFAULT_PROPERTIES.filter(p => unlockedList.includes(p.id));
+      document.getElementById('kpi-unlocked-count').textContent = unlockedProps.length;
+      document.getElementById('unlocked-tab-badge').textContent = unlockedProps.length;
+
+      if (unlockedProps.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
+            <p class="text-sm text-slate-500">You haven't unlocked any property contacts yet. Browse matched properties and unlock with ₹0 fee.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = unlockedProps.map(p => `
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div class="flex items-center gap-3">
+            <img src="${p.image}" alt="${p.title}" class="w-14 h-14 rounded-xl object-cover shrink-0" />
+            <div>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-extrabold">Unlocked Contact</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight mt-0.5">${p.title}</h4>
+              <span class="text-xs font-bold text-slate-500">${p.priceLabel} • ${p.locality}</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-xs space-y-1">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Owner / Builder:</span>
+              <strong class="text-slate-900 dark:text-white">${p.postedBy}</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Direct Number:</span>
+              <strong class="text-emerald-600 dark:text-emerald-400 font-mono">${p.ownerPhone}</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">RERA Number:</span>
+              <span class="text-slate-600 dark:text-slate-300 font-mono text-[10px]">${p.reraId}</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <a href="tel:${p.ownerPhone.replace(/[^0-9+]/g, '')}" class="py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold text-center hover:opacity-90 transition">
+              📞 Call Now
+            </a>
+            <a href="https://wa.me/${p.ownerPhone.replace(/[^0-9]/g, '')}?text=Hello,%20I%20am%20interested%20in%20inspecting%20${encodeURIComponent(p.title)}" target="_blank" class="py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold text-center hover:bg-emerald-700 transition">
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderSavedProperties() {
+      const grid = document.getElementById('saved-properties-grid');
+      if (!grid) return;
+
+      const savedProps = DEFAULT_PROPERTIES.filter(p => savedList.includes(p.id));
+      document.getElementById('kpi-saved-count').textContent = savedProps.length;
+
+      grid.innerHTML = savedProps.map(p => `
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col justify-between">
+          <div class="relative h-40">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" />
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-full bg-rose-500 text-white text-[10px] font-bold">Saved ❤️</span>
+          </div>
+          <div class="p-4 space-y-2">
+            <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white">${p.title}</h4>
+            <div class="text-xs font-bold text-genriv-600">${p.priceLabel} • ${p.bhk}</div>
+            <p class="text-[11px] text-slate-500">📍 ${p.locality}</p>
+          </div>
+          <div class="p-4 pt-0">
+            <button type="button" onclick="unlockPropertyContact('${p.id}')" class="w-full py-2 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white text-xs font-bold">
+              Contact Owner
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function calculateBuyerEMI() {
+      const P = parseFloat(document.getElementById('loan-amount-input').value) || 12000000;
+      const N = (parseFloat(document.getElementById('loan-tenure-input').value) || 20) * 12;
+      const R = ((parseFloat(document.getElementById('loan-rate-input').value) || 8.40) / 12) / 100;
+
+      const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      const totalPayable = emi * N;
+      const totalInterest = totalPayable - P;
+
+      document.getElementById('loan-emi-output').textContent = `₹${Math.round(emi).toLocaleString('en-IN')} / mo`;
+      document.getElementById('loan-total-interest').textContent = `₹${(totalInterest / 10000000).toFixed(2)} Cr`;
+      document.getElementById('loan-total-payable').textContent = `₹${(totalPayable / 10000000).toFixed(2)} Cr`;
+    }
+
+    function applyBankLoan(bank, rate) {
+      document.getElementById('loan-rate-input').value = rate.toFixed(2);
+      calculateBuyerEMI();
+      showToast(`🏦 ${bank} rate applied (${rate.toFixed(2)}% p.a.). Dedicated mortgage concierge requested!`);
+    }
+
+    function switchBuyerTab(tabKey) {
+      const sections = {
+        'requisition': document.getElementById('section-buyer-requisition'),
+        'unlocked': document.getElementById('section-buyer-unlocked'),
+        'saved': document.getElementById('section-buyer-saved'),
+        'loan': document.getElementById('section-buyer-loan')
+      };
+      const buttons = {
+        'requisition': document.getElementById('btn-tab-requisition'),
+        'unlocked': document.getElementById('btn-tab-unlocked'),
+        'saved': document.getElementById('btn-tab-saved'),
+        'loan': document.getElementById('btn-tab-loan')
+      };
+
+      Object.keys(sections).forEach(k => {
+        if (k === tabKey) {
+          sections[k]?.classList.remove('hidden');
+          buttons[k].className = 'buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-genriv-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap';
+        } else {
+          sections[k]?.classList.add('hidden');
+          buttons[k].className = 'buyer-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap';
+        }
+      });
+    }
+
+    function logoutBuyer() {
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) {
+          const db = JSON.parse(raw);
+          db.isLoggedIn = false;
+          localStorage.setItem('genriv_mb_db_v1', JSON.stringify(db));
+        }
+      } catch (e) {}
+      window.location.href = 'index.html';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      document.getElementById('theme-btn-text').textContent = isDark ? '☀️' : '🌙';
+      try { localStorage.setItem('genriv_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const c = document.getElementById('toast-container');
+      const t = document.createElement('div');
+      t.className = 'px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-white/20 animate-bounce pointer-events-auto flex items-center gap-2';
+      t.innerHTML = `<span>✨</span><span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => { t.remove(); }, 4000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Restore theme
+      const savedTheme = localStorage.getItem('genriv_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-btn-text').textContent = '☀️';
+      }
+      initBuyerDashboard();
+
+      // Check for first-time buyer signup onboarding
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('new_signup') === 'true') {
+        const reqCard = document.getElementById('buyer-requisition-form-card');
+        if (reqCard) {
+          reqCard.classList.remove('hidden');
+          const welcomeBanner = document.createElement('div');
+          welcomeBanner.className = "mb-6 p-5 rounded-2xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-600 text-white shadow-xl flex items-center justify-between";
+          welcomeBanner.innerHTML = `
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-amber-300">👋 Welcome New Buyer / Tenant!</div>
+              <div class="font-display font-extrabold text-lg mt-0.5">Step 1: Complete Your Customer Requisition Form</div>
+              <p class="text-xs text-indigo-100 mt-1">Filling this 6-section form allows our matching engine to display properties filtered to your exact budget, BHK configuration, and preferred Kolkata localities.</p>
+            </div>
+            <button onclick="document.getElementById('buyer-requisition-form-card').scrollIntoView({behavior: 'smooth'})" class="px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs shadow-md">Fill Requisition Form ↓</button>
+          `;
+          const mainContainer = document.querySelector('main');
+          if (mainContainer) mainContainer.insertBefore(welcomeBanner, mainContainer.firstChild);
+          reqCard.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+    });
+  </script>
+  <script src="header-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "genrivreality-magicbricks-fullstack",
+  "version": "2.0.0",
+  "description": "Genrivreality \u2014 Housing + 99acres + MagicBricks Full-Stack Real Estate Portal (Buyer, Seller, Admin & Subscriptions)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,44 @@
+CUSTOMER REQUISITION FORM
+Customer Registration & Property Requirement Details
+Requisition No.: ____________________Date: ____ / ____ / ______
+1. CUSTOMER INFORMATION
+Customer Name: __________________________________
+Mobile Number: ___________________________________
+WhatsApp Number: ________________________________
+Email ID: _________________________________________
+Present Address: __________________________________
+Customer Type: ☐ Individual ☐ Company ☐ Investor ☐ NRI
+2. PROPERTY REQUIREMENT
+Purpose: ☐ Buy  ☐ Rent ☐ Lease
+Property Category: ☐ Residential ☐ Commercial ☐ Land/Plot
+Property Type:☐ Flat/Apartment ☐ Independent House ☐ Villa☐ Office ☐ Shop ☐ Showroom ☐ Warehouse☐ Land/Plot ☐ PG/Mess ☐ Other: _______________
+Preferred Configuration:☐ 1 BHK ☐ 2 BHK ☐ 3 BHK ☐ 4+ BHK ☐ Other: ______
+Preferred Location/Locality: _______________________
+Alternative Location: ______________________________
+Preferred Area: __________ sq. ft.
+Minimum Area: __________ sq. ft.
+Maximum Area: __________ sq. ft.
+3. BUDGET & PAYMENT DETAILS
+Minimum Budget: ₹ __________________
+Maximum Budget: ₹ __________________
+Payment Preference: ☐ Self-Financed ☐ Home Loan ☐ Both
+Loan Status: ☐ Approved ☐ Applied ☐ Not Applied ☐ Not Required
+Expected Possession: ☐ Immediate ☐ Within 3 Months ☐ Within 6 Months ☐ Flexible
+4. PROPERTY PREFERENCES
+Furnishing: ☐ Unfurnished ☐ Semi-Furnished ☐ Fully Furnished
+Floor Preference: _________________________________
+Parking: ☐ Required ☐ Not Required
+Lift: ☐ Required ☐ Not Required
+24×7 Water Supply: ☐ Required ☐ Not Required
+Power Backup: ☐ Required ☐ Not Required
+Property Status: ☐ Ready to Move ☐ Under Construction
+Additional Requirements: __________________________
+5. ADDITIONAL INFORMATION
+Purpose of Purchase/Rental: ☐ Self-Use ☐ Investment ☐ Business
+Preferred Site Visit Date: ____ / ____ / ______
+Preferred Contact Time: ___________________________
+Reference/Source: ☐ Website ☐ Social Media ☐ Referral ☐ Advertisement ☐ Other
+6. CUSTOMER DECLARATION
+I confirm that the information provided above is correct to the best of my knowledge. I authorize GENRIV to contact me regarding suitable property options and related services. My contact details may be used for this purpose in accordance with applicable privacy requirements.
+Customer Signature: _______________________________
+Date: ____ / ____ / ______

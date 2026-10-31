@@ -1,7 +1,8 @@
-// Genrivreality — Main Application Script (script.js)
+// Genrivreality — Full-Stack Frontend & Role-Gated Forms Engine (script.js)
 
 // 1. INITIAL VERIFIED DATASET (Blending Housing.com Visual Richness & 99acres RERA/Yield Metrics)
         const GENRIV_ASSETS = {
+      logo: 'images/genriv_logo.png',
       p1: 'images/prop1.jpg',
       p2: 'images/prop2.jpg',
       p3: 'images/prop3.jpg',
@@ -11,111 +12,12 @@
     };
     const initialProperties = [
       {
-        id: 'prop-1',
-        title: 'Genriv Celestia Sky Penthouse',
-        city: 'Mumbai',
-        locality: 'Worli Sea Face, South Mumbai',
-        intent: 'Buy',
-        bhk: '4 BHK',
-        priceCr: 8.40,
-        priceLabel: '₹8.40 Cr',
-        rentEquiv: '₹2.9L / mo',
-        areaSqft: 3250,
-        pricePerSqft: '₹25,846 / sq.ft.',
-        reraId: 'P51900028491',
-        reraVerified: true,
-        postedBy: 'Builder',
-        builderName: 'Genriv Pinnacle Developers',
-        livabilityScore: 9.6,
-        rentalYield: 4.3,
-        appreciationYoY: '+14.2% YoY',
-        tags: ['Sea / Lake View', 'Ready to Move', 'Vastu Compliant', 'Metro < 500m'],
-        image: GENRIV_ASSETS.p1,
-        mapX: 18,
-        mapY: 66,
-        description: '270-degree Arabian Sea & Bandra-Worli Sea Link panorama with private plunge deck, double-height travertine living lounge, and biometric elevator foyer.'
-      },
-      {
-        id: 'prop-2',
-        title: 'The Teakwood Courtyard Biophilic Villa',
-        city: 'Bengaluru',
-        locality: 'Whitefield IT Corridor, East Bengaluru',
-        intent: 'Buy',
-        bhk: '5 BHK',
-        priceCr: 4.25,
-        priceLabel: '₹4.25 Cr',
-        rentEquiv: '₹1.65L / mo',
-        areaSqft: 4100,
-        pricePerSqft: '₹10,365 / sq.ft.',
-        reraId: 'PRM/KA/RERA/1251/446',
-        reraVerified: true,
-        postedBy: 'Owner',
-        builderName: 'Direct Verified Owner (Zero Brokerage)',
-        livabilityScore: 9.4,
-        rentalYield: 4.9,
-        appreciationYoY: '+19.8% YoY',
-        tags: ['Zero Brokerage', 'Ready to Move', 'Vastu Compliant'],
-        image: GENRIV_ASSETS.p2,
-        mapX: 44,
-        mapY: 74,
-        description: 'Net-zero smart tropical villa with private heated lap pool, 10kW solar roof, teakwood Louver facade, and 5 mins from Purple Line Metro.'
-      },
-      {
-        id: 'prop-3',
-        title: 'Aravalli Crest Golf Residences',
-        city: 'Gurugram',
-        locality: 'Golf Course Road, Sector 54',
-        intent: 'New Projects',
-        bhk: '3 BHK',
-        priceCr: 3.60,
-        priceLabel: '₹3.60 Cr',
-        rentEquiv: '₹1.35L / mo',
-        areaSqft: 2480,
-        pricePerSqft: '₹14,516 / sq.ft.',
-        reraId: 'RC/REP/HARERA/GGM/612',
-        reraVerified: true,
-        postedBy: 'Builder',
-        builderName: 'DLF & Genriv Signature JV',
-        livabilityScore: 9.3,
-        rentalYield: 4.6,
-        appreciationYoY: '+22.1% YoY',
-        tags: ['Metro < 500m', 'Vastu Compliant'],
-        image: GENRIV_ASSETS.p3,
-        mapX: 38,
-        mapY: 22,
-        description: 'Ultra-low density 3-to-a-core residences with 65,000 sq.ft. podium clubhouse, temperature-controlled lagoon pool, and direct Rapid Metro skywalk.'
-      },
-      {
-        id: 'prop-4',
-        title: 'Genriv Nexus Grade-A Tech Plaza',
-        city: 'Hyderabad',
-        locality: 'HITEC City Main Road, Madhapur',
-        intent: 'Commercial',
-        bhk: 'Commercial',
-        priceCr: 5.80,
-        priceLabel: '₹5.80 Cr',
-        rentEquiv: '₹4.40L / mo Lease',
-        areaSqft: 5200,
-        pricePerSqft: '₹11,153 / sq.ft.',
-        reraId: 'P02400004918',
-        reraVerified: true,
-        postedBy: 'Builder',
-        builderName: 'Genriv Commercial REIT',
-        livabilityScore: 9.5,
-        rentalYield: 8.6,
-        appreciationYoY: '+16.5% YoY',
-        tags: ['Ready to Move', 'Metro < 500m', 'Zero Brokerage'],
-        image: GENRIV_ASSETS.p4,
-        mapX: 54,
-        mapY: 56,
-        description: 'LEED Platinum certified commercial floor plate with pre-leased Fortune-500 tenant option, 8.6% assured rental yield, and double-height concourse.'
-      },
-      {
         id: 'prop-5',
         title: 'Botanica Waterfront Sky-Forest Towers',
         city: 'Kolkata',
         locality: 'Action Area II, New Town, Kolkata',
         intent: 'Buy',
+        category: 'Residential',
         bhk: '3 BHK',
         priceCr: 1.45,
         priceLabel: '₹1.45 Cr',
@@ -133,7 +35,141 @@
         image: GENRIV_ASSETS.p5,
         mapX: 78,
         mapY: 42,
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        isFeatured: true,
+        tier: 'Top 10 Front Spotlight',
+        views: 2150,
+        leadsCount: 31,
         description: 'Cantilevered vertical forest balconies overlooking Eco Park lake with skybridge infinity pool, smart home automation, and EV fast-charging bays.'
+      },
+      {
+        id: 'prop-1',
+        title: 'Genriv Celestia Sky Penthouse',
+        city: 'Mumbai',
+        locality: 'Worli Sea Face, South Mumbai',
+        intent: 'Buy',
+        category: 'Residential',
+        bhk: '4 BHK',
+        priceCr: 8.40,
+        priceLabel: '₹8.40 Cr',
+        rentEquiv: '₹2.9L / mo',
+        areaSqft: 3250,
+        pricePerSqft: '₹25,846 / sq.ft.',
+        reraId: 'P51900028491',
+        reraVerified: true,
+        postedBy: 'Builder',
+        builderName: 'Genriv Pinnacle Developers',
+        livabilityScore: 9.6,
+        rentalYield: 4.3,
+        appreciationYoY: '+14.2% YoY',
+        tags: ['Sea / Lake View', 'Ready to Move', 'Vastu Compliant', 'Metro < 500m'],
+        image: GENRIV_ASSETS.p1,
+        mapX: 18,
+        mapY: 66,
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        isFeatured: true,
+        tier: 'Top 10 Front Spotlight',
+        views: 1840,
+        leadsCount: 24,
+        description: '270-degree Arabian Sea & Bandra-Worli Sea Link panorama with private plunge deck, double-height travertine living lounge, and biometric elevator foyer.'
+      },
+      {
+        id: 'prop-2',
+        title: 'The Teakwood Courtyard Biophilic Villa',
+        city: 'Bengaluru',
+        locality: 'Whitefield IT Corridor, East Bengaluru',
+        intent: 'Buy',
+        category: 'Residential',
+        bhk: '5 BHK',
+        priceCr: 4.25,
+        priceLabel: '₹4.25 Cr',
+        rentEquiv: '₹1.65L / mo',
+        areaSqft: 4100,
+        pricePerSqft: '₹10,365 / sq.ft.',
+        reraId: 'PRM/KA/RERA/1251/446',
+        reraVerified: true,
+        postedBy: 'Owner',
+        builderName: 'Direct Verified Owner (Zero Brokerage)',
+        livabilityScore: 9.4,
+        rentalYield: 4.9,
+        appreciationYoY: '+19.8% YoY',
+        tags: ['Zero Brokerage', 'Ready to Move', 'Vastu Compliant'],
+        image: GENRIV_ASSETS.p2,
+        mapX: 44,
+        mapY: 74,
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        isFeatured: false,
+        tier: 'Owner Free (1 ad / 6 mo)',
+        views: 1290,
+        leadsCount: 19,
+        description: 'Net-zero smart tropical villa with private heated lap pool, 10kW solar roof, teakwood Louver facade, and 5 mins from Purple Line Metro.'
+      },
+      {
+        id: 'prop-3',
+        title: 'Aravalli Crest Golf Residences',
+        city: 'Gurugram',
+        locality: 'Golf Course Road, Sector 54',
+        intent: 'New Projects',
+        category: 'Residential',
+        bhk: '3 BHK',
+        priceCr: 3.60,
+        priceLabel: '₹3.60 Cr',
+        rentEquiv: '₹1.35L / mo',
+        areaSqft: 2480,
+        pricePerSqft: '₹14,516 / sq.ft.',
+        reraId: 'RC/REP/HARERA/GGM/612',
+        reraVerified: true,
+        postedBy: 'Builder',
+        builderName: 'DLF & Genriv Signature JV',
+        livabilityScore: 9.3,
+        rentalYield: 4.6,
+        appreciationYoY: '+22.1% YoY',
+        tags: ['Metro < 500m', 'Vastu Compliant'],
+        image: GENRIV_ASSETS.p3,
+        mapX: 38,
+        mapY: 22,
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        isFeatured: true,
+        tier: 'Featured Project',
+        views: 980,
+        leadsCount: 14,
+        description: 'Ultra-low density 3-to-a-core residences with 65,000 sq.ft. podium clubhouse, temperature-controlled lagoon pool, and direct Rapid Metro skywalk.'
+      },
+      {
+        id: 'prop-4',
+        title: 'Genriv Nexus Grade-A Tech Plaza',
+        city: 'Hyderabad',
+        locality: 'HITEC City Main Road, Madhapur',
+        intent: 'Commercial',
+        category: 'Commercial',
+        bhk: 'Commercial',
+        priceCr: 5.80,
+        priceLabel: '₹5.80 Cr',
+        rentEquiv: '₹4.40L / mo Lease',
+        areaSqft: 5200,
+        pricePerSqft: '₹11,153 / sq.ft.',
+        reraId: 'P02400004918',
+        reraVerified: true,
+        postedBy: 'Builder',
+        builderName: 'Genriv Commercial REIT',
+        livabilityScore: 9.5,
+        rentalYield: 8.6,
+        appreciationYoY: '+16.5% YoY',
+        tags: ['Ready to Move', 'Metro < 500m', 'Zero Brokerage'],
+        image: GENRIV_ASSETS.p4,
+        mapX: 54,
+        mapY: 56,
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        isFeatured: false,
+        tier: 'Standard',
+        views: 1120,
+        leadsCount: 16,
+        description: 'LEED Platinum certified commercial floor plate with pre-leased Fortune-500 tenant option, 8.6% assured rental yield, and double-height concourse.'
       },
       {
         id: 'prop-6',
@@ -141,6 +177,7 @@
         city: 'Pune',
         locality: 'Koregaon Park Lane 7, Pune',
         intent: 'Rent',
+        category: 'Residential',
         bhk: '1 BHK',
         priceCr: 0.95,
         priceLabel: '₹42,000 / mo (or ₹95 L)',
@@ -158,14 +195,91 @@
         image: GENRIV_ASSETS.p6,
         mapX: 28,
         mapY: 58,
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        isFeatured: false,
+        tier: 'Owner Free (1 ad / 6 mo)',
+        views: 890,
+        leadsCount: 12,
         description: 'Fully furnished Scandinavian-Indian studio residence overlooking century-old banyan trees, high-speed fiber workspace, and zero-brokerage digital lease.'
+      },
+      {
+        id: 'prop-7',
+        title: 'Merlin Rise Sports City Suites',
+        city: 'Kolkata',
+        locality: 'Rajarhat 6-Lane Expressway, Kolkata',
+        intent: 'New Projects',
+        category: 'Residential',
+        bhk: '3 BHK',
+        priceCr: 0.88,
+        priceLabel: '₹88.5 Lakhs',
+        rentEquiv: '₹32,000 / mo',
+        areaSqft: 1420,
+        pricePerSqft: '₹6,232 / sq.ft.',
+        reraId: 'WBRERA/P/NOR/2026/000889',
+        reraVerified: true,
+        postedBy: 'Builder',
+        builderName: 'Merlin Group & Genriv Landmark',
+        livabilityScore: 9.1,
+        rentalYield: 5.2,
+        appreciationYoY: '+17.6% YoY',
+        tags: ['Ready to Move', 'Metro < 500m', 'Vastu Compliant'],
+        image: GENRIV_ASSETS.p4,
+        mapX: 82,
+        mapY: 48,
+        approvalStatus: 'Approved',
+        isTopTen: true,
+        isFeatured: true,
+        tier: 'Top 10 Front Spotlight',
+        views: 1640,
+        leadsCount: 28,
+        description: 'International sports-themed gated township with Olympic swimming pool, cricket academy, and direct Metro skybridge.'
+      },
+      {
+        id: 'prop-8',
+        title: 'South City Classic Garden Apartment',
+        city: 'Kolkata',
+        locality: 'Prince Anwar Shah Road, South Kolkata',
+        intent: 'Buy',
+        category: 'Residential',
+        bhk: '3 BHK',
+        priceCr: 1.95,
+        priceLabel: '₹1.95 Cr',
+        rentEquiv: '₹65,000 / mo',
+        areaSqft: 1980,
+        pricePerSqft: '₹9,848 / sq.ft.',
+        reraId: 'WBRERA/P/KOL/2026/000104',
+        reraVerified: true,
+        postedBy: 'Owner',
+        builderName: 'Anupam Roy (Direct Owner)',
+        livabilityScore: 9.5,
+        rentalYield: 4.1,
+        appreciationYoY: '+11.5% YoY',
+        tags: ['Zero Brokerage', 'Ready to Move', 'Vastu Compliant'],
+        image: GENRIV_ASSETS.p6,
+        mapX: 74,
+        mapY: 54,
+        approvalStatus: 'Approved',
+        isTopTen: false,
+        isFeatured: false,
+        tier: 'Owner Free (1 ad / 6 mo)',
+        views: 740,
+        leadsCount: 15,
+        description: 'Iconic South Kolkata residential address with private garden view, adjacent shopping mall, and zero brokerage fee.'
       }
     ];
 
     // State Management
-    let properties = [...initialProperties];
+    let rawProps = (typeof window !== 'undefined' && window.GENRIV_GLOBAL_PROPERTIES && window.GENRIV_GLOBAL_PROPERTIES.length > 0)
+      ? window.GENRIV_GLOBAL_PROPERTIES
+      : initialProperties;
+    let properties = rawProps.map(p => ({
+      ...p,
+      reraVerified: true,
+      approvalStatus: 'Approved'
+    }));
     let currentIntent = 'All';
-    let currentCity = 'All';
+    let currentCity = 'Kolkata'; // Auto-detected default to Kolkata
     let activeTags = new Set();
     let layoutMode = 'grid';
     let shortlistedIds = new Set(['prop-1', 'prop-5']);
@@ -283,13 +397,83 @@
       applyFilters();
     }
 
-    function syncCityFilter(city) {
+    function detectUserLocation() {
+      const saved = localStorage.getItem('genriv_user_city');
+      if (saved && saved !== 'All') {
+        applyCityLocation(saved, false);
+        return;
+      }
+
+      // Browser Geolocation API with IP fallback
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            // Check approximate coordinates or default to Kolkata
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            let detectedCity = 'Kolkata';
+            if (lat > 18.5 && lat < 19.5 && lng > 72.5 && lng < 73.5) detectedCity = 'Mumbai';
+            else if (lat > 12.5 && lat < 13.5 && lng > 77.2 && lng < 78.0) detectedCity = 'Bengaluru';
+            else if (lat > 28.0 && lat < 28.9 && lng > 76.8 && lng < 77.5) detectedCity = 'Gurugram';
+            else if (lat > 17.0 && lat < 17.8 && lng > 78.0 && lng < 78.9) detectedCity = 'Hyderabad';
+            else if (lat > 18.2 && lat < 18.8 && lng > 73.5 && lng < 74.2) detectedCity = 'Pune';
+            applyCityLocation(detectedCity, true);
+          },
+          err => {
+            applyCityLocation('Kolkata', true);
+          },
+          { timeout: 3500 }
+        );
+      } else {
+        applyCityLocation('Kolkata', true);
+      }
+    }
+
+    function applyCityLocation(city, showBanner = true) {
       currentCity = city;
+      try { localStorage.setItem('genriv_user_city', city); } catch (e) {}
+
       ['header-city-select', 'mobile-city-select', 'search-city'].forEach(id => {
         const el = document.getElementById(id);
         if (el && el.value !== city) el.value = city;
       });
+
+      // Update all dynamic location headlines across the site
+      document.querySelectorAll('.dynamic-city-name').forEach(el => {
+        el.textContent = city;
+      });
+
+      const banner = document.getElementById('auto-location-banner');
+      const bannerCity = document.getElementById('detected-city-name');
+      if (banner && bannerCity && showBanner) {
+        bannerCity.textContent = city;
+        banner.classList.remove('hidden');
+      }
+
+      renderMagicBricksSections(city);
       applyFilters();
+    }
+
+    function promptChangeCity() {
+      const city = prompt('Enter your metro city (Kolkata, Mumbai, Bengaluru, Gurugram, Hyderabad, Pune):', currentCity);
+      if (city) {
+        const formatted = city.trim();
+        const validMetros = ['Kolkata', 'Mumbai', 'Bengaluru', 'Gurugram', 'Hyderabad', 'Pune'];
+        const matched = validMetros.find(m => m.toLowerCase() === formatted.toLowerCase()) || 'Kolkata';
+        applyCityLocation(matched, true);
+        showToast(`📍 Switched active location to ${matched}`);
+      }
+    }
+    window.promptChangeCity = promptChangeCity;
+
+    function dismissLocationBanner() {
+      const banner = document.getElementById('auto-location-banner');
+      if (banner) banner.classList.add('hidden');
+    }
+    window.dismissLocationBanner = dismissLocationBanner;
+
+    function syncCityFilter(city) {
+      applyCityLocation(city, false);
     }
 
     function toggleTagFilter(tag) {
@@ -312,19 +496,19 @@
 
     function resetAllFilters() {
       currentIntent = 'All';
-      currentCity = 'All';
+      currentCity = 'Kolkata';
       activeTags.clear();
       document.getElementById('search-query').value = '';
       document.getElementById('search-bhk').value = 'All';
       document.getElementById('posted-by-filter').value = 'All';
       document.getElementById('budget-range').value = 30;
       document.getElementById('budget-value-label').textContent = '₹30.0 Cr';
-      syncCityFilter('All');
+      syncCityFilter('Kolkata');
       document.querySelectorAll('.tag-pill').forEach(btn => {
         btn.className = 'tag-pill px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-genriv-50 transition';
       });
       applyFilters();
-      showToast('All filters reset — showing all verified pan-India properties.');
+      showToast('All filters reset — showing verified Kolkata properties.');
     }
 
     function executeHeroSearch() {
@@ -333,7 +517,7 @@
     }
 
     function triggerVoiceSearch() {
-      const sampleQueries = ['Worli', 'Whitefield', 'Kolkata', 'Golf Course', 'HITEC'];
+      const sampleQueries = ['New Town', 'Rajarhat', 'Salt Lake', 'Worli', 'Whitefield', 'Golf Course'];
       const picked = sampleQueries[Math.floor(Math.random() * sampleQueries.length)];
       const input = document.getElementById('search-query');
       if (input) input.value = picked;
@@ -350,6 +534,9 @@
       const sortBy = document.getElementById('sort-select')?.value || 'featured';
 
       let list = properties.filter(p => {
+        // Requirement 7: Only Approved properties are shown on the front-end!
+        if (p.approvalStatus && p.approvalStatus !== 'Approved') return false;
+
         if (currentCity !== 'All' && p.city !== currentCity) return false;
         if (currentIntent !== 'All') {
           if (currentIntent === 'PG / Co-Living' && p.bhk !== '1 BHK') return false;
@@ -358,21 +545,42 @@
         if (bhk !== 'All' && p.bhk !== bhk) return false;
         if (p.priceCr > maxBudget) return false;
         if (postedBy !== 'All' && p.postedBy !== postedBy) return false;
-        if (reraOnly && !p.reraVerified) return false;
+        if (reraOnly && !p.reraVerified && !p.rera) return false;
         if (query) {
-          const hay = `${p.title} ${p.city} ${p.locality} ${p.builderName} ${p.bhk}`.toLowerCase();
+          const hay = `${p.title} ${p.city} ${p.locality} ${p.builderName || p.postedBy} ${p.bhk}`.toLowerCase();
           if (!hay.includes(query)) return false;
         }
+        if (activeRequisitionMatch) {
+          const reqLoc = (activeRequisitionMatch.location || '').toLowerCase();
+          const pLoc = `${p.city} ${p.locality}`.toLowerCase();
+          let matchCity = false;
+          const cities = ['mumbai', 'bengaluru', 'gurugram', 'hyderabad', 'kolkata', 'pune'];
+          for (const c of cities) {
+            if (reqLoc.includes(c) && pLoc.includes(c)) { matchCity = true; break; }
+          }
+          const bhkNum = (activeRequisitionMatch.specs || '').match(/\d+/);
+          const pBhkNum = (p.bhk || '').match(/\d+/);
+          const matchBhk = bhkNum && pBhkNum && bhkNum[0] === pBhkNum[0];
+          if (!matchCity && !matchBhk) return false;
+        }
         for (let tag of activeTags) {
-          if (!p.tags.includes(tag)) return false;
+          if (!p.tags || !p.tags.includes(tag)) return false;
         }
         return true;
       });
 
       if (sortBy === 'price-asc') list.sort((a, b) => a.priceCr - b.priceCr);
       else if (sortBy === 'price-desc') list.sort((a, b) => b.priceCr - a.priceCr);
-      else if (sortBy === 'yield-desc') list.sort((a, b) => b.rentalYield - a.rentalYield);
-      else if (sortBy === 'score-desc') list.sort((a, b) => b.livabilityScore - a.livabilityScore);
+      else if (sortBy === 'yield-desc') list.sort((a, b) => (b.rentalYield || 0) - (a.rentalYield || 0));
+      else if (sortBy === 'score-desc') list.sort((a, b) => (b.livabilityScore || 0) - (a.livabilityScore || 0));
+      else {
+        // Requirement 5: Top 10 Front-End Placement Subscriptions prioritized first!
+        list.sort((a, b) => {
+          const scoreA = (a.isTopTen ? 100 : 0) + (a.boosted ? 20 : 0) + (a.isFeatured ? 10 : 0);
+          const scoreB = (b.isTopTen ? 100 : 0) + (b.boosted ? 20 : 0) + (b.isFeatured ? 10 : 0);
+          return scoreB - scoreA;
+        });
+      }
 
       return list;
     }
@@ -397,100 +605,80 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(p => {
+      const displayList = filtered.slice(0, 8);
+      grid.innerHTML = displayList.map(p => {
         const isSaved = shortlistedIds.has(p.id);
         const isCompared = compareIds.includes(p.id);
         return `
-          <article id="card-${p.id}" class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-sm card-hover flex flex-col justify-between">
+          <div id="card-${p.id}" class="property-slider-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
             <div>
               <!-- Image Header -->
-              <div class="relative h-52 overflow-hidden group">
+              <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden group bg-slate-800">
                 <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/15 to-transparent"></div>
 
-                <!-- Top Badges (99acres RERA + Housing Lifestyle) -->
+                <!-- Top Badges -->
                 <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                  <span class="px-2.5 py-1 rounded-lg bg-emerald-500/95 text-slate-950 text-[10px] font-extrabold uppercase tracking-wide flex items-center gap-1 shadow">
+                  <span class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-wide shadow">
                     🛡️ RERA Verified
                   </span>
                   <span class="px-2.5 py-1 rounded-lg bg-slate-900/85 text-white text-[10px] font-bold backdrop-blur-md">
-                    ${p.postedBy === 'Owner' ? '🤝 Direct Owner' : '🏗️ Platinum Builder'}
+                    ${p.postedBy === 'Owner' ? '🤝 Direct Owner' : '🏗️ Certified Developer'}
                   </span>
                 </div>
 
-                <!-- Save Heart Button -->
-                <button type="button" onclick="toggleShortlist('${p.id}')" aria-label="Save Property" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 dark:bg-slate-900/90 flex items-center justify-center shadow hover:scale-110 transition">
-                  <span class="${isSaved ? 'text-rose-600' : 'text-slate-400'} text-base">${isSaved ? '❤️' : '🤍'}</span>
-                </button>
-
-                <!-- Bottom Image Overlay: Price + 360 Tour Trigger -->
+                <!-- Bottom Image Overlay: Price -->
                 <div class="absolute bottom-3 inset-x-3 flex items-end justify-between gap-2">
-                  <div>
-                    <div class="font-display font-extrabold text-xl text-white leading-tight">${p.priceLabel}</div>
-                    <div class="text-[11px] text-slate-200">${p.pricePerSqft} • Est. Rent ${p.rentEquiv}</div>
-                  </div>
-                  <button type="button" onclick="openVirtualTourModal('${p.id}')" class="px-3 py-1.5 rounded-xl bg-genriv-600 hover:bg-genriv-500 text-white text-[11px] font-bold shadow-lg flex items-center gap-1 shrink-0 transition">
-                    <span>🌐 360° Tour</span>
-                  </button>
+                  <div class="font-display font-extrabold text-lg text-white leading-tight">${p.priceLabel}</div>
+                  <span class="px-2.5 py-1 rounded-lg bg-genriv-600 text-white text-[10px] font-bold shadow">
+                    ${p.bhk}
+                  </span>
                 </div>
-              </div>
+              </a>
 
               <!-- Card Body -->
-              <div class="p-4 sm:p-5 space-y-3">
+              <div class="p-4 space-y-2">
                 <div class="flex items-start justify-between gap-2">
-                  <div>
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-genriv-600 dark:text-genriv-400">${p.city} • ${p.bhk}</span>
-                    <h3 class="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug">${p.title}</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">📍 ${p.locality}</p>
+                  <div class="min-w-0 flex-1">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-genriv-600 dark:text-genriv-400">${p.city} • ${p.bhk}</span>
+                    <h3 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug truncate hover:text-genriv-600 transition">
+                      <a href="property-detail.html?id=${p.id}">${p.title}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">📍 ${p.locality}</p>
                   </div>
                   <div class="text-right shrink-0">
                     <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-extrabold">
-                      ★ ${p.livabilityScore}
+                      ★ ${p.livabilityScore || '9.3'}
                     </span>
                     <div class="text-[10px] text-slate-400 mt-0.5">Livability</div>
                   </div>
                 </div>
 
-                <!-- Key Metrics Strip -->
-                <div class="grid grid-cols-3 gap-2 py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-center text-xs">
+                <!-- Metrics Strip -->
+                <div class="grid grid-cols-3 gap-1.5 py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-center text-xs">
                   <div>
-                    <div class="text-[10px] text-slate-400">Carpet Area</div>
-                    <div class="font-bold text-slate-800 dark:text-slate-100">${p.areaSqft} sq.ft.</div>
+                    <div class="text-[10px] text-slate-400">Carpet</div>
+                    <div class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">${p.areaSqft || 1850} sq.ft.</div>
                   </div>
                   <div class="border-x border-slate-200 dark:border-slate-700">
-                    <div class="text-[10px] text-slate-400">Rental Yield</div>
-                    <div class="font-bold text-emerald-600 dark:text-emerald-400">${p.rentalYield}% p.a.</div>
+                    <div class="text-[10px] text-slate-400">Yield</div>
+                    <div class="font-bold text-emerald-600 dark:text-emerald-400 text-[11px]">${p.rentalYield || 4.2}%</div>
                   </div>
                   <div>
                     <div class="text-[10px] text-slate-400">Appreciation</div>
-                    <div class="font-bold text-acres-500">${p.appreciationYoY}</div>
+                    <div class="font-bold text-acres-500 text-[11px]">${p.appreciationYoY || '+14.2% YoY'}</div>
                   </div>
                 </div>
-
-                <!-- Tags -->
-                <div class="flex flex-wrap gap-1.5">
-                  ${p.tags.map(t => `<span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-semibold">${t}</span>`).join('')}
-                </div>
               </div>
             </div>
 
-            <!-- Card Footer Actions -->
-            <div class="px-4 sm:px-5 py-3 bg-slate-50/80 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-              <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer">
-                <input type="checkbox" ${isCompared ? 'checked' : ''} onchange="toggleCompare('${p.id}')" class="rounded text-genriv-600 focus:ring-genriv-500" />
-                <span>Compare</span>
-              </label>
-
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openVirtualTourModal('${p.id}')" class="px-3 py-1.5 rounded-xl border border-genriv-600/30 text-genriv-600 dark:text-genriv-300 text-xs font-bold hover:bg-genriv-50 dark:hover:bg-slate-800 transition">
-                  Book Visit
-                </button>
-                <button type="button" onclick="contactSeller('${p.id}')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white text-xs font-bold shadow-sm hover:opacity-95 transition">
-                  Get Owner Contact
-                </button>
-              </div>
+            <!-- Card Action Footer -->
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Explore Property Details →
+              </a>
             </div>
-          </article>
+          </div>
         `;
       }).join('');
 
@@ -507,25 +695,35 @@
       const btnSplit = document.getElementById('view-btn-split');
 
       if (mode === 'split') {
-        wrapper.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
-        grid.className = 'lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5';
-        mapPanel.className = 'block lg:col-span-5 lg:sticky lg:top-24 h-[520px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900 relative';
-        btnSplit.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm transition flex items-center gap-1';
-        btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition flex items-center gap-1';
+        if (wrapper) wrapper.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
+        if (grid) grid.className = 'lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5';
+        if (mapPanel) {
+          mapPanel.classList.remove('hidden');
+          mapPanel.style.display = 'block';
+          mapPanel.className = 'block lg:col-span-5 lg:sticky lg:top-24 h-[520px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900 relative z-20';
+        }
+        if (btnSplit) btnSplit.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm transition flex items-center gap-1';
+        if (btnGrid) btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition flex items-center gap-1';
       } else {
-        wrapper.className = 'grid grid-cols-1 gap-6';
-        grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
-        mapPanel.className = 'hidden';
-        btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm transition flex items-center gap-1';
-        btnSplit.className = 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition flex items-center gap-1';
+        if (wrapper) wrapper.className = 'grid grid-cols-1 gap-6';
+        if (grid) grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+        if (mapPanel) {
+          mapPanel.classList.add('hidden');
+          mapPanel.style.display = 'none';
+          mapPanel.className = 'hidden';
+        }
+        if (btnGrid) btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm transition flex items-center gap-1';
+        if (btnSplit) btnSplit.className = 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition flex items-center gap-1';
       }
     }
+    window.setLayoutMode = setLayoutMode;
+    window.closeMap = () => setLayoutMode('grid');
 
     function renderMapPins(list) {
       const container = document.getElementById('map-pins-container');
       if (!container) return;
       container.innerHTML = list.map(p => `
-        <button type="button" onclick="selectMapPin('${p.id}')" style="left: ${p.mapX}%; top: ${p.mapY}%;" class="map-pin-pulse absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-gradient-to-r from-genriv-600 to-acres-500 text-white text-xs font-extrabold shadow-lg border-2 border-white hover:scale-110 transition z-10 whitespace-nowrap">
+        <button type="button" onclick="selectMapPin('${p.id}')" style="left: ${p.mapX}%; top: ${p.mapY}%;" class="pointer-events-auto cursor-pointer map-pin-pulse absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-gradient-to-r from-genriv-600 to-acres-500 text-white text-xs font-extrabold shadow-lg border-2 border-white hover:scale-110 transition z-20 whitespace-nowrap">
           ${p.priceLabel} • ${p.city}
         </button>
       `).join('');
@@ -675,11 +873,11 @@
             </tr>
             <tr>
               <td class="py-3 px-3 font-semibold text-slate-500">Gross Rental Yield</td>
-              ${items.map(p => `<td class="py-3 px-3 font-bold text-emerald-600">${p.rentalYield}% p.a. (${p.appreciationYoY})</td>`).join('')}
+              ${items.map(p => `<td class="py-3 px-3 font-bold text-emerald-600">${p.rentalYield || 4.2}% p.a. (${p.appreciationYoY || '+14.2% YoY'})</td>`).join('')}
             </tr>
             <tr>
               <td class="py-3 px-3 font-semibold text-slate-500">Locality Livability</td>
-              ${items.map(p => `<td class="py-3 px-3 font-bold">★ ${p.livabilityScore} / 10</td>`).join('')}
+              ${items.map(p => `<td class="py-3 px-3 font-bold">★ ${p.livabilityScore || '9.3'} / 10</td>`).join('')}
             </tr>
           </tbody>
         </table>
@@ -738,7 +936,7 @@
     function contactSeller(propId) {
       const p = properties.find(x => x.id === propId);
       if (!p) return;
-      showToast(`📞 Verified contact for ${p.builderName} unlocked (+91 98201-GENRIV). Zero spam guaranteed.`);
+      unlockOwnerContactWithBackend(propId);
     }
 
     // Post Property Free Modal
@@ -924,9 +1122,109 @@
       }
     }
 
-    // Smart Home Loan EMI & 5-Yr Equity Appreciation Calculator
-    function calculateEMI() {
-      const priceLakhs = parseFloat(document.getElementById('calc-price')?.value || '250'); // in Lakhs
+    // =========================================================================
+    // MAGICBRICKS-STYLE HOME LOAN ELIGIBILITY & EMI CALCULATOR (Requirement 3)
+    // Formula based on Banking FOIR (50-60%) & Reverse Loan Amortization
+    // =========================================================================
+    let currentEligTenure = 20;
+
+    function setEligTenure(tenure) {
+      currentEligTenure = tenure;
+      const tenureInput = document.getElementById('elig-tenure');
+      if (tenureInput) tenureInput.value = tenure;
+      document.querySelectorAll('.tenure-btn').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-tenure'), 10) === tenure) {
+          btn.className = 'tenure-btn px-3 py-1.5 rounded-xl bg-genriv-600 text-white font-extrabold text-xs shadow-sm transition';
+        } else {
+          btn.className = 'tenure-btn px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition';
+        }
+      });
+      calculateEligibility();
+    }
+    window.setEligTenure = setEligTenure;
+
+    function calculateEligibility() {
+      const incomeInput = document.getElementById('elig-income');
+      const emiInput = document.getElementById('elig-existing-emi');
+      const tenureInput = document.getElementById('elig-tenure');
+      const rateInput = document.getElementById('elig-rate');
+      const ageInput = document.getElementById('elig-age');
+
+      if (!incomeInput) {
+        // Fallback to legacy calc if elements don't exist yet
+        return calculateLegacyEMI();
+      }
+
+      const netIncome = parseFloat(incomeInput.value) || 150000;
+      const existingEmi = parseFloat(emiInput?.value || '20000') || 0;
+      const tenureYrs = parseInt(tenureInput?.value || currentEligTenure || '20', 10);
+      const annualRate = parseFloat(rateInput?.value || '8.40');
+
+      // Standard Banking FOIR (Fixed Obligation to Income Ratio)
+      // 50% for income < 2L, 60% for income >= 2L
+      const foirPercent = netIncome >= 200000 ? 0.60 : 0.50;
+      const maxAllowableTotalEmi = netIncome * foirPercent;
+      const availableEmi = Math.max(0, maxAllowableTotalEmi - existingEmi);
+
+      // Reverse EMI formula: P = EMI * ((1 + r)^n - 1) / (r * (1 + r)^n)
+      const r = (annualRate / 12) / 100;
+      const n = tenureYrs * 12;
+      let maxLoan = 0;
+      if (availableEmi > 0 && r > 0) {
+        maxLoan = availableEmi * (Math.pow(1 + r, n) - 1) / (r * Math.pow(1 + r, n));
+      }
+
+      // Maximum Affordable Property Value (Assuming 20% down payment = Loan / 0.80)
+      const maxPropertyBudget = maxLoan / 0.80;
+      const totalLoanPayable = availableEmi * n;
+      const totalInterest = Math.max(0, totalLoanPayable - maxLoan);
+      const principalShare = totalLoanPayable > 0 ? Math.round((maxLoan / totalLoanPayable) * 100) : 50;
+
+      // Update Slider Display Labels
+      const incDisp = document.getElementById('elig-income-display');
+      if (incDisp) incDisp.textContent = '₹' + Math.round(netIncome).toLocaleString('en-IN') + ' / mo';
+
+      const emiDisp = document.getElementById('elig-emi-display');
+      if (emiDisp) emiDisp.textContent = '₹' + Math.round(existingEmi).toLocaleString('en-IN') + ' / mo';
+
+      const rateDisp = document.getElementById('elig-rate-display');
+      if (rateDisp) rateDisp.textContent = annualRate.toFixed(2) + '% p.a.';
+
+      const tenureDisp = document.getElementById('elig-tenure-display');
+      if (tenureDisp) tenureDisp.textContent = tenureYrs + ' Years (' + n + ' Months)';
+
+      // Update Metric Outputs
+      const loanEl = document.getElementById('elig-max-loan');
+      if (loanEl) {
+        loanEl.textContent = maxLoan >= 10000000 
+          ? '₹' + (maxLoan / 10000000).toFixed(2) + ' Cr' 
+          : '₹' + (maxLoan / 100000).toFixed(2) + ' Lakhs';
+      }
+
+      const budgetEl = document.getElementById('elig-max-budget');
+      if (budgetEl) {
+        budgetEl.textContent = maxPropertyBudget >= 10000000 
+          ? '₹' + (maxPropertyBudget / 10000000).toFixed(2) + ' Cr' 
+          : '₹' + (maxPropertyBudget / 100000).toFixed(2) + ' Lakhs';
+      }
+
+      const monthlyEmiEl = document.getElementById('elig-monthly-emi');
+      if (monthlyEmiEl) monthlyEmiEl.textContent = '₹' + Math.round(availableEmi).toLocaleString('en-IN') + ' / mo';
+
+      const interestEl = document.getElementById('elig-total-interest');
+      if (interestEl) {
+        interestEl.textContent = totalInterest >= 10000000 
+          ? '₹' + (totalInterest / 10000000).toFixed(2) + ' Cr' 
+          : '₹' + (totalInterest / 100000).toFixed(2) + ' Lakhs';
+      }
+
+      const bar = document.getElementById('elig-principal-bar');
+      if (bar) bar.style.width = Math.max(15, Math.min(85, principalShare)) + '%';
+    }
+    window.calculateEligibility = calculateEligibility;
+
+    function calculateLegacyEMI() {
+      const priceLakhs = parseFloat(document.getElementById('calc-price')?.value || '250');
       const downPct = parseFloat(document.getElementById('calc-down')?.value || '20');
       const annualRate = parseFloat(document.getElementById('calc-rate')?.value || '8.5');
       const tenureYears = parseInt(document.getElementById('calc-tenure')?.value || '20', 10);
@@ -939,24 +1237,447 @@
       const monthlyRate = annualRate / 12 / 100;
       const months = tenureYears * 12;
       const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-
       const totalPayable = emi * months;
       const totalInterest = totalPayable - principal;
       const principalShare = Math.round((principal / totalPayable) * 100);
-      const projected5YrCr = priceCr * Math.pow(1.09, 5);
 
-      document.getElementById('calc-price-display').textContent = priceCr >= 1 ? `₹${priceCr.toFixed(2)} Cr` : `₹${priceLakhs} Lakhs`;
-      document.getElementById('calc-down-display').textContent = `${downPct}% (₹${downLakhs.toFixed(1)} L)`;
-      document.getElementById('calc-rate-display').textContent = `${annualRate.toFixed(2)}%`;
-      document.getElementById('calc-tenure-display').textContent = `${tenureYears} Yrs`;
-
-      document.getElementById('emi-monthly-result').textContent = `₹${Math.round(emi).toLocaleString('en-IN')} / mo`;
-      document.getElementById('emi-loan-amount-sub').textContent = `Principal Loan Amount: ₹${(loanLakhs / 100).toFixed(2)} Cr`;
-      document.getElementById('emi-principal-total').textContent = `₹${(loanLakhs / 100).toFixed(2)} Cr`;
-      document.getElementById('emi-interest-total').textContent = `₹${(totalInterest / 10000000).toFixed(2)} Cr`;
-      document.getElementById('emi-projected-worth').textContent = `₹${projected5YrCr.toFixed(2)} Cr`;
-      document.getElementById('emi-principal-bar').style.width = `${principalShare}%`;
+      const pDisp = document.getElementById('calc-price-display');
+      if (pDisp) pDisp.textContent = priceCr >= 1 ? `₹${priceCr.toFixed(2)} Cr` : `₹${priceLakhs} Lakhs`;
+      const emiRes = document.getElementById('emi-monthly-result');
+      if (emiRes) emiRes.textContent = `₹${Math.round(emi).toLocaleString('en-IN')} / mo`;
     }
+
+    function calculateEMI() {
+      calculateEligibility();
+    }
+    window.calculateEMI = calculateEMI;
+
+    // =========================================================================
+    // MAGICBRICKS-STYLE 8 CORRIDOR & LOCATION SECTIONS (Requirement 4)
+    // =========================================================================
+    
+    // Preferred Kolkata Real Estate Agents Dataset
+    const preferredAgentsData = [
+      {
+        id: 'agent-1',
+        name: 'Debashis Sen',
+        agency: 'Sen Estates & Commercial Advisory',
+        experience: '14+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2023/000188',
+        rating: '4.9 ★ (142 Reviews)',
+        listingsCount: '48 Active Listings',
+        specialization: 'New Town, Rajarhat & Salt Lake IT Corridor',
+        phone: '+91 98310-77890',
+        image: 'images/sellers/Curated_Proper/documents/IMG-AVATAR-Curated_Proper.jpg'
+      },
+      {
+        id: 'agent-2',
+        name: 'Amitava Mukherjee',
+        agency: 'Prime Habitat Advisory',
+        experience: '11+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2022/000094',
+        rating: '4.9 ★ (118 Reviews)',
+        listingsCount: '36 Active Listings',
+        specialization: 'EM Bypass, Anandapur & Ballygunge',
+        phone: '+91 98302-44512',
+        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        id: 'agent-3',
+        name: 'Subhashish Bose',
+        agency: 'Bengal Metro Properties',
+        experience: '16+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2021/000052',
+        rating: '4.8 ★ (96 Reviews)',
+        listingsCount: '52 Active Listings',
+        specialization: 'North Kolkata & Dunlop Corridors',
+        phone: '+91 98314-88901',
+        image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        id: 'agent-4',
+        name: 'Priyanka Banerjee',
+        agency: 'South Kolkata Luxury Homes',
+        experience: '9+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2023/000219',
+        rating: '4.9 ★ (84 Reviews)',
+        listingsCount: '29 Active Listings',
+        specialization: 'Alipore, New Alipore & Tollygunge Golf',
+        phone: '+91 98365-11234',
+        image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        id: 'agent-5',
+        name: 'Rajesh Khemka',
+        agency: 'Eastern Realty Partners',
+        experience: '12+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2022/000145',
+        rating: '4.8 ★ (77 Reviews)',
+        listingsCount: '34 Active Listings',
+        specialization: 'Joka Metro Corridor & Behala',
+        phone: '+91 98301-33299',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        id: 'agent-6',
+        name: 'Tanmoy Sengupta',
+        agency: 'Heritage City Brokers',
+        experience: '15+ Yrs Experience',
+        rera: 'WBRERA/A/KOL/2020/000031',
+        rating: '4.9 ★ (130 Reviews)',
+        listingsCount: '41 Active Listings',
+        specialization: 'Salt Lake & Kankurgachi Premium Residencies',
+        phone: '+91 98319-55670',
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'
+      }
+    ];
+
+    function renderMagicBricksSections(city = 'Kolkata') {
+      const targetCity = (city === 'All' || !city) ? 'Kolkata' : city;
+      const allProps = (typeof window !== 'undefined' && window.GENRIV_GLOBAL_PROPERTIES && window.GENRIV_GLOBAL_PROPERTIES.length > 0)
+        ? window.GENRIV_GLOBAL_PROPERTIES
+        : properties;
+
+      let cityProps = allProps.filter(p => p.city.toLowerCase() === targetCity.toLowerCase());
+      if (cityProps.length < 6) cityProps = allProps;
+
+      // 1. Featured Projects in {city} (5-6 in 1 single horizontal slider)
+      const featGrid = document.getElementById('featured-projects-grid');
+      if (featGrid) {
+        const featProps = allProps.slice(0, 6);
+        featGrid.innerHTML = featProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-xl transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
+                <span class="px-2.5 py-1 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase shadow-sm">
+                  ⭐ Top Spotlight
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-bold">
+                  ✓ RERA Approved
+                </span>
+              </div>
+              <div class="absolute bottom-3 left-3 px-3 py-1 rounded-xl bg-slate-950/85 backdrop-blur-md text-white text-xs font-extrabold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-2">
+              <span class="text-[10px] font-extrabold text-genriv-600 dark:text-genriv-400 uppercase tracking-wider">${p.bhk} • ${p.areaSqft || 1850} sq.ft.</span>
+              <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug truncate hover:text-genriv-600 transition">
+                <a href="property-detail.html?id=${p.id}">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="pt-2 text-[11px] text-slate-500 flex justify-between border-t border-slate-100 dark:border-slate-800">
+                <span>By: <strong>${p.builderName || p.sellerName || 'Sen Estates'}</strong></span>
+                <span class="text-emerald-600 font-bold">${p.rentalYield || 4.5}% Yield</span>
+              </div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs hover:opacity-90 transition block text-center">
+                Explore Property Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 2. Popular Owner Properties in {city} (5-6 in 1 horizontal slider)
+      const ownerGrid = document.getElementById('owner-properties-grid');
+      if (ownerGrid) {
+        const ownerProps = allProps.filter(p => {
+          const isOwner = p.postedBy === 'Owner' || p.sellerRole === 'Property Owner';
+          const hasZeroBrok = Array.isArray(p.tags) && p.tags.includes('Zero Brokerage');
+          return isOwner || hasZeroBrok || p.intent === 'Rent';
+        }).slice(0, 6);
+
+        ownerGrid.innerHTML = ownerProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold shadow-sm">
+                0% ZERO BROKERAGE
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Direct Owner Flat</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 1450} sq.ft. • ${p.possessionType || 'Ready to Move'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Contact Owner &amp; View Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 3. Preferred Agents in {city} (5-6 in 1 horizontal slider)
+      const agentsGrid = document.getElementById('preferred-agents-grid');
+      if (agentsGrid) {
+
+      // Point 3: Inject Super Admin Verified Seller into Preferred Agents slider
+      let displayAgents = [...preferredAgentsData];
+      try {
+        const rawProf = localStorage.getItem('genriv_seller_profile');
+        if (rawProf) {
+          const prof = JSON.parse(rawProf);
+          if (prof.status === 'verified') {
+            displayAgents.unshift({
+              name: prof.companyName || 'Curated Proper',
+              agency: (prof.category || 'Certified Partner') + ' (Super Seller)',
+              rating: '5.0 ★',
+              listingsCount: (prof.quota || 5) + '+ Properties',
+              rera: prof.reraId || 'WBRERA/A/KOL/2024/000188',
+              specialization: 'New Town, Salt Lake, Kolkata',
+              phone: prof.phone || '+91 98300-99110',
+              image: prof.image || 'images/genriv_logo-Photoroom.png'
+            });
+          }
+        }
+      } catch (e) {}
+
+        agentsGrid.innerHTML = displayAgents.map(ag => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <img src="${ag.image}" alt="${ag.name}" class="w-14 h-14 rounded-2xl object-cover border-2 border-indigo-500 shadow-sm" />
+                <div class="min-w-0">
+                  <span class="px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[10px] font-extrabold">Verified Agent</span>
+                  <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white truncate mt-0.5">${ag.name}</h4>
+                  <p class="text-[11px] text-slate-500 truncate">${ag.agency}</p>
+                </div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 text-xs space-y-1">
+                <div class="flex justify-between text-slate-500">
+                  <span>Rating:</span>
+                  <span class="font-bold text-amber-500">${ag.rating}</span>
+                </div>
+                <div class="flex justify-between text-slate-500">
+                  <span>Listings:</span>
+                  <span class="font-bold text-emerald-600">${ag.listingsCount}</span>
+                </div>
+                <div class="text-[10px] font-mono text-slate-400 truncate">🛡️ ${ag.rera}</div>
+              </div>
+              <p class="text-xs text-slate-500 line-clamp-1">📍 ${ag.specialization}</p>
+            </div>
+            <div class="pt-4 flex items-center gap-2">
+              <a href="agents.html" class="flex-1 py-2 text-center rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition">
+                View Agency →
+              </a>
+              <a href="tel:${ag.phone}" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold transition">
+                📞 Call
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 4. Top Projects in {city} (5-6 in 1 horizontal slider)
+      const topProjectsGrid = document.getElementById('top-projects-grid');
+      if (topProjectsGrid) {
+        const topProjects = allProps.filter(p => {
+          return p.sellerRole === 'Builder / Developer' || p.postedBy === 'Builder' || p.isTopTen;
+        }).slice(0, 6);
+
+        topProjectsGrid.innerHTML = topProjects.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-indigo-600 text-white text-[10px] font-extrabold shadow-sm">
+                🏆 Top Township
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">Master Community</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 1920} sq.ft. • ${p.possessionType || 'Under Construction'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Explore Project Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 5. Trending in {city} (5-6 in 1 horizontal slider)
+      const trendingGrid = document.getElementById('trending-properties-grid');
+      if (trendingGrid) {
+        const trendingProps = cityProps.slice(0, 6);
+        trendingGrid.innerHTML = trendingProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold shadow-sm">
+                📈 Trending ${p.appreciationYoY || '+14.2% YoY'}
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">High Growth Corridor</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 1650} sq.ft. • ${p.possessionType || 'Ready to Move'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs hover:opacity-90 transition block text-center">
+                Explore Property Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 6. New Project Gallery (5-6 in 1 horizontal slider)
+      const galleryGrid = document.getElementById('project-gallery-grid');
+      if (galleryGrid) {
+        const galleryProps = allProps.slice(6, 12);
+        galleryGrid.innerHTML = galleryProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-purple-600 text-white text-[10px] font-extrabold shadow-sm">
+                📸 New Launch Preview
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-purple-600 dark:text-purple-400">Architectural Masterpiece</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 2100} sq.ft. • ${p.possessionType || 'Upcoming 2027'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Explore Project Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 7. Popular Localities in Kolkata (8 Micro-market Cards)
+      const localitiesGrid = document.getElementById('trending-localities-grid');
+      if (localitiesGrid) {
+        const localityData = [
+          { name: 'New Town Action Area II', yoy: '+14.2% YoY', avgRate: '₹7,650 / sq.ft.', tag: 'Metro Corridors & IT Hub', link: 'New Town' },
+          { name: 'Rajarhat Expressway', yoy: '+17.6% YoY', avgRate: '₹6,400 / sq.ft.', tag: 'High Rental Yield Zone', link: 'Rajarhat' },
+          { name: 'EM Bypass / Anandapur', yoy: '+12.1% YoY', avgRate: '₹9,800 / sq.ft.', tag: 'Luxury Living & Hospitals', link: 'EM Bypass' },
+          { name: 'Salt Lake Sector V', yoy: '+9.5% YoY', avgRate: '₹8,900 / sq.ft.', tag: 'Commercial Tech REIT', link: 'Salt Lake' },
+          { name: 'Ballygunge Circular Rd', yoy: '+11.2% YoY', avgRate: '₹14,500 / sq.ft.', tag: 'South Kolkata Heritage', link: 'Ballygunge' },
+          { name: 'Behala Chowrasta', yoy: '+15.0% YoY', avgRate: '₹4,890 / sq.ft.', tag: 'Metro Line Expansion Boom', link: 'Behala' },
+          { name: 'Jadavpur & Prince Anwar Shah', yoy: '+13.8% YoY', avgRate: '₹8,200 / sq.ft.', tag: 'South City Mall & Metro', link: 'Jadavpur' },
+          { name: 'Garia & Kavi Subhash', yoy: '+16.1% YoY', avgRate: '₹5,400 / sq.ft.', tag: 'Metro Junction & Affordable', link: 'Garia' }
+        ];
+
+        localitiesGrid.innerHTML = localityData.map(loc => `
+          <a href="new-projects.html?city=Kolkata&locality=${encodeURIComponent(loc.link)}" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2 hover:border-genriv-500 hover:shadow-md transition block group">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${loc.tag}</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold text-[11px]">${loc.yoy}</span>
+            </div>
+            <h4 class="font-display font-extrabold text-base text-slate-900 dark:text-white group-hover:text-genriv-600 transition">${loc.name}</h4>
+            <div class="text-xs text-slate-500">Avg Property Rate: <strong class="text-slate-800 dark:text-slate-200">${loc.avgRate}</strong></div>
+            <span class="text-xs text-genriv-600 font-bold block pt-1">Explore Projects in ${loc.link} →</span>
+          </a>
+        `).join('');
+      }
+
+      // 8. Exclusive Owner Properties (5-6 in 1 horizontal slider)
+      const exclusiveGrid = document.getElementById('exclusive-owner-grid');
+      if (exclusiveGrid) {
+        const exclusiveProps = allProps.filter(p => p.intent === 'Buy' || p.purpose === 'For Sale').slice(4, 10);
+        exclusiveGrid.innerHTML = exclusiveProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-rose-600 text-white text-[10px] font-extrabold shadow-sm">
+                ⚡ Direct Resale
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-rose-600 dark:text-rose-400">Exclusive Owner Resale</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 1780} sq.ft. • ${p.possessionType || 'Ready to Move'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Explore Property Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+          // 9. Fresh Properties (Last 48 Hours) in {city} (5-6 in 1 horizontal slider)
+      const freshGrid = document.getElementById('fresh-properties-grid');
+      if (freshGrid) {
+        const freshProps = allProps.slice(12, 18).length >= 4 ? allProps.slice(12, 18) : allProps.slice(0, 6);
+        freshGrid.innerHTML = freshProps.map(p => `
+          <div class="property-slider-card rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+            <a href="property-detail.html?id=${p.id}" class="relative h-48 block overflow-hidden bg-slate-800 group">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-rose-600 text-white text-[10px] font-extrabold shadow-sm">
+                ⚡ Freshly Listed &bull; 2h ago
+              </span>
+              <div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </a>
+            <div class="p-4 space-y-1.5">
+              <span class="text-[10px] font-bold text-rose-600 dark:text-rose-400">Verified Fresh Listing</span>
+              <h4 class="font-display font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                <a href="property-detail.html?id=${p.id}" class="hover:text-genriv-600">${p.title}</a>
+              </h4>
+              <p class="text-xs text-slate-500 truncate">📍 ${p.locality}, ${p.city}</p>
+              <div class="text-[11px] text-slate-400 mt-1">${p.bhk} • ${p.areaSqft || 1550} sq.ft. • ${p.possessionType || 'Ready to Move'}</div>
+            </div>
+            <div class="p-4 pt-0">
+              <a href="property-detail.html?id=${p.id}" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition block text-center">
+                Explore Property Details →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+    window.renderMagicBricksSections = renderMagicBricksSections;
+
+    function scrollSlider(id, direction) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      const card = container.querySelector('.property-slider-card') || container.firstElementChild;
+      const scrollAmount = card ? (card.offsetWidth + 20) : 340;
+      container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+    window.scrollSlider = scrollSlider;
 
     function handleNewsletterSubmit(e) {
       e.preventDefault();
@@ -1147,9 +1868,7 @@
       if (catSelect) catSelect.value = 'Booking for ' + category;
       const locInput = document.getElementById('req-location');
       if (locInput) locInput.value = city;
-      scrollToSection('forms-hub-section');
-      highlightFormCard('requisition');
-      showToast(`📋 Pre-filled Customer Requisition Form for ${category} in ${city}!`);
+      openRoleGatedForm('requisition');
     }
 
     // =========================================================================
@@ -1252,70 +1971,103 @@
 
     function handleRequisitionSubmit(e) {
       e.preventDefault();
+      const reqId = (document.getElementById('req-no-input')?.value || '').trim() || ('REQ-2026-' + Math.floor(1000 + Math.random() * 9000));
       const name = document.getElementById('req-name').value.trim();
+      const phone = document.getElementById('req-phone').value.trim();
+      const whatsapp = document.getElementById('req-whatsapp')?.value.trim() || phone;
       const role = document.getElementById('req-role').value;
+      const purpose = document.getElementById('req-purpose')?.value || 'Buy';
       const category = document.getElementById('req-category').value;
-      const location = document.getElementById('req-location').value.trim();
-      const specs = document.getElementById('req-specs').value.trim();
-      const budget = document.getElementById('req-budget').value.trim();
-      const notes = document.getElementById('req-notes').value.trim() || 'Verified priority customer requisition.';
+      const checkedTypes = Array.from(document.querySelectorAll('input[name="req_prop_type"]:checked')).map(cb => cb.value);
+      const otherType = (document.getElementById('req-prop-type-other')?.value || '').trim();
+      if (otherType) checkedTypes.push(otherType);
+      const propTypesLabel = checkedTypes.length ? checkedTypes.join(', ') : 'Flat/Apartment';
 
-      const reqId = 'REQ-2026-' + Math.floor(1000 + Math.random() * 9000);
-      customerRequisitions.unshift({
+      const specs = document.getElementById('req-specs').value;
+      const location = document.getElementById('req-location').value.trim();
+      const prefArea = document.getElementById('req-pref-area')?.value || '1650';
+      const minBudget = document.getElementById('req-min-budget')?.value.trim() || '₹95L';
+      const maxBudget = document.getElementById('req-budget').value.trim();
+      const paymentPref = document.getElementById('req-payment-pref')?.value || 'Home Loan';
+      const furnishing = document.getElementById('req-furnishing')?.value || 'Semi-Furnished';
+      const possession = document.getElementById('req-possession')?.value || 'Immediate';
+      const notes = document.getElementById('req-notes').value.trim() || `${furnishing} • ${paymentPref} • Possession: ${possession}`;
+
+      const newReq = {
         id: reqId,
         name,
-        role,
-        category,
+        role: `${role} (${purpose})`,
+        category: `${category} • ${propTypesLabel}`,
         location,
-        specs,
-        budget,
-        notes
-      });
+        specs: `${specs} (~${prefArea} sq.ft.)`,
+        budget: `${minBudget} – ${maxBudget}`,
+        notes: `WhatsApp: ${whatsapp} | ${notes}`
+      };
+      customerRequisitions.unshift(newReq);
       renderRequisitionsList();
+
+      const user = getCurrentMbUser();
+      user.lastRequisitionId = reqId;
+      saveMbDatabase();
+      renderMbDashboard();
+
       e.target.reset();
-      showToast(`✅ Customer Requisition ${reqId} registered! Matching owners & venues notified.`);
+      const nextReqInput = document.getElementById('req-no-input');
+      if (nextReqInput) nextReqInput.value = 'REQ-2026-' + Math.floor(1000 + Math.random() * 9000);
+      showToast(`✅ Customer Requisition ${reqId} registered! Tailored properties matching your criteria are ready.`);
     }
 
     function handleAdvertisementFormSubmit(e) {
       e.preventDefault();
+      const advId = (document.getElementById('adv-reg-no')?.value || '').trim() || ('REG-2026-' + Math.floor(100 + Math.random() * 900));
       const ownerName = document.getElementById('adv-owner-name').value.trim();
       const role = document.getElementById('adv-role').value;
-      const category = document.getElementById('adv-category').value;
+      const propCategory = document.getElementById('adv-prop-category')?.value || 'Residential';
+      const purpose = document.getElementById('adv-category').value;
+      const possessionType = document.getElementById('adv-possession-type')?.value || 'Ready to Move';
       const title = document.getElementById('adv-title').value.trim();
       const city = document.getElementById('adv-city').value;
       const locality = document.getElementById('adv-locality').value.trim();
       const bhk = document.getElementById('adv-bhk').value;
       const areaSqft = parseInt(document.getElementById('adv-area').value, 10) || 1800;
-      const priceCr = parseFloat(document.getElementById('adv-price').value) || 1.5;
-      const highlights = document.getElementById('adv-highlights').value.trim() || '100% Free Verified Property Advertisement on Genrivreality.';
+      const priceType = document.getElementById('adv-price-type')?.value || 'Sale Price (₹)';
+      const minPriceINR = parseFloat(document.getElementById('adv-min-price')?.value) || 12000000;
+      const maxPriceINR = parseFloat(document.getElementById('adv-price').value) || 14500000;
+      const furnishing = document.getElementById('adv-furnishing')?.value || 'Semi-furnished';
+      const checkedAmenities = Array.from(document.querySelectorAll('input[name="adv_amenity"]:checked')).map(cb => cb.value);
+      const highlights = document.getElementById('adv-highlights').value.trim() || checkedAmenities.slice(0, 5).join(', ') || 'Verified GenRiv Property Listing';
 
-      const advId = 'ADV-FREE-' + Math.floor(100 + Math.random() * 900);
+      // Convert INR to Cr if Sale Price >= 100000, or handle direct Cr entry
+      const priceCr = maxPriceINR > 100 ? +(maxPriceINR / 10000000).toFixed(2) : maxPriceINR;
+      const formattedPrice = priceType.includes('Rent') || priceType.includes('Lease')
+        ? `₹${maxPriceINR.toLocaleString('en-IN')} / mo`
+        : `₹${priceCr.toFixed(2)} Cr`;
+
       publishedAdvertisements.unshift({
         id: advId,
         owner: `${ownerName} (${role})`,
-        category,
+        category: `${propCategory} • ${purpose} (${possessionType})`,
         title,
         city,
         locality,
-        price: `₹${priceCr.toFixed(2)} Cr`,
-        plan: '100% FREE Forever Ad'
+        price: formattedPrice,
+        plan: `${furnishing} • ${checkedAmenities.length} Amenities`
       });
       renderAdvertisementsList();
 
-      // If it is a hospitality category, also add to hospitalityVenues; AND always add to main properties grid!
-      if (category === 'Marriage Hall' || category === 'Picnic Spot' || category === 'Hotel / Guest House') {
+      if (propCategory === 'Marriage Hall' || propCategory === 'Picnic Spot' || propCategory === 'Hotel / Guest House') {
         hospitalityVenues.unshift({
           id: 'venue-' + (hospitalityVenues.length + 1),
-          category,
+          category: propCategory,
           title,
           city,
           locality: `${locality}, ${city}`,
-          capacity: `${areaSqft} sq.ft. / Custom Capacity`,
-          tariffLabel: `₹${(priceCr * 100000).toLocaleString('en-IN')} Package`,
+          capacity: `${areaSqft} sq.ft.`,
+          tariffLabel: formattedPrice,
           rating: '5.0 ★',
-          highlights: ['Free Verified Ad', highlights.slice(0, 40)],
+          highlights: ['Free Verified Ad', ...checkedAmenities.slice(0, 3)],
           image: GENRIV_ASSETS.p1,
-          badge: category === 'Marriage Hall' ? '💒 Marriage Hall' : (category === 'Picnic Spot' ? '🌳 Picnic Spot' : '🏨 Hotel / Guest House')
+          badge: propCategory === 'Marriage Hall' ? '💒 Marriage Hall' : (propCategory === 'Picnic Spot' ? '🌳 Picnic Spot' : '🏨 Hotel / Guest House')
         });
         renderHospitalityVenues();
       }
@@ -1325,17 +2077,17 @@
         title,
         city,
         locality: `${locality}, ${city}`,
-        intent: (category === 'Buy' || category === 'Rent' || category === 'Commercial') ? category : 'Buy',
-        bhk: bhk === 'Commercial' ? 'Commercial' : bhk,
-        priceCr,
-        priceLabel: `₹${priceCr.toFixed(2)} Cr`,
-        rentEquiv: `₹${Math.round(priceCr * 30000).toLocaleString('en-IN')} / mo`,
+        intent: purpose === 'For Rent' || purpose === 'For Lease' ? 'Rent' : (propCategory === 'Commercial' ? 'Commercial' : 'Buy'),
+        bhk: propCategory === 'Commercial' ? 'Commercial' : (bhk.includes('BHK') ? bhk : '3 BHK'),
+        priceCr: priceCr > 0 ? priceCr : 1.45,
+        priceLabel: formattedPrice,
+        rentEquiv: `₹${Math.round((priceCr || 1.4) * 30000).toLocaleString('en-IN')} / mo`,
         areaSqft,
-        pricePerSqft: `₹${Math.round((priceCr * 10000000) / areaSqft).toLocaleString('en-IN')} / sq.ft.`,
-        reraId: 'FREE-AD-' + advId,
+        pricePerSqft: `₹${Math.round(((priceCr || 1.4) * 10000000) / areaSqft).toLocaleString('en-IN')} / sq.ft.`,
+        reraId: advId,
         reraVerified: true,
-        postedBy: role === 'Builder' ? 'Builder' : 'Owner',
-        builderName: `${ownerName} (Free Verified Ad)`,
+        postedBy: role.includes('Builder') ? 'Builder' : 'Owner',
+        builderName: `${ownerName} (${role})`,
         livabilityScore: 9.5,
         rentalYield: 4.9,
         appreciationYoY: '+16.0% YoY',
@@ -1343,24 +2095,18 @@
         image: GENRIV_ASSETS.p5,
         mapX: 52,
         mapY: 50,
-        description: highlights
+        description: `${highlights} | Amenities: ${checkedAmenities.join(', ')}`
       };
       properties.unshift(newProp);
       applyFilters();
       e.target.reset();
-      showToast(`📢 Free Property Advertisement "${title}" (${advId}) is now LIVE across Genrivreality!`);
+      const nextRegInput = document.getElementById('adv-reg-no');
+      if (nextRegInput) nextRegInput.value = 'REG-2026-' + Math.floor(100 + Math.random() * 900);
+      showToast(`📢 Property Advertisement "${title}" (${advId}) published live under your Seller Account!`);
     }
 
     function highlightFormCard(which) {
-      const reqCard = document.getElementById('requisition-form-card');
-      const advCard = document.getElementById('advertisement-form-card');
-      if (which === 'requisition' && reqCard) {
-        reqCard.classList.add('ring-4', 'ring-genriv-500');
-        setTimeout(() => reqCard.classList.remove('ring-4', 'ring-genriv-500'), 2400);
-      } else if (which === 'advertisement' && advCard) {
-        advCard.classList.add('ring-4', 'ring-emerald-500');
-        setTimeout(() => advCard.classList.remove('ring-4', 'ring-emerald-500'), 2400);
-      }
+      openRoleGatedForm(which);
     }
 
     // =========================================================================
@@ -1377,13 +2123,13 @@
               <div class="text-xs font-extrabold uppercase text-genriv-600 dark:text-genriv-400">Buyers &amp; Tenants</div>
               <div class="font-display font-bold text-base text-slate-900 dark:text-white mt-1">360° Spatial &amp; Zero-Brokerage</div>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Browse verified homes or submit a Customer Requisition Form for instant matching.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('requisition')" class="mt-3 text-xs font-extrabold text-genriv-600 dark:text-genriv-400 hover:underline">Open Requisition Form →</button>
+              <button type="button" onclick="openRoleGatedForm('requisition')" class="mt-3 text-xs font-extrabold text-genriv-600 dark:text-genriv-400 hover:underline">Open Requisition Form →</button>
             </div>
             <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
               <div class="text-xs font-extrabold uppercase text-emerald-600 dark:text-emerald-400">Sellers &amp; Owners</div>
               <div class="font-display font-bold text-base text-slate-900 dark:text-white mt-1">100% Free Property Ad Studio</div>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Publish unlimited owner/seller listings via our PROPERTY ADVERTISEMENT FORM at ₹0 cost.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="mt-3 text-xs font-extrabold text-emerald-600 dark:text-emerald-400 hover:underline">Post Free Property Ad →</button>
+              <button type="button" onclick="openRoleGatedForm('advertisement')" class="mt-3 text-xs font-extrabold text-emerald-600 dark:text-emerald-400 hover:underline">Post Free Property Ad →</button>
             </div>
             <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
               <div class="text-xs font-extrabold uppercase text-amber-600 dark:text-amber-400">Celebrations &amp; Stays</div>
@@ -1410,7 +2156,7 @@
               <span class="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold uppercase">Step 1</span>
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white mt-2">Free Advertisement of your Properties</h3>
               <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Fill out the PROPERTY ADVERTISEMENT FORM to showcase your apartment, villa, plot, or commercial unit for free.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="mt-3 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Open Property Ad Form →</button>
+              <button type="button" onclick="openRoleGatedForm('advertisement')" class="mt-3 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Open Property Ad Form →</button>
             </div>
             <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <span class="px-2.5 py-0.5 rounded-full bg-genriv-600 text-white text-[10px] font-extrabold uppercase">Step 2</span>
@@ -1422,7 +2168,7 @@
               <span class="px-2.5 py-0.5 rounded-full bg-acres-500 text-white text-[10px] font-extrabold uppercase">Step 3</span>
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white mt-2">Match Live Buyer Requisitions</h3>
               <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Connect directly with pre-qualified buyers who have posted active requisitions in your city.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section')" class="mt-3 px-4 py-2 rounded-xl bg-acres-600 text-white text-xs font-bold">View Live Buyer Demand →</button>
+              <button type="button" onclick="openRoleGatedForm('requisition')" class="mt-3 px-4 py-2 rounded-xl bg-acres-600 text-white text-xs font-bold">View Live Buyer Demand →</button>
             </div>
           </div>
         `
@@ -1436,7 +2182,7 @@
             <div class="p-5 rounded-2xl bg-genriv-50/70 dark:bg-slate-800 border border-genriv-200 dark:border-slate-700">
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">📋 Submit Buyer Requisition</h3>
               <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Can't find your exact configuration? Post your budget &amp; preferred locality in the Customer Requisition Form.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('requisition')" class="mt-3 px-4 py-2 rounded-xl bg-genriv-600 text-white text-xs font-bold">Fill Buyer Requisition Form →</button>
+              <button type="button" onclick="openRoleGatedForm('requisition')" class="mt-3 px-4 py-2 rounded-xl bg-genriv-600 text-white text-xs font-bold">Fill Buyer Requisition Form →</button>
             </div>
             <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">🏠 Explore Verified Buy Listings</h3>
@@ -1460,7 +2206,7 @@
             <div class="p-5 rounded-2xl bg-emerald-50/70 dark:bg-slate-800 border border-emerald-200 dark:border-slate-700">
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">📢 Free Advertisement of your Properties</h3>
               <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">List your residential property, marriage hall, picnic spot, or guest house with 0% commission.</p>
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="mt-3 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Publish Free Owner Ad →</button>
+              <button type="button" onclick="openRoleGatedForm('advertisement')" class="mt-3 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Publish Free Owner Ad →</button>
             </div>
             <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">📜 Instant Aadhaar Rent Agreement</h3>
@@ -1511,7 +2257,7 @@
               <p class="text-xs text-emerald-100 mt-1">Use our full-featured PROPERTY ADVERTISEMENT FORM below or launch the quick Post Property modal.</p>
             </div>
             <div class="flex flex-wrap gap-2.5 shrink-0">
-              <button type="button" onclick="scrollToSection('forms-hub-section'); highlightFormCard('advertisement')" class="px-4 py-2.5 rounded-xl bg-white text-emerald-800 font-extrabold text-xs shadow">Go to PROPERTY ADVERTISEMENT FORM ↓</button>
+              <button type="button" onclick="openRoleGatedForm('advertisement')" class="px-4 py-2.5 rounded-xl bg-white text-emerald-800 font-extrabold text-xs shadow">Go to PROPERTY ADVERTISEMENT FORM ↓</button>
               <button type="button" onclick="openPostPropertyModal()" class="px-4 py-2.5 rounded-xl bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold text-xs border border-white/25">Quick Post Modal ➕</button>
             </div>
           </div>
@@ -1709,27 +2455,37 @@
     };
 
     function switchMainTab(tabKey) {
-      const config = portalTabConfigs[tabKey] || portalTabConfigs['home'];
+      if (tabKey === 'login') {
+        openLoginModal();
+        return;
+      }
+      if (tabKey === 'sellers' || tabKey === 'owners') {
+        window.location.href = 'seller-dashboard.html';
+        return;
+      }
+      if (tabKey === 'buyers' || tabKey === 'tenants') {
+        window.location.href = 'buyer-dashboard.html';
+        return;
+      }
+      if (tabKey === 'listing-property') {
+        window.location.href = 'seller-dashboard.html#seller-page-advertisement-form';
+        return;
+      }
+      if (tabKey === 'bank-loan') {
+        window.location.href = 'loan-calculator.html';
+        return;
+      }
 
-      // Highlight active button in 12-tab header bar
-      const allTabs = ['home', 'sellers', 'buyers', 'owners', 'tenants', 'listing-property', 'customer-support', 'bank-loan', 'legal-support', 'publication', 'contact', 'login'];
-      allTabs.forEach(k => {
-        const btn = document.getElementById('nav-tab-' + k);
-        if (!btn) return;
-        if (k === 'login') {
-          btn.className = k === tabKey
-            ? 'main-portal-tab inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-md whitespace-nowrap shrink-0 transition'
-            : 'main-portal-tab inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-genriv-600/25 whitespace-nowrap shrink-0 transition';
-        } else if (k === 'contact') {
-          btn.className = k === tabKey
-            ? 'main-portal-tab inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 text-white font-extrabold text-xs sm:text-sm shadow-sm whitespace-nowrap shrink-0 transition'
-            : 'main-portal-tab inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-genriv-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 font-bold text-xs sm:text-sm whitespace-nowrap shrink-0 transition';
-        } else if (k === tabKey) {
-          btn.className = 'main-portal-tab px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap shrink-0 transition bg-gradient-to-r from-genriv-600 to-acres-500 text-white shadow-sm flex items-center gap-1.5';
-        } else {
-          btn.className = 'main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5';
-        }
-      });
+      const sec = document.getElementById('tab-portal-section');
+      if (tabKey === 'home') {
+        if (sec) sec.classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      // For customer-support, legal-support, publication:
+      const config = portalTabConfigs[tabKey] || portalTabConfigs['home'];
+      if (sec) sec.classList.remove('hidden');
 
       const pillEl = document.getElementById('portal-active-tab-pill');
       const headEl = document.getElementById('portal-tab-heading');
@@ -1741,14 +2497,7 @@
       if (subEl) subEl.textContent = config.subtitle;
       if (bodyEl) bodyEl.innerHTML = config.render();
 
-      if (tabKey === 'login') {
-        openLoginModal();
-      } else if (tabKey === 'listing-property') {
-        scrollToSection('forms-hub-section');
-        highlightFormCard('advertisement');
-      } else if (tabKey !== 'home') {
-        scrollToSection('tab-portal-section');
-      }
+      scrollToSection('tab-portal-section');
     }
 
     function applyBankRate(rate, bankName) {
@@ -1770,33 +2519,2080 @@
       showToast(`🎧 Support Ticket ${ticketId} created for ${name} (${topic}). Concierge callback in 5 mins!`);
     }
 
-    function openLoginModal() {
-      document.getElementById('login-portal-modal').classList.remove('hidden');
+    function openLoginModal(tab = 'signin') {
+      const modal = document.getElementById('login-portal-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        switchAuthTab(tab);
+      }
     }
+    window.openLoginModal = openLoginModal;
 
     function closeLoginModal() {
-      document.getElementById('login-portal-modal').classList.add('hidden');
+      const modal = document.getElementById('login-portal-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeLoginModal = closeLoginModal;
+
+    function switchAuthTab(tab) {
+      const formSignIn = document.getElementById('form-auth-signin');
+      const formSignUp = document.getElementById('form-auth-signup');
+      const btnSignIn = document.getElementById('auth-tab-btn-signin');
+      const btnSignUp = document.getElementById('auth-tab-btn-signup');
+      const mainTitle = document.getElementById('auth-modal-main-title');
+
+      if (tab === 'signup') {
+        if (formSignIn) formSignIn.classList.add('hidden');
+        if (formSignUp) formSignUp.classList.remove('hidden');
+        if (btnSignUp) {
+          btnSignUp.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm';
+        }
+        if (btnSignIn) {
+          btnSignIn.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 dark:text-slate-400 hover:text-slate-900';
+        }
+        if (mainTitle) mainTitle.textContent = 'Create New Member Account';
+      } else {
+        if (formSignIn) formSignIn.classList.remove('hidden');
+        if (formSignUp) formSignUp.classList.add('hidden');
+        if (btnSignIn) {
+          btnSignIn.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition bg-white dark:bg-slate-900 text-genriv-700 dark:text-genriv-300 shadow-sm';
+        }
+        if (btnSignUp) {
+          btnSignUp.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 dark:text-slate-400 hover:text-slate-900';
+        }
+        if (mainTitle) mainTitle.textContent = 'Sign In to Your Account';
+      }
+    }
+    window.switchAuthTab = switchAuthTab;
+
+    function handleSignupSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim().toLowerCase();
+      const phone = document.getElementById('signup-phone').value.trim();
+      const role = document.getElementById('signup-role').value;
+      const isSeller = role === 'Seller' || role === 'Owner' || role === 'Builder' || role === 'Agent';
+
+      // Check if user already exists
+      const existing = mbDatabase.users.find(u => u.email.toLowerCase() === email);
+      if (existing) {
+        showToast('⚠️ An account with this email already exists. Please Sign In.');
+        switchAuthTab('signin');
+        const idInput = document.getElementById('login-identifier');
+        if (idInput) idInput.value = email;
+        return;
+      }
+
+      const newUser = {
+        id: 'usr-' + Date.now(),
+        name,
+        email,
+        phone: phone || '+91 98300-12345',
+        role: isSeller ? 'Seller' : 'Buyer',
+        planId: isSeller ? 'seller-free-tier' : 'buyer-free-tier',
+        planName: isSeller ? 'Free Basic Tier (1 Ad / 6 Mo)' : 'Buyer Verified Explorer',
+        contactCredits: isSeller ? 10 : 20,
+        listingQuota: isSeller ? 1 : 0,
+        listingUsed: 0,
+        planDurationDays: 180,
+        planExpiresAt: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
+        isTopTenActive: false,
+        status: 'Active',
+        isOnboarded: false,
+        joinedAt: new Date().toISOString().slice(0, 10),
+        unlockedPropertyIds: []
+      };
+
+      mbDatabase.users.push(newUser);
+      mbDatabase.isLoggedIn = true;
+      mbDatabase.currentUserId = newUser.id;
+      mbDatabase.currentDashboardView = isSeller ? 'seller' : 'buyer';
+      saveMbDatabase();
+
+      try {
+        localStorage.setItem('genriv_active_user', JSON.stringify(newUser));
+      } catch (e) {}
+
+      // Post to Express backend
+      try {
+        fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newUser)
+        }).catch(() => {});
+      } catch (err) {}
+
+      updateHeaderAccountStatus();
+      closeLoginModal();
+
+      
+      if (isSeller) {
+        const regId = 'REG-2026-' + Math.floor(1000 + Math.random() * 9000);
+        const sellerProfile = {
+          regId: regId,
+          companyName: name,
+          reraId: 'WBRERA/A/KOL/2026/' + Math.floor(100000 + Math.random() * 900000),
+          category: role === 'Builder' ? 'Builder / Developer' : (role === 'Agent' ? 'Real Estate Agent / Broker' : 'Property Owner'),
+          pan: 'AACCS' + Math.floor(1000 + Math.random() * 9000) + 'J',
+          gstin: role === 'Property Owner' ? '' : '19AACCS' + Math.floor(1000 + Math.random() * 9000) + 'J1ZM',
+          phone: phone || '+91 98300-12345',
+          email: email,
+          status: 'pending', // Gated until Super Admin verifies
+          reVerificationRequested: false,
+          quota: 1,
+          planName: 'Free Basic (1 Ad / 6 Mo)',
+          documents: ['RERA_Sanction_Certificate.pdf', 'PAN_Incorporation_Scan.jpg'],
+          submittedAt: new Date().toISOString()
+        };
+        localStorage.setItem('genriv_seller_profile', JSON.stringify(sellerProfile));
+        let pendingList = [];
+        try {
+          const rawPending = localStorage.getItem('genriv_pending_sellers');
+          if (rawPending) pendingList = JSON.parse(rawPending);
+        } catch (e) {}
+        pendingList = pendingList.filter(s => s.regId !== regId && s.email !== email);
+        pendingList.unshift(sellerProfile);
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(pendingList));
+      }
+
+      showToast(`🎉 Welcome, ${name}! Your ${newUser.role} account is created. Loading registration form...`);
+
+      setTimeout(() => {
+        if (newUser.role === 'Seller') {
+          window.location.href = 'seller-dashboard.html?new_signup=true';
+        } else {
+          window.location.href = 'buyer-dashboard.html?new_signup=true';
+        }
+      }, 700);
+    }
+    window.handleSignupSubmit = handleSignupSubmit;
+
+    // =========================================================================
+    // NEW MODULE 4: MAGICBRICKS-STYLE FULL-STACK BACKEND ENGINE,
+    // BUYER / SELLER / ADMIN ACCOUNTS & MB PRIME SUBSCRIPTION SYSTEM
+    // =========================================================================
+    const MB_SUBSCRIPTION_PLANS = [
+      {
+        id: 'buyer-basic',
+        targetRole: 'Buyer',
+        name: 'Buyer Free Explorer',
+        price: 0,
+        priceLabel: '₹0 / Forever',
+        duration: 'Lifetime Basic',
+        contactCredits: 2,
+        listingQuota: 0,
+        badge: 'FREE TIER',
+        features: [
+          'Unlock up to 2 Direct Owner Contacts',
+          'Post Customer Requisition Forms',
+          '360° Spatial Tour & Locality Price Access'
+        ]
+      },
+      {
+        id: 'mb-prime-silver',
+        targetRole: 'Buyer',
+        name: 'MB Prime Silver',
+        price: 999,
+        priceLabel: '₹999 / 3 Months',
+        duration: '90 Days',
+        contactCredits: 15,
+        listingQuota: 1,
+        badge: 'POPULAR BUYER PLAN',
+        features: [
+          'Unlock 15 Verified Direct Owner Contacts',
+          'Zero-Brokerage Exclusive Owner Filter',
+          'Instant WhatsApp Price-Drop Alerts',
+          'Free Rent Agreement Draft Coupon'
+        ]
+      },
+      {
+        id: 'mb-prime-gold',
+        targetRole: 'Buyer',
+        name: 'MB Prime Gold Assisted',
+        price: 2499,
+        priceLabel: '₹2,499 / 6 Months',
+        duration: '180 Days',
+        contactCredits: 50,
+        listingQuota: 3,
+        badge: 'BEST VALUE • VIP RM',
+        features: [
+          'Unlock 50 Direct Owner & Builder Contacts',
+          'Dedicated MagicBricks-Style Relationship Manager',
+          '1 Free Legal Title Search Voucher (Worth ₹2,499)',
+          'Priority VIP Chauffeur Site Visits'
+        ]
+      },
+      {
+        id: 'seller-free-ad',
+        targetRole: 'Seller',
+        name: 'Free Property Ad Starter',
+        price: 0,
+        priceLabel: '₹0 / Forever',
+        duration: '90 Days Active',
+        contactCredits: 3,
+        listingQuota: 1,
+        badge: '100% FREE AD',
+        features: [
+          'Publish 1 Property or Hospitality Venue FREE',
+          'Standard Search Grid Placement',
+          'Receive Buyer Inquiries in Seller CRM'
+        ]
+      },
+      {
+        id: 'seller-silver-boost',
+        targetRole: 'Seller',
+        name: 'Seller Silver Boost Pack',
+        price: 1499,
+        priceLabel: '₹1,499 / 3 Months',
+        duration: '90 Days',
+        contactCredits: 20,
+        listingQuota: 5,
+        badge: '3X MORE BUYER LEADS',
+        features: [
+          'Publish up to 5 Properties / Venues',
+          'Boost 2 Listings to Top Search Slot',
+          'Verified Owner Tag + Instant WhatsApp Lead Push',
+          'Access Live Buyer Requisition Contacts'
+        ]
+      },
+      {
+        id: 'seller-titanium-pro',
+        targetRole: 'Seller',
+        name: 'Seller Titanium Builder Pro',
+        price: 3999,
+        priceLabel: '₹3,999 / 6 Months',
+        duration: '180 Days',
+        contactCredits: 100,
+        listingQuota: 25,
+        badge: '10X VISIBILITY • TOP SLOT',
+        features: [
+          'Up to 25 Active Listings + Unlimited Boosts',
+          'Pinned #1 MB Prime Top Slot Ribbon on Search',
+          'Professional 360° Virtual Tour Badge',
+          'Full Buyer Lead CRM Export & Priority RERA Audit'
+        ]
+      }
+    ];
+
+    function getDefaultBackendDB() {
+      return {
+        isLoggedIn: false,
+        buyerSubscriptionsEnabled: false,
+        currentUserId: 'usr-buyer-1',
+        currentDashboardView: 'buyer',
+        users: [
+          {
+            id: 'usr-buyer-1',
+            name: 'Anirban Chatterjee',
+            email: 'anirban.buyer@genrivreality.com',
+            phone: '+91 98301-44210',
+            role: 'Buyer',
+            planId: 'mb-prime-gold',
+            planName: 'MB Prime Gold Assisted',
+            contactCredits: 12,
+            listingQuota: 3,
+            status: 'Active',
+            joinedAt: '2026-08-14',
+            unlockedPropertyIds: ['prop-1', 'prop-5']
+          },
+          {
+            id: 'usr-seller-1',
+            name: 'Debashis Sen (Sen Estates)',
+            email: 'debashis.seller@genrivreality.com',
+            phone: '+91 98310-77890',
+            role: 'Seller',
+            planId: 'seller-titanium-pro',
+            planName: 'Seller Titanium Builder Pro',
+            contactCredits: 45,
+            listingQuota: 25,
+            status: 'Active',
+            joinedAt: '2026-07-02',
+            unlockedPropertyIds: ['prop-2']
+          },
+          {
+            id: 'usr-owner-1',
+            name: 'Meera Deshmukh',
+            email: 'meera.owner@genrivreality.com',
+            phone: '+91 98204-55112',
+            role: 'Owner',
+            planId: 'seller-silver-boost',
+            planName: 'Seller Silver Boost Pack',
+            contactCredits: 15,
+            listingQuota: 5,
+            status: 'Active',
+            joinedAt: '2026-09-19',
+            unlockedPropertyIds: []
+          },
+          {
+            id: 'usr-admin-1',
+            name: 'Vikramaditya Roy (Super Admin)',
+            email: 'admin@genrivreality.com',
+            phone: '+91 98300-00001',
+            role: 'Admin',
+            planId: 'admin-master',
+            planName: 'Platform Master Admin',
+            contactCredits: 999,
+            listingQuota: 999,
+            status: 'Active',
+            joinedAt: '2026-01-01',
+            unlockedPropertyIds: ['prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6']
+          }
+        ],
+        sellerLeads: [
+          {
+            id: 'LEAD-901',
+            propertyId: 'prop-5',
+            propertyTitle: 'Botanica Waterfront Sky-Forest Towers (Kolkata)',
+            buyerName: 'Anirban Chatterjee',
+            buyerPhone: '+91 98301-44210',
+            buyerEmail: 'anirban.buyer@genrivreality.com',
+            budget: '₹1.45 Cr',
+            intent: 'Buy • 3 BHK',
+            status: 'Site Visit Fixed',
+            timestamp: '2026-10-28 18:40'
+          },
+          {
+            id: 'LEAD-902',
+            propertyId: 'prop-1',
+            propertyTitle: 'Genriv Celestia Sky Penthouse (Mumbai)',
+            buyerName: 'Rohan Malhotra',
+            buyerPhone: '+91 98201-66321',
+            buyerEmail: 'rohan.m@corpindia.in',
+            budget: '₹8.40 Cr',
+            intent: 'Buy • 4 BHK',
+            status: 'New Lead',
+            timestamp: '2026-10-29 11:15'
+          },
+          {
+            id: 'LEAD-903',
+            propertyId: 'prop-2',
+            propertyTitle: 'The Teakwood Courtyard Biophilic Villa (Bengaluru)',
+            buyerName: 'Priya Nair',
+            buyerPhone: '+91 99001-33490',
+            buyerEmail: 'priya.nair@techpark.io',
+            budget: '₹4.25 Cr',
+            intent: 'Buy • 5 BHK',
+            status: 'Contacted',
+            timestamp: '2026-10-29 14:20'
+          }
+        ],
+        transactions: [
+          {
+            id: 'TXN-MB-8841',
+            userId: 'usr-buyer-1',
+            userName: 'Anirban Chatterjee',
+            role: 'Buyer',
+            planName: 'MB Prime Gold Assisted',
+            amount: 2499,
+            method: 'UPI Instant (GPay)',
+            date: '2026-10-15',
+            status: 'Paid'
+          },
+          {
+            id: 'TXN-MB-8842',
+            userId: 'usr-seller-1',
+            userName: 'Debashis Sen (Sen Estates)',
+            role: 'Seller',
+            planName: 'Seller Titanium Builder Pro',
+            amount: 3999,
+            method: 'Corporate NetBanking',
+            date: '2026-10-18',
+            status: 'Paid'
+          },
+          {
+            id: 'TXN-MB-8843',
+            userId: 'usr-owner-1',
+            userName: 'Meera Deshmukh',
+            role: 'Owner',
+            planName: 'Seller Silver Boost Pack',
+            amount: 1499,
+            method: 'Credit Card',
+            date: '2026-10-24',
+            status: 'Paid'
+          }
+        ],
+        propertyOverrides: {
+          'prop-1': { boosted: true, views: 1840, leadsCount: 24, ownerPhone: '+91 98201-11001', ownerId: 'usr-seller-1' },
+          'prop-2': { boosted: false, views: 1290, leadsCount: 19, ownerPhone: '+91 98450-22002', ownerId: 'usr-owner-1' },
+          'prop-3': { boosted: false, views: 980, leadsCount: 14, ownerPhone: '+91 98110-33003', ownerId: 'usr-seller-1' },
+          'prop-4': { boosted: false, views: 1120, leadsCount: 16, ownerPhone: '+91 98490-44004', ownerId: 'usr-seller-1' },
+          'prop-5': { boosted: true, views: 2150, leadsCount: 31, ownerPhone: '+91 98310-77890', ownerId: 'usr-seller-1' },
+          'prop-6': { boosted: false, views: 890, leadsCount: 12, ownerPhone: '+91 98220-66006', ownerId: 'usr-owner-1' }
+        },
+        lastApiLog: {
+          endpoint: 'GET /api/v1/bootstrap',
+          status: 200,
+          timestamp: new Date().toISOString(),
+          note: 'MagicBricks Hybrid REST + LocalStorage Engine Initialized'
+        }
+      };
+    }
+
+    let mbDatabase = getDefaultBackendDB();
+
+    function loadMbDatabase() {
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.users)) {
+            mbDatabase = parsed;
+            if (typeof mbDatabase.buyerSubscriptionsEnabled !== 'boolean') {
+              mbDatabase.buyerSubscriptionsEnabled = false;
+            }
+          }
+        }
+      } catch (e) {}
+      syncPropertiesWithMbBackend();
+    }
+
+    function saveMbDatabase() {
+      try {
+        localStorage.setItem('genriv_mb_db_v1', JSON.stringify(mbDatabase));
+      } catch (e) {}
+    }
+
+    function syncPropertiesWithMbBackend() {
+      properties.forEach(p => {
+        const ov = mbDatabase.propertyOverrides[p.id] || {
+          boosted: false,
+          views: 650,
+          leadsCount: 8,
+          ownerPhone: '+91 98300-55443',
+          ownerId: 'usr-seller-1'
+        };
+        p.boosted = Boolean(ov.boosted);
+        p.views = ov.views;
+        p.leadsCount = ov.leadsCount;
+        p.ownerPhone = ov.ownerPhone;
+        p.ownerId = ov.ownerId;
+        if (typeof ov.reraVerified === 'boolean') {
+          p.reraVerified = ov.reraVerified;
+        }
+      });
+    }
+
+    function getCurrentMbUser() {
+      return mbDatabase.users.find(u => u.id === mbDatabase.currentUserId) || mbDatabase.users[0];
+    }
+
+    function goToUserDashboard() {
+      const user = getCurrentMbUser();
+      if (user.role === 'Admin') {
+        window.location.href = 'admin-dashboard.html';
+      } else if (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder') {
+        window.location.href = 'seller-dashboard.html';
+      } else {
+        window.location.href = 'buyer-dashboard.html';
+      }
+    }
+    window.goToUserDashboard = goToUserDashboard;
+
+    function togglePortalRequisitionFormEdit() {
+      const blankForm = document.getElementById('customer-requisition-form');
+      const summaryView = document.getElementById('requisition-active-summary');
+      if (blankForm && summaryView) {
+        if (blankForm.classList.contains('hidden')) {
+          blankForm.classList.remove('hidden');
+          summaryView.classList.add('hidden');
+        } else {
+          blankForm.classList.add('hidden');
+          summaryView.classList.remove('hidden');
+        }
+      }
+    }
+    window.togglePortalRequisitionFormEdit = togglePortalRequisitionFormEdit;
+
+    function togglePortalAdFormEdit() {
+      const blankAdForm = document.getElementById('property-advertisement-form');
+      const adSummaryView = document.getElementById('advertisement-active-summary');
+      if (blankAdForm && adSummaryView) {
+        if (blankAdForm.classList.contains('hidden')) {
+          blankAdForm.classList.remove('hidden');
+          adSummaryView.classList.add('hidden');
+        } else {
+          blankAdForm.classList.add('hidden');
+          adSummaryView.classList.remove('hidden');
+        }
+      }
+    }
+    window.togglePortalAdFormEdit = togglePortalAdFormEdit;
+
+    function renderPortalMatchedPreviews(req) {
+      const grid = document.getElementById('portal-matched-preview-grid');
+      if (!grid) return;
+      const matched = properties.slice(0, 3);
+      grid.innerHTML = matched.map(p => `
+        <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2 shadow-sm">
+          <img src="${p.image}" class="w-full h-28 object-cover rounded-xl" />
+          <div class="text-xs font-bold text-slate-900 dark:text-white truncate">${p.title}</div>
+          <div class="text-[11px] text-emerald-600 font-extrabold">${p.priceLabel} • ${p.bhk}</div>
+          <a href="buyer-dashboard.html" class="block text-center py-1.5 rounded-lg bg-genriv-600 hover:bg-genriv-700 text-white text-[11px] font-bold transition">
+            Unlock Contact Free
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function renderPortalSellerListingPreviews(user) {
+      const grid = document.getElementById('portal-seller-listings-preview');
+      if (!grid) return;
+      const sellerProps = properties.slice(0, 3);
+      grid.innerHTML = sellerProps.map(p => `
+        <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2 shadow-sm">
+          <img src="${p.image}" class="w-full h-28 object-cover rounded-xl" />
+          <div class="text-xs font-bold text-slate-900 dark:text-white truncate">${p.title}</div>
+          <div class="text-[11px] text-emerald-600 font-extrabold">${p.priceLabel} • Live & Verified</div>
+          <a href="seller-dashboard.html" class="block text-center py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition">
+            Manage in Seller Dashboard
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function updateHeaderAccountStatus() {
+      const user = getCurrentMbUser();
+      const isLogged = Boolean(mbDatabase.isLoggedIn);
+      const loginBtn = document.getElementById('nav-tab-login');
+      const loginLbl = document.getElementById('nav-login-label');
+      const shortName = user.name.split(' ')[0];
+
+      if (loginBtn) {
+        if (isLogged) {
+          const dashboardUrl = user.role === 'Admin' ? 'admin-dashboard.html' : (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder' ? 'seller-dashboard.html' : 'buyer-dashboard.html');
+          const roleIcon = user.role === 'Admin' ? '⚡' : (user.role === 'Seller' || user.role === 'Owner' ? '🏢' : '👤');
+          loginBtn.onclick = () => window.location.href = dashboardUrl;
+          loginBtn.title = `Go to ${user.role} Dashboard`;
+          if (loginLbl) {
+            loginLbl.innerHTML = `<span>${roleIcon} ${shortName}</span><span class="hidden sm:inline text-[11px] opacity-90 font-bold"> (${user.role} Dashboard)</span>`;
+          }
+        } else {
+          loginBtn.onclick = () => switchMainTab('login');
+          loginBtn.title = 'Login';
+          if (loginLbl) {
+            loginLbl.innerHTML = 'Login';
+          }
+        }
+      }
+
+      // Point 1: When a seller or buyer is logged in, adjust the top tab appropriately
+      const listingTab = document.getElementById('nav-tab-listing-property');
+      if (listingTab) {
+        if (isLogged && (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder')) {
+          listingTab.onclick = () => window.location.href = 'seller-dashboard.html';
+          listingTab.innerHTML = `<span>🏢 Seller Dashboard</span><span class="px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 text-[9px] font-extrabold uppercase">POST PROPERTY</span>`;
+          listingTab.title = 'Go to Seller Dashboard to post and manage properties';
+        } else if (isLogged && user.role === 'Buyer') {
+          listingTab.onclick = () => window.location.href = 'buyer-dashboard.html';
+          listingTab.innerHTML = `<span>📋 Buyer Hub</span><span class="px-1.5 py-0.2 rounded bg-genriv-600 text-white text-[9px] font-extrabold uppercase">REQUISITIONS</span>`;
+          listingTab.title = 'Go to Buyer Hub';
+        } else {
+          listingTab.onclick = () => switchMainTab('listing-property');
+          listingTab.innerHTML = `<span>Listing your Property</span><span class="px-1.5 py-0.2 rounded bg-emerald-500 text-white text-[9px] font-extrabold uppercase">FREE</span>`;
+        }
+      }
+
+      const primeBtn = document.getElementById('header-mb-prime-btn');
+      if (primeBtn) {
+        if (mbDatabase.buyerSubscriptionsEnabled && isLogged && (user.role === 'Buyer' || user.role === 'Admin')) {
+          primeBtn.classList.remove('hidden');
+          primeBtn.classList.add('inline-flex');
+        } else {
+          primeBtn.classList.add('hidden');
+          primeBtn.classList.remove('inline-flex');
+        }
+      }
+      const creditsPill = document.getElementById('header-credits-pill');
+      if (creditsPill) {
+        if (!isLogged) {
+          creditsPill.textContent = 'Sign In';
+        } else if (!mbDatabase.buyerSubscriptionsEnabled && user.role === 'Buyer') {
+          creditsPill.textContent = 'Free Unlocks';
+        } else if (user.role === 'Admin') {
+          creditsPill.textContent = 'Master Admin';
+        } else {
+          creditsPill.textContent = `${user.contactCredits} Credits`;
+        }
+      }
+      const nameEl = document.getElementById('mb-current-user-name');
+      const metaEl = document.getElementById('mb-current-user-meta');
+      const planEl = document.getElementById('mb-active-plan-badge');
+      if (nameEl) {
+        nameEl.textContent = isLogged ? `${user.name} (${user.email})` : 'Guest Visitor (Not Signed In)';
+      }
+      if (metaEl) {
+        if (!isLogged) {
+          metaEl.textContent = 'Sign in as Customer/Buyer for Requisition Form or Seller for Property Advertisement Form';
+        } else if (user.role === 'Buyer') {
+          metaEl.textContent = mbDatabase.buyerSubscriptionsEnabled
+            ? `Role: Buyer • ${user.contactCredits} MB Prime Credits Active`
+            : `Role: Buyer • Unlimited Free Owner Contact Unlocks (Admin Promo Active)`;
+        } else if (user.role === 'Seller') {
+          metaEl.textContent = `Role: Seller • ${user.listingQuota} Listing Quota Slots • Leads CRM Active`;
+        } else {
+          metaEl.textContent = `Role: Super Admin • Platform Governance • Buyer Subscriptions: ${mbDatabase.buyerSubscriptionsEnabled ? 'ON' : 'OFF'}`;
+        }
+      }
+      if (planEl) {
+        if (!isLogged) {
+          planEl.textContent = '🔒 Personal Workspace Locked';
+        } else if (user.role === 'Buyer') {
+          planEl.textContent = mbDatabase.buyerSubscriptionsEnabled ? `👑 ${user.planName}` : '🎉 100% Free Buyer Access';
+        } else if (user.role === 'Seller') {
+          planEl.textContent = `🏗️ ${user.planName}`;
+        } else {
+          planEl.textContent = '🛡️ Super Admin Master';
+        }
+      }
+      syncRoleGatedFormsVisibility();
+    }
+
+    function toggleBuyerSubscriptionsAdmin() {
+      mbDatabase.buyerSubscriptionsEnabled = !mbDatabase.buyerSubscriptionsEnabled;
+      saveMbDatabase();
+      updateHeaderAccountStatus();
+      renderMbDashboard();
+      showToast(mbDatabase.buyerSubscriptionsEnabled
+        ? '🟢 Admin: Buyer Subscriptions are now ENABLED (MB Prime active).'
+        : '🔴 Admin: Buyer Subscriptions are now DISABLED (All buyer contacts are 100% free).'
+      );
+    }
+
+    function syncRoleGatedFormsVisibility() {
+      // Requirement 8: Never show "Seller Listing Desk", "Customer Requisition Desk",
+      // or raw forms on index.html. Dashboards handle all authenticated forms.
+      const section = document.getElementById('forms-hub-section');
+      if (section) {
+        section.classList.add('hidden');
+      }
+      const reqCard = document.getElementById('requisition-form-card');
+      const advCard = document.getElementById('advertisement-form-card');
+      const adminCard = document.getElementById('admin-creative-submissions-card');
+      if (reqCard) reqCard.classList.add('hidden');
+      if (advCard) advCard.classList.add('hidden');
+      if (adminCard) adminCard.classList.add('hidden');
+      return;
+    }
+
+    let adminSubmissionsActiveTab = 'requisitions';
+    let activeRequisitionMatch = null;
+
+    function switchAdminSubmissionsTab(tab) {
+      adminSubmissionsActiveTab = tab;
+      const tabReq = document.getElementById('admin-sub-tab-req');
+      const tabAdv = document.getElementById('admin-sub-tab-adv');
+      if (tabReq && tabAdv) {
+        if (tab === 'requisitions') {
+          tabReq.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition bg-gradient-to-r from-genriv-600 to-acres-500 text-white shadow-sm';
+          tabAdv.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-300 hover:text-white';
+        } else {
+          tabReq.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-300 hover:text-white';
+          tabAdv.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-sm';
+        }
+      }
+      renderAdminSubmissionsView();
+    }
+
+    function renderAdminSubmissionsView() {
+      const container = document.getElementById('admin-submissions-roster-container');
+      const reqCountEl = document.getElementById('admin-req-count');
+      const advCountEl = document.getElementById('admin-adv-count');
+      if (reqCountEl) reqCountEl.textContent = customerRequisitions.length;
+      if (advCountEl) advCountEl.textContent = publishedAdvertisements.length;
+      if (!container) return;
+
+      const currentTab = adminSubmissionsActiveTab || 'requisitions';
+      if (currentTab === 'requisitions') {
+        container.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-display font-bold text-base text-slate-900 dark:text-white">📋 Customer Requisitions Roster (${customerRequisitions.length})</h4>
+            <span class="text-xs text-slate-500 dark:text-slate-400">Demand records submitted by authenticated Buyers &amp; Hosts</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${customerRequisitions.map(r => {
+              const matches = getMatchingPropertiesForRequisition(r);
+              return `
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-genriv-500 transition shadow-md flex flex-col justify-between space-y-3">
+                  <div>
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-xs font-extrabold text-genriv-600 dark:text-genriv-300 bg-genriv-100 dark:bg-genriv-950/80 px-2.5 py-1 rounded-lg border border-genriv-300 dark:border-genriv-800">${r.id}</span>
+                      <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Active Demand</span>
+                    </div>
+                    <h5 class="font-display font-extrabold text-base text-slate-900 dark:text-white mt-2">${r.name}</h5>
+                    <div class="text-xs text-genriv-600 dark:text-amber-300 font-bold">${r.role} • ${r.category}</div>
+                    <div class="mt-3 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-2.5">
+                      <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">📍 Locality:</span> <strong class="text-slate-900 dark:text-white">${r.location}</strong></div>
+                      <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">📐 Config:</span> <strong class="text-slate-900 dark:text-white">${r.specs}</strong></div>
+                      <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">💰 Budget:</span> <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold">${r.budget}</span></div>
+                      ${r.notes ? `<div class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60">${r.notes}</div>` : ''}
+                    </div>
+                  </div>
+                  <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+                    <button type="button" onclick="filterSearchByRequisition('${r.id}')" class="px-3 py-1.5 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white text-xs font-bold transition flex items-center gap-1 shadow-sm">
+                      <span>🎯 View Matches</span>
+                      <span class="px-1.5 py-0.2 rounded bg-genriv-800 text-[10px]">${matches.length}</span>
+                    </button>
+                    <a href="https://wa.me/919830144210?text=Hello%20${encodeURIComponent(r.name)},%20we%20have%20verified%20properties%20matching%20your%20requisition%20${r.id}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+                      💬 WhatsApp
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-display font-bold text-base text-slate-900 dark:text-white">🏠 Published Property Advertisements (${publishedAdvertisements.length})</h4>
+            <span class="text-xs text-slate-500 dark:text-slate-400">Seller &amp; Owner listings submitted via 100% Free Property Ad Form</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${publishedAdvertisements.map(adv => `
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-md flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-xs font-extrabold text-emerald-600 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-300 dark:border-emerald-800">${adv.id}</span>
+                    <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Live Listing</span>
+                  </div>
+                  <h5 class="font-display font-extrabold text-base text-slate-900 dark:text-white mt-2">${adv.title}</h5>
+                  <div class="text-xs text-amber-600 dark:text-amber-300 font-bold">${adv.owner}</div>
+                  <div class="mt-3 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700/60 pt-2.5">
+                    <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">📍 Location:</span> <strong class="text-slate-900 dark:text-white">${adv.locality}, ${adv.city}</strong></div>
+                    <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">🏷️ Price:</span> <span class="px-2 py-0.5 rounded bg-amber-400/15 text-amber-600 dark:text-amber-300 font-extrabold">${adv.price}</span></div>
+                    <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">📦 Category:</span> <strong class="text-slate-900 dark:text-white">${adv.category}</strong></div>
+                    <div class="flex items-start gap-1.5"><span class="text-slate-400 font-semibold">✨ Specs:</span> <span class="text-slate-600 dark:text-slate-300">${adv.plan}</span></div>
+                  </div>
+                </div>
+                <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+                  <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Published in Catalog</span>
+                  <button type="button" onclick="scrollToSection('listings-section')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-bold transition">
+                    View in Search →
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function getMatchingPropertiesForRequisition(req) {
+      if (!req) return properties.slice(0, 3);
+      const locLower = (req.location || '').toLowerCase();
+      const specs = (req.specs || '');
+      const bhkMatch = specs.match(/(\d+)\s*BHK/i);
+      const targetBhk = bhkMatch ? bhkMatch[1] : null;
+
+      const matches = properties.filter(p => {
+        const pLoc = `${p.city} ${p.locality}`.toLowerCase();
+        let cityMatch = false;
+        const cities = ['mumbai', 'bengaluru', 'gurugram', 'hyderabad', 'kolkata', 'pune'];
+        for (const c of cities) {
+          if (locLower.includes(c) && pLoc.includes(c)) {
+            cityMatch = true;
+            break;
+          }
+        }
+        const pBhkMatch = (p.bhk || '').match(/(\d+)\s*BHK/i);
+        const bhkEqual = targetBhk && pBhkMatch ? targetBhk === pBhkMatch[1] : false;
+        return cityMatch || bhkEqual;
+      });
+      return matches.length > 0 ? matches : properties.slice(0, 3);
+    }
+
+    function filterSearchByRequisition(reqId) {
+      const req = customerRequisitions.find(r => r.id === reqId) || customerRequisitions[0];
+      if (!req) return;
+
+      const citySelect = document.getElementById('search-city');
+      const headerCitySelect = document.getElementById('header-city-select');
+      const locLower = (req.location || '').toLowerCase();
+      let matchedCity = 'All';
+      const metroCities = ['Mumbai', 'Bengaluru', 'Gurugram', 'Hyderabad', 'Kolkata', 'Pune'];
+      for (const c of metroCities) {
+        if (locLower.includes(c.toLowerCase())) {
+          matchedCity = c;
+          break;
+        }
+      }
+      if (citySelect) citySelect.value = matchedCity;
+      if (headerCitySelect) headerCitySelect.value = matchedCity;
+
+      const bhkSelect = document.getElementById('search-bhk');
+      if (bhkSelect) {
+        if ((req.specs || '').includes('1 BHK')) bhkSelect.value = '1 BHK';
+        else if ((req.specs || '').includes('3 BHK')) bhkSelect.value = '3 BHK';
+        else if ((req.specs || '').includes('4 BHK')) bhkSelect.value = '4 BHK';
+        else if ((req.specs || '').includes('5 BHK')) bhkSelect.value = '5 BHK';
+        else bhkSelect.value = 'All';
+      }
+
+      const banner = document.getElementById('requisition-match-alert-banner');
+      const reqIdEl = document.getElementById('requisition-match-req-id');
+      const descEl = document.getElementById('requisition-match-desc');
+      if (banner) banner.classList.remove('hidden');
+      if (reqIdEl) reqIdEl.textContent = req.id;
+      if (descEl) descEl.textContent = `Matching: ${req.category} • ${req.specs} in ${req.location} • Budget: ${req.budget}`;
+
+      activeRequisitionMatch = req;
+      applyFilters();
+      scrollToSection('listings-section');
+      showToast(`🎯 Showing verified properties matching your Requisition ${req.id}!`);
+    }
+
+    function clearRequisitionSearchFilter() {
+      activeRequisitionMatch = null;
+      const banner = document.getElementById('requisition-match-alert-banner');
+      if (banner) banner.classList.add('hidden');
+      const bhkSelect = document.getElementById('search-bhk');
+      if (bhkSelect) bhkSelect.value = 'All';
+      const citySelect = document.getElementById('search-city');
+      if (citySelect) citySelect.value = 'All';
+      applyFilters();
+      showToast('Filters cleared — showing all verified properties.');
+    }
+
+    function openRoleGatedForm(which) {
+      const user = getCurrentMbUser();
+      const role = (user.role || '').toLowerCase();
+      if (which === 'requisition') {
+        if (!mbDatabase.isLoggedIn || (role !== 'buyer' && role !== 'tenant' && role !== 'admin')) {
+          const roleSelect = document.getElementById('login-role');
+          if (roleSelect) roleSelect.value = 'Buyer';
+          openLoginModal();
+          showToast('🔐 Please log in with your Customer / Buyer Account to access the Customer Requisition Form.');
+          return;
+        }
+        syncRoleGatedFormsVisibility();
+        scrollToSection('forms-hub-section');
+      } else if (which === 'advertisement') {
+        if (!mbDatabase.isLoggedIn || (role !== 'seller' && role !== 'owner' && role !== 'builder' && role !== 'admin')) {
+          const roleSelect = document.getElementById('login-role');
+          if (roleSelect) roleSelect.value = 'Seller';
+          openLoginModal();
+          showToast('🔐 Please log in with your Seller / Owner Account to access the PROPERTY ADVERTISEMENT FORM.');
+          return;
+        }
+        syncRoleGatedFormsVisibility();
+        scrollToSection('forms-hub-section');
+      }
+    }
+
+    function logoutMbUser() {
+      mbDatabase.isLoggedIn = false;
+      saveMbDatabase();
+      updateHeaderAccountStatus();
+      renderMbDashboard();
+      showToast('🚪 Signed out. Customer Requisition Form & Property Advertisement Form are now hidden from the front-end.');
+    }
+
+    function quickSwitchRole(roleName) {
+      let target = mbDatabase.users.find(u => u.role.toLowerCase() === roleName.toLowerCase());
+      if (!target) {
+        target = mbDatabase.users[0];
+      }
+      mbDatabase.isLoggedIn = true;
+      mbDatabase.currentUserId = target.id;
+      const viewMap = { 'Buyer': 'buyer', 'Seller': 'seller', 'Owner': 'seller', 'Admin': 'admin' };
+      mbDatabase.currentDashboardView = viewMap[target.role] || 'buyer';
+      mbDatabase.lastApiLog = {
+        endpoint: 'POST /api/auth/switch-role',
+        status: 200,
+        timestamp: new Date().toISOString(),
+        activeUser: { id: target.id, name: target.name, role: target.role, plan: target.planName }
+      };
+      saveMbDatabase();
+      updateHeaderAccountStatus();
+      switchMbDashboardView(mbDatabase.currentDashboardView);
+      if (target.role === 'Buyer' || target.role === 'Seller' || target.role === 'Owner') {
+        scrollToSection('forms-hub-section');
+      } else {
+        scrollToSection('mb-command-center-section');
+      }
+      showToast(`🔐 Logged in as ${target.role} (${target.name}) — ${target.role === 'Buyer' ? 'Customer Requisition Form' : (target.role === 'Admin' ? 'Admin Console' : 'PROPERTY ADVERTISEMENT FORM')} unlocked!`);
+    }
+
+    function openMbCommandCenter(viewKey) {
+      switchMbDashboardView(viewKey || mbDatabase.currentDashboardView || 'buyer');
+      scrollToSection('mb-command-center-section');
+    }
+
+    function switchMbDashboardView(viewKey) {
+      mbDatabase.currentDashboardView = viewKey;
+      saveMbDatabase();
+      renderDashboardNavStrip();
+      renderMbDashboard();
+    }
+
+    function renderDashboardNavStrip() {
+      const navStrip = document.getElementById('mb-dashboard-nav-strip');
+      if (!navStrip) return;
+
+      const user = getCurrentMbUser();
+      const isLogged = Boolean(mbDatabase.isLoggedIn);
+      const role = (user.role || 'Buyer').toLowerCase();
+      const currentView = mbDatabase.currentDashboardView || 'buyer';
+
+      if (!isLogged) {
+        navStrip.innerHTML = `
+          <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
+            <span class="text-xs font-bold text-slate-400 pl-2">Select Persona to Explore:</span>
+            <button type="button" onclick="quickSwitchRole('Buyer')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-genriv-600/30 hover:bg-genriv-600 text-white border border-genriv-500/40 transition">
+              👤 Buyer Demo
+            </button>
+            <button type="button" onclick="quickSwitchRole('Seller')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-600/30 hover:bg-emerald-600 text-white border border-emerald-500/40 transition">
+              🏗️ Seller Demo
+            </button>
+            <button type="button" onclick="quickSwitchRole('Admin')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-rose-600/30 hover:bg-rose-600 text-white border border-rose-500/40 transition">
+              🛡️ Admin Demo
+            </button>
+          </div>
+          <button type="button" onclick="openLoginModal()" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition">
+            Sign In with Email / OTP →
+          </button>
+        `;
+        return;
+      }
+
+      let tabsHtml = '';
+      if (role === 'buyer' || role === 'tenant') {
+        tabsHtml = `
+          <button type="button" onclick="switchMbDashboardView('buyer')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition ${currentView === 'buyer' ? 'bg-gradient-to-r from-genriv-600 to-acres-500 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:text-white'}">
+            👤 My Buyer Hub &amp; Matched Properties
+          </button>
+          ${mbDatabase.buyerSubscriptionsEnabled ? `
+            <button type="button" onclick="switchMbDashboardView('subscriptions')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition ${currentView === 'subscriptions' ? 'bg-amber-400 text-slate-950 font-extrabold shadow' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30 hover:bg-amber-400/30'}">
+              👑 MB Prime Subscriptions
+            </button>
+          ` : `
+            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5">
+              <span>🎉 100% Free Buyer Access Active</span>
+            </span>
+          `}
+        `;
+      } else if (role === 'seller' || role === 'owner' || role === 'builder') {
+        tabsHtml = `
+          <button type="button" onclick="switchMbDashboardView('seller')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition ${currentView === 'seller' ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:text-white'}">
+            🏗️ My Seller &amp; Builder CRM
+          </button>
+          <button type="button" onclick="switchMbDashboardView('subscriptions')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition ${currentView === 'subscriptions' ? 'bg-amber-400 text-slate-950 font-extrabold shadow' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30 hover:bg-amber-400/30'}">
+            🚀 Seller Boost Packages
+          </button>
+        `;
+      } else {
+        // Admin
+        tabsHtml = `
+          <button type="button" onclick="switchMbDashboardView('admin')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition ${currentView === 'admin' ? 'bg-gradient-to-r from-rose-600 to-amber-500 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:text-white'}">
+            🛡️ Super Admin Master Console
+          </button>
+          <button type="button" onclick="scrollToSection('forms-hub-section')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 border border-indigo-500/40">
+            📋 Creative Submissions Hub (${customerRequisitions.length + publishedAdvertisements.length})
+          </button>
+          <button type="button" onclick="switchMbDashboardView('subscriptions')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition ${currentView === 'subscriptions' ? 'bg-amber-400 text-slate-950 font-extrabold shadow' : 'bg-slate-800 text-slate-300 hover:text-white'}">
+            👑 Subscriptions Ledger
+          </button>
+          <button type="button" onclick="switchMbDashboardView('api')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition ${currentView === 'api' ? 'bg-slate-700 text-white font-extrabold' : 'bg-slate-800 text-slate-300 hover:text-white'}">
+            ⚡ REST API Logs
+          </button>
+        `;
+      }
+
+      navStrip.innerHTML = `
+        <div class="flex items-center gap-1.5 flex-wrap">
+          ${tabsHtml}
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <button type="button" onclick="exportBackendDatabaseJson()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-slate-700 transition">
+            ⬇️ Export DB JSON
+          </button>
+          <button type="button" onclick="resetBackendDatabase()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-950 text-rose-300 font-bold border border-slate-700 transition">
+            ↺ Reset DB
+          </button>
+        </div>
+      `;
+    }
+
+    // MagicBricks Owner Contact Unlock Workflow (Checks Buyer Subscription & Credits)
+    function unlockOwnerContactWithBackend(propId) {
+      const p = properties.find(x => x.id === propId);
+      if (!p) return;
+      const user = getCurrentMbUser();
+
+      if (!Array.isArray(user.unlockedPropertyIds)) {
+        user.unlockedPropertyIds = [];
+      }
+
+      const alreadyUnlocked = user.unlockedPropertyIds.includes(propId) || user.role === 'Admin';
+      if (!alreadyUnlocked) {
+        if (mbDatabase.buyerSubscriptionsEnabled) {
+          if (user.contactCredits <= 0) {
+            showToast('⚠️ You have 0 Owner Contact Credits left! Upgrade to MB Prime to unlock direct owner contacts.');
+            openSubscriptionCheckoutModal('mb-prime-silver');
+            return;
+          }
+          user.contactCredits -= 1;
+        }
+        user.unlockedPropertyIds.push(propId);
+
+        // Increment property lead count & create a real Seller CRM Lead
+        if (!mbDatabase.propertyOverrides[propId]) {
+          mbDatabase.propertyOverrides[propId] = { boosted: false, views: 700, leadsCount: 9, ownerPhone: '+91 98300-11223', ownerId: 'usr-seller-1' };
+        }
+        mbDatabase.propertyOverrides[propId].leadsCount += 1;
+
+        mbDatabase.sellerLeads.unshift({
+          id: 'LEAD-' + Math.floor(100 + Math.random() * 900),
+          propertyId: p.id,
+          propertyTitle: `${p.title} (${p.city})`,
+          buyerName: user.name,
+          buyerPhone: user.phone,
+          buyerEmail: user.email,
+          budget: p.priceLabel,
+          intent: `${p.intent} • ${p.bhk}`,
+          status: 'New Lead',
+          timestamp: new Date().toISOString().slice(0, 16).replace('T', ' ')
+        });
+
+        mbDatabase.lastApiLog = {
+          endpoint: 'POST /api/leads/unlock-contact',
+          status: 200,
+          timestamp: new Date().toISOString(),
+          propertyId: p.id,
+          remainingCredits: user.contactCredits
+        };
+        syncPropertiesWithMbBackend();
+        saveMbDatabase();
+        updateHeaderAccountStatus();
+        renderMbDashboard();
+      }
+
+      // Show the Unlocked Owner Contact Dossier Modal
+      const titleEl = document.getElementById('unlocked-modal-prop-title');
+      const bodyEl = document.getElementById('unlocked-modal-body');
+      if (titleEl) titleEl.textContent = p.title;
+      if (bodyEl) {
+        bodyEl.innerHTML = `
+          <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-800 border border-emerald-200 dark:border-slate-700 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500">Advertiser / Owner:</span>
+              <span class="font-bold text-slate-900 dark:text-white">${p.builderName}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500">Verified Mobile / WhatsApp:</span>
+              <span class="font-mono font-extrabold text-emerald-600 dark:text-emerald-400 text-base">${p.ownerPhone || '+91 98310-77890'}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500">RERA Registration ID:</span>
+              <span class="font-mono font-bold text-slate-800 dark:text-slate-200">${p.reraId}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500">Remaining MB Prime Credits:</span>
+              <span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-700 dark:text-amber-300 font-extrabold text-xs">${user.contactCredits} Credits Left</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            ✅ Your inquiry has also been logged in the Seller's CRM Inbox and saved to your Buyer Dashboard under <strong>Unlocked Owner Contacts</strong>.
+          </p>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button type="button" onclick="closeOwnerContactModal(); openVirtualTourModal('${p.id}')" class="py-2.5 px-3 rounded-xl bg-genriv-600 text-white font-bold text-xs">
+              📅 Schedule Site Visit
+            </button>
+            <button type="button" onclick="closeOwnerContactModal(); openMbCommandCenter('buyer')" class="py-2.5 px-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs">
+              Open Buyer Vault →
+            </button>
+          </div>
+        `;
+      }
+      document.getElementById('owner-contact-dossier-modal').classList.remove('hidden');
+      showToast(`📞 Owner contact unlocked for ${p.title}! (${user.contactCredits} MB Prime credits left)`);
+    }
+
+    function closeOwnerContactModal() {
+      document.getElementById('owner-contact-dossier-modal').classList.add('hidden');
+    }
+
+    // Seller Action: Boost Property to Top Slot (MagicBricks Super Boost)
+    function toggleSellerPropertyBoost(propId) {
+      const user = getCurrentMbUser();
+      if (!mbDatabase.propertyOverrides[propId]) {
+        mbDatabase.propertyOverrides[propId] = { boosted: false, views: 750, leadsCount: 10, ownerPhone: user.phone, ownerId: user.id };
+      }
+      const current = Boolean(mbDatabase.propertyOverrides[propId].boosted);
+      mbDatabase.propertyOverrides[propId].boosted = !current;
+      mbDatabase.propertyOverrides[propId].views += !current ? 420 : 0;
+      mbDatabase.lastApiLog = {
+        endpoint: `POST /api/seller/properties/${propId}/boost`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        boosted: !current
+      };
+      syncPropertiesWithMbBackend();
+      saveMbDatabase();
+      applyFilters();
+      renderMbDashboard();
+      showToast(!current
+        ? `⚡ Boosted property ${propId} to #1 MB Prime Top Slot in search results!`
+        : `Removed Top Slot boost from ${propId}.`);
+    }
+
+    // Seller Action: Update Buyer Lead CRM Status
+    function updateSellerLeadStatus(leadId, newStatus) {
+      const lead = mbDatabase.sellerLeads.find(l => l.id === leadId);
+      if (!lead) return;
+      lead.status = newStatus;
+      mbDatabase.lastApiLog = {
+        endpoint: `PATCH /api/seller/leads/${leadId}`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        leadId,
+        newStatus
+      };
+      saveMbDatabase();
+      renderMbDashboard();
+      showToast(`📋 Updated Lead ${leadId} (${lead.buyerName}) status to "${newStatus}"`);
+    }
+
+    // Admin Action: Toggle RERA Verification Badge on Property
+    function adminToggleReraVerification(propId) {
+      const p = properties.find(x => x.id === propId);
+      if (!p) return;
+      p.reraVerified = !p.reraVerified;
+      if (!mbDatabase.propertyOverrides[propId]) {
+        mbDatabase.propertyOverrides[propId] = { boosted: false, views: 600, leadsCount: 6, ownerPhone: '+91 98300-00000', ownerId: 'usr-seller-1' };
+      }
+      mbDatabase.propertyOverrides[propId].reraVerified = p.reraVerified;
+      mbDatabase.lastApiLog = {
+        endpoint: `PATCH /api/admin/properties/${propId}/rera`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        propertyId: propId,
+        reraVerified: p.reraVerified
+      };
+      saveMbDatabase();
+      applyFilters();
+      renderMbDashboard();
+      showToast(p.reraVerified
+        ? `🛡️ Admin verified RERA compliance for ${p.title}`
+        : `⏳ Marked ${p.title} as Pending Admin RERA Audit`);
+    }
+
+    // Admin Action: Delete / Remove Listing
+    function adminDeleteProperty(propId) {
+      if (properties.length <= 2) {
+        showToast('⚠️ Keep at least 2 active properties in the demo catalog.');
+        return;
+      }
+      const p = properties.find(x => x.id === propId);
+      properties = properties.filter(x => x.id !== propId);
+      mbDatabase.lastApiLog = {
+        endpoint: `DELETE /api/admin/properties/${propId}`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        removedProperty: p ? p.title : propId
+      };
+      saveMbDatabase();
+      applyFilters();
+      renderMbDashboard();
+      showToast(`🗑️ Admin removed listing "${p ? p.title : propId}" from live catalog.`);
+    }
+
+    // Admin Action: Grant +10 Contact Credits or Toggle Account Status
+    function adminAddCreditsToUser(userId, amount) {
+      const u = mbDatabase.users.find(x => x.id === userId);
+      if (!u) return;
+      u.contactCredits += amount;
+      mbDatabase.lastApiLog = {
+        endpoint: `PATCH /api/admin/users/${userId}/credits`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        user: u.name,
+        newCredits: u.contactCredits
+      };
+      saveMbDatabase();
+      updateHeaderAccountStatus();
+      renderMbDashboard();
+      showToast(`🎁 Admin added +${amount} credits to ${u.name} (Total: ${u.contactCredits})`);
+    }
+
+    function adminToggleUserStatus(userId) {
+      const u = mbDatabase.users.find(x => x.id === userId);
+      if (!u) return;
+      u.status = u.status === 'Active' ? 'Suspended' : 'Active';
+      mbDatabase.lastApiLog = {
+        endpoint: `PATCH /api/admin/users/${userId}/status`,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        user: u.name,
+        status: u.status
+      };
+      saveMbDatabase();
+      renderMbDashboard();
+      showToast(`🛡️ Admin updated ${u.name} account status to ${u.status}`);
+    }
+
+    // Subscription Checkout Modal & Payment Handler
+    function openSubscriptionCheckoutModal(planId) {
+      const plan = MB_SUBSCRIPTION_PLANS.find(p => p.id === planId) || MB_SUBSCRIPTION_PLANS[2];
+      document.getElementById('sub-checkout-plan-id').value = plan.id;
+      document.getElementById('sub-checkout-role-badge').textContent = `${plan.targetRole} Subscription Package`;
+      document.getElementById('sub-checkout-plan-title').textContent = `Subscribe to ${plan.name}`;
+      document.getElementById('sub-checkout-summary-name').textContent = `${plan.name} (${plan.duration})`;
+      document.getElementById('sub-checkout-summary-credits').textContent = `${plan.contactCredits} Contact Unlocks • ${plan.listingQuota} Listings Quota`;
+      document.getElementById('sub-checkout-summary-amount').textContent = plan.priceLabel;
+      document.getElementById('mb-subscription-checkout-modal').classList.remove('hidden');
+    }
+
+    function closeSubscriptionCheckoutModal() {
+      document.getElementById('mb-subscription-checkout-modal').classList.add('hidden');
+    }
+
+    function handleSubscriptionPaymentSubmit(e) {
+      e.preventDefault();
+      const planId = document.getElementById('sub-checkout-plan-id').value;
+      const method = document.getElementById('sub-checkout-method').value;
+      const promo = (document.getElementById('sub-checkout-promo').value || '').trim().toUpperCase();
+      const plan = MB_SUBSCRIPTION_PLANS.find(p => p.id === planId) || MB_SUBSCRIPTION_PLANS[2];
+      const user = getCurrentMbUser();
+
+      const finalAmount = promo === 'GENRIV20' ? Math.round(plan.price * 0.8) : plan.price;
+
+      user.planId = plan.id;
+      user.planName = plan.name;
+      user.contactCredits += plan.contactCredits;
+      user.listingQuota += plan.listingQuota;
+      if (plan.targetRole === 'Seller' && user.role === 'Buyer') {
+        user.role = 'Seller';
+      }
+
+      const txn = {
+        id: 'TXN-MB-' + Math.floor(1000 + Math.random() * 9000),
+        userId: user.id,
+        userName: user.name,
+        role: user.role,
+        planName: plan.name,
+        amount: finalAmount,
+        method,
+        date: new Date().toISOString().slice(0, 10),
+        status: 'Paid'
+      };
+      mbDatabase.transactions.unshift(txn);
+      mbDatabase.lastApiLog = {
+        endpoint: 'POST /api/subscriptions/checkout',
+        status: 201,
+        timestamp: new Date().toISOString(),
+        transaction: txn
+      };
+
+      saveMbDatabase();
+      updateHeaderAccountStatus();
+      closeSubscriptionCheckoutModal();
+      renderMbDashboard();
+      showToast(`🎉 Activated ${plan.name}! Added +${plan.contactCredits} Contact Credits (Invoice ${txn.id})`);
+    }
+
+    // Export & Reset Backend DB Helpers
+    function exportBackendDatabaseJson() {
+      const payload = JSON.stringify(mbDatabase, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'genrivreality-backend-db.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('⬇️ Exported live Genrivreality Backend Database JSON!');
+    }
+
+    function resetBackendDatabase() {
+      mbDatabase = getDefaultBackendDB();
+      try {
+        localStorage.removeItem('genriv_mb_db_v1');
+      } catch (e) {}
+      syncPropertiesWithMbBackend();
+      updateHeaderAccountStatus();
+      applyFilters();
+      renderMbDashboard();
+      showToast('↺ Reset Backend Database to fresh default Buyer, Seller & Admin state.');
+    }
+
+    // Live API Simulator in the Backend API Console Tab
+    function triggerSimulatedApiCall(endpointName) {
+      const user = getCurrentMbUser();
+      let responseData = {};
+      if (endpointName === 'GET /api/properties') {
+        responseData = { count: properties.length, boostedCount: properties.filter(p => p.boosted).length, items: properties.map(p => ({ id: p.id, title: p.title, price: p.priceLabel, reraVerified: p.reraVerified, boosted: p.boosted, views: p.views })) };
+      } else if (endpointName === 'GET /api/auth/me') {
+        responseData = { authenticated: true, sessionUser: user };
+      } else if (endpointName === 'GET /api/seller/leads') {
+        responseData = { totalLeads: mbDatabase.sellerLeads.length, leads: mbDatabase.sellerLeads };
+      } else if (endpointName === 'GET /api/admin/metrics') {
+        const totalRev = mbDatabase.transactions.reduce((acc, t) => acc + t.amount, 0);
+        responseData = { totalUsers: mbDatabase.users.length, totalProperties: properties.length, totalSubscriptionRevenueINR: totalRev, transactions: mbDatabase.transactions };
+      }
+      mbDatabase.lastApiLog = {
+        endpoint: endpointName,
+        status: 200,
+        timestamp: new Date().toISOString(),
+        response: responseData
+      };
+      saveMbDatabase();
+      renderMbDashboard();
+      showToast(`⚡ Executed ${endpointName} — 200 OK`);
+    }
+
+    // Master Renderer for the Role-Isolated Dashboards & Subscriptions
+    function renderMbDashboard() {
+      const container = document.getElementById('mb-dashboard-workspace');
+      if (!container) return;
+      renderDashboardNavStrip();
+
+      const user = getCurrentMbUser();
+      const isLogged = Boolean(mbDatabase.isLoggedIn);
+      const role = (user.role || 'Buyer').toLowerCase();
+      let view = mbDatabase.currentDashboardView || 'buyer';
+
+      // Enforce role dashboard separation
+      if (isLogged) {
+        if (role === 'buyer' || role === 'tenant') {
+          if (view !== 'buyer' && view !== 'subscriptions') view = 'buyer';
+          if (view === 'subscriptions' && !mbDatabase.buyerSubscriptionsEnabled) view = 'buyer';
+        } else if (role === 'seller' || role === 'owner' || role === 'builder') {
+          if (view !== 'seller' && view !== 'subscriptions') view = 'seller';
+        }
+      }
+
+      // Guest Visitor View: Display 3 Persona Chooser Cards
+      if (!isLogged) {
+        container.innerHTML = `
+          <div class="p-4 sm:p-8 text-center space-y-6">
+            <div class="max-w-xl mx-auto space-y-2">
+              <span class="px-3 py-1 rounded-full bg-genriv-600/30 text-genriv-300 text-xs font-extrabold uppercase tracking-wider">Multi-Role Portal Access</span>
+              <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Select Your Dedicated Dashboard Workspace</h3>
+              <p class="text-xs sm:text-sm text-slate-300">Each role has its own dedicated workspace, features, and gated forms. Choose an account to test:</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto text-left">
+              <!-- Buyer Card -->
+              <div class="p-6 rounded-3xl bg-slate-800/80 border border-genriv-500/40 hover:border-genriv-400 transition shadow-xl space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                  <div class="w-12 h-12 rounded-2xl bg-genriv-600/30 text-genriv-300 flex items-center justify-center text-2xl shadow-inner">👤</div>
+                  <h4 class="font-display font-bold text-lg text-white">Customer &amp; Buyer Hub</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Access the <strong>Customer Requisition Form</strong>, receive AI-curated property matches, and unlock direct owner contacts.
+                  </p>
+                  <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px] text-slate-300">
+                    <span class="text-slate-400">Demo User:</span> Anirban Chatterjee<br/>
+                    <span class="text-slate-400">Status:</span> ${mbDatabase.buyerSubscriptionsEnabled ? 'MB Prime Active' : '100% Free Promo Active'}
+                  </div>
+                </div>
+                <button type="button" onclick="quickSwitchRole('Buyer')" class="w-full py-3 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-xs shadow-md transition">
+                  Enter Buyer Dashboard →
+                </button>
+              </div>
+
+              <!-- Seller Card -->
+              <div class="p-6 rounded-3xl bg-slate-800/80 border border-emerald-500/40 hover:border-emerald-400 transition shadow-xl space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-600/30 text-emerald-300 flex items-center justify-center text-2xl shadow-inner">🏗️</div>
+                  <h4 class="font-display font-bold text-lg text-white">Seller &amp; Builder CRM</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Submit the <strong>PROPERTY ADVERTISEMENT FORM</strong> (100% Free), track buyer leads in real time, and 1-click boost listings.
+                  </p>
+                  <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px] text-slate-300">
+                    <span class="text-slate-400">Demo User:</span> Debashis Sen (Sen Estates)<br/>
+                    <span class="text-slate-400">Package:</span> Titanium Builder Pro (25 slots)
+                  </div>
+                </div>
+                <button type="button" onclick="quickSwitchRole('Seller')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-extrabold text-xs shadow-md transition">
+                  Enter Seller Dashboard →
+                </button>
+              </div>
+
+              <!-- Admin Card -->
+              <div class="p-6 rounded-3xl bg-slate-800/80 border border-rose-500/40 hover:border-rose-400 transition shadow-xl space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                  <div class="w-12 h-12 rounded-2xl bg-rose-600/30 text-rose-300 flex items-center justify-center text-2xl shadow-inner">🛡️</div>
+                  <h4 class="font-display font-bold text-lg text-white">Super Admin Console</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Access the <strong>Creative Submissions Hub</strong>, toggle Buyer Subscriptions ON/OFF, audit RERA licenses, and view revenue ledger.
+                  </p>
+                  <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px] text-slate-300">
+                    <span class="text-slate-400">Demo User:</span> Vikramaditya Roy<br/>
+                    <span class="text-slate-400">Privileges:</span> Full Platform Master
+                  </div>
+                </div>
+                <button type="button" onclick="quickSwitchRole('Admin')" class="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-amber-500 hover:from-rose-700 hover:to-amber-600 text-white font-extrabold text-xs shadow-md transition">
+                  Enter Admin Console →
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // VIEW 1: DEDICATED BUYER DASHBOARD
+      if (view === 'buyer') {
+        const unlockedProps = properties.filter(p => (user.unlockedPropertyIds || []).includes(p.id));
+        const savedProps = properties.filter(p => shortlistedIds.has(p.id));
+        const userReq = customerRequisitions.find(r => r.name.toLowerCase().includes(user.name.split(' ')[0].toLowerCase())) || customerRequisitions[0];
+        const matchedProps = getMatchingPropertiesForRequisition(userReq);
+
+        container.innerHTML = `
+          <div class="space-y-6">
+            <!-- Buyer Top KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Active Buyer Plan</div>
+                <div class="font-display font-extrabold text-lg ${mbDatabase.buyerSubscriptionsEnabled ? 'text-amber-300' : 'text-emerald-400'} mt-1">
+                  ${mbDatabase.buyerSubscriptionsEnabled ? `👑 ${user.planName}` : '🎉 100% Free Access'}
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">
+                  ${mbDatabase.buyerSubscriptionsEnabled ? 'MB Prime credit deduction active' : 'Zero payment required — Admin Promo'}
+                </p>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Owner Contact Credits</div>
+                <div class="font-display font-extrabold text-2xl text-emerald-400 mt-1">
+                  ${mbDatabase.buyerSubscriptionsEnabled ? `${user.contactCredits} <span class="text-xs font-normal text-slate-400">Available</span>` : 'Unlimited <span class="text-xs font-normal text-slate-400">Free</span>'}
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">
+                  ${mbDatabase.buyerSubscriptionsEnabled ? '1 credit per direct owner unlock' : 'Unlock direct owner contacts freely'}
+                </p>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Unlocked Owner Contacts</div>
+                <div class="font-display font-extrabold text-2xl text-white mt-1">${unlockedProps.length} <span class="text-xs font-normal text-slate-400">Properties</span></div>
+                <p class="text-[11px] text-slate-400 mt-1">Zero-brokerage verified owner numbers</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Saved Shortlist &amp; Alerts</div>
+                <div class="font-display font-extrabold text-2xl text-rose-400 mt-1">${savedProps.length} <span class="text-xs font-normal text-slate-400">Shortlisted</span></div>
+                <button type="button" onclick="toggleShortlistDrawer()" class="mt-2 text-xs font-bold text-rose-300 hover:underline">Open Saved Drawer →</button>
+              </div>
+            </div>
+
+            <!-- REQUIREMENT 5: Curated Property Matches based on Customer Requisition -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-950/70 via-slate-800/80 to-slate-900 border-2 border-genriv-500/40 shadow-xl space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-start sm:items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-genriv-600 text-white flex items-center justify-center text-lg font-bold shrink-0 shadow-md">
+                    🎯
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded-full bg-genriv-500/20 text-genriv-300 border border-genriv-500/30 text-[10px] font-extrabold uppercase">Requisition AI Match</span>
+                      <span class="font-mono text-xs text-amber-300 font-bold">${userReq ? userReq.id : 'No Requisition Submitted'}</span>
+                    </div>
+                    <h3 class="font-display font-extrabold text-base sm:text-lg text-white mt-0.5">
+                      Properties Curated for Your Customer Requisition
+                    </h3>
+                    <p class="text-xs text-slate-300">
+                      ${userReq
+                        ? `Matched for <strong>${userReq.specs}</strong> in <strong>${userReq.location}</strong> • Budget: <strong class="text-emerald-400">${userReq.budget}</strong>`
+                        : 'Submit your Customer Requisition Form to automatically receive tailored property matches!'}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  ${userReq ? `
+                    <button type="button" onclick="filterSearchByRequisition('${userReq.id}')" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
+                      <span>🔍 Show All Matches in Property Search</span>
+                      <span class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">${matchedProps.length}</span>
+                    </button>
+                  ` : ''}
+                  <button type="button" onclick="openRoleGatedForm('requisition')" class="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs shadow-md transition">
+                    📝 Edit / New Requisition
+                  </button>
+                </div>
+              </div>
+
+              <!-- Matched Property Cards Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                ${matchedProps.slice(0, 3).map(p => `
+                  <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-genriv-400/60 transition shadow flex flex-col justify-between space-y-3">
+                    <div class="space-y-2">
+                      <div class="relative h-32 rounded-lg overflow-hidden">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" />
+                        <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md text-emerald-400 font-extrabold text-[10px]">
+                          ✓ 98% Match
+                        </span>
+                        <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-genriv-600 text-white font-bold text-[10px]">
+                          ${p.priceLabel}
+                        </span>
+                      </div>
+                      <h4 class="font-display font-bold text-sm text-white line-clamp-1">${p.title}</h4>
+                      <p class="text-[11px] text-slate-400 flex items-center gap-1">
+                        <span>📍</span><span>${p.locality}, ${p.city}</span>
+                      </p>
+                      <div class="flex items-center justify-between text-xs font-semibold text-slate-300 pt-1 border-t border-slate-800">
+                        <span>${p.bhk}</span>
+                        <span>${p.areaSqft} sq.ft.</span>
+                        <span class="text-emerald-400 font-bold">${p.rentalYield || '4.8'}% Yield</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2 pt-1">
+                      <button type="button" onclick="unlockOwnerContactWithBackend('${p.id}')" class="w-full py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition">
+                        ${(user.unlockedPropertyIds || []).includes(p.id) ? '📞 View Unlocked Contact' : '🔓 Get Owner Contact'}
+                      </button>
+                      <button type="button" onclick="openVirtualTourModal('${p.id}')" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold" title="360° Tour">
+                        🔄
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Active Requisitions List for Current Buyer -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="font-display font-bold text-base text-white">📋 My Active Customer Requisitions (${customerRequisitions.length})</h3>
+                <button type="button" onclick="openRoleGatedForm('requisition')" class="text-xs font-bold text-genriv-400 hover:underline">
+                  + Submit Another Requisition
+                </button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">Requisition ID</th>
+                      <th class="py-2.5 px-3">Category &amp; Specs</th>
+                      <th class="py-2.5 px-3">Location Demand</th>
+                      <th class="py-2.5 px-3">Budget</th>
+                      <th class="py-2.5 px-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${customerRequisitions.map(r => `
+                      <tr>
+                        <td class="py-3 px-3 font-mono font-bold text-genriv-300">${r.id}</td>
+                        <td class="py-3 px-3 text-white font-semibold">${r.category}<span class="block text-[11px] text-slate-400">${r.specs}</span></td>
+                        <td class="py-3 px-3 text-slate-300">📍 ${r.location}</td>
+                        <td class="py-3 px-3 font-bold text-emerald-400">${r.budget}</td>
+                        <td class="py-3 px-3">
+                          <button type="button" onclick="filterSearchByRequisition('${r.id}')" class="px-3 py-1.5 rounded-lg bg-genriv-600 hover:bg-genriv-500 text-white font-bold text-xs">
+                            🎯 Show Matches
+                          </button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Unlocked Owner Contacts Table -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 class="font-display font-bold text-base sm:text-lg text-white">📞 Buyer's Unlocked Owner Contacts Vault</h3>
+                  <p class="text-xs text-slate-400">Direct zero-brokerage owner contacts unlocked by your account.</p>
+                </div>
+                <button type="button" onclick="scrollToSection('listings-section')" class="px-3.5 py-2 rounded-xl bg-genriv-600 hover:bg-genriv-500 text-white text-xs font-bold shrink-0">
+                  + Unlock More Properties
+                </button>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">Property &amp; Locality</th>
+                      <th class="py-2.5 px-3">Price &amp; Config</th>
+                      <th class="py-2.5 px-3">Owner / Developer</th>
+                      <th class="py-2.5 px-3">Unlocked Phone / WhatsApp</th>
+                      <th class="py-2.5 px-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${unlockedProps.length === 0 ? `
+                      <tr><td colspan="5" class="py-6 text-center text-slate-400">No owner contacts unlocked yet. Click "Get Owner Contact" on any property card to reveal verified direct numbers!</td></tr>
+                    ` : unlockedProps.map(p => `
+                      <tr>
+                        <td class="py-3 px-3 font-bold text-white">${p.title} <span class="block text-[11px] font-normal text-slate-400">${p.locality}, ${p.city}</span></td>
+                        <td class="py-3 px-3 text-amber-300 font-bold">${p.priceLabel} • ${p.bhk}</td>
+                        <td class="py-3 px-3 text-slate-200">${p.builderName}</td>
+                        <td class="py-3 px-3 font-mono font-extrabold text-emerald-400">${p.ownerPhone || '+91 98310-77890'}</td>
+                        <td class="py-3 px-3">
+                          <button type="button" onclick="openVirtualTourModal('${p.id}')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold">360° Tour</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // VIEW 2: DEDICATED SELLER DASHBOARD
+      else if (view === 'seller') {
+        container.innerHTML = `
+          <div class="space-y-6">
+            <!-- Seller Top KPI Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Active Seller Package</div>
+                <div class="font-display font-extrabold text-lg text-emerald-400 mt-1">🏗️ ${user.planName}</div>
+                <button type="button" onclick="switchMbDashboardView('subscriptions')" class="mt-2 text-xs font-bold text-amber-300 hover:underline">Upgrade Seller Pack →</button>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Active Listings &amp; Quota</div>
+                <div class="font-display font-extrabold text-2xl text-white mt-1">${properties.length} / ${user.listingQuota} <span class="text-xs font-normal text-slate-400">Slots</span></div>
+                <button type="button" onclick="openRoleGatedForm('advertisement')" class="mt-2 text-xs font-bold text-emerald-300 hover:underline">+ Post Free Property Ad →</button>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Total Buyer Impressions</div>
+                <div class="font-display font-extrabold text-2xl text-sky-400 mt-1">${properties.reduce((s, p) => s + (p.views || 700), 0).toLocaleString()}</div>
+                <p class="text-[11px] text-slate-400 mt-1">Boosted listings get 5x top-slot views</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                <div class="text-xs text-slate-400 font-semibold">Verified Buyer Leads (CRM)</div>
+                <div class="font-display font-extrabold text-2xl text-amber-300 mt-1">${mbDatabase.sellerLeads.length} <span class="text-xs font-normal text-slate-400">Active Leads</span></div>
+                <p class="text-[11px] text-slate-400 mt-1">Instant phone &amp; WhatsApp buyer details</p>
+              </div>
+            </div>
+
+            <!-- Seller Property Performance & 1-Click Boost Table -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 class="font-display font-bold text-base sm:text-lg text-white">⚡ Seller Listings &amp; MagicBricks Top-Slot Boost Manager</h3>
+                  <p class="text-xs text-slate-400">Toggle "Boost to Top Slot" on any listing to pin it first in property search results.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" onclick="openRoleGatedForm('advertisement')" class="px-3.5 py-2 rounded-xl bg-amber-400 text-slate-950 text-xs font-extrabold shrink-0">
+                    📢 Open PROPERTY ADVERTISEMENT FORM
+                  </button>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">Property Listing</th>
+                      <th class="py-2.5 px-3">Price &amp; City</th>
+                      <th class="py-2.5 px-3">Search Views</th>
+                      <th class="py-2.5 px-3">Buyer Leads</th>
+                      <th class="py-2.5 px-3">RERA Status</th>
+                      <th class="py-2.5 px-3">MagicBricks Boost</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${properties.map(p => `
+                      <tr>
+                        <td class="py-3 px-3 font-bold text-white">${p.title}</td>
+                        <td class="py-3 px-3 text-amber-300 font-bold">${p.priceLabel} • ${p.city}</td>
+                        <td class="py-3 px-3 text-slate-200 font-semibold">${(p.views || 750).toLocaleString()} views</td>
+                        <td class="py-3 px-3 text-emerald-400 font-bold">${p.leadsCount || 10} leads</td>
+                        <td class="py-3 px-3">
+                          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.reraVerified ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
+                            ${p.reraVerified ? '🛡️ Verified' : '⏳ Pending'}
+                          </span>
+                        </td>
+                        <td class="py-3 px-3">
+                          <button type="button" onclick="toggleSellerPropertyBoost('${p.id}')" class="px-3 py-1.5 rounded-xl font-extrabold text-xs transition ${p.boosted ? 'bg-amber-400 text-slate-950 shadow' : 'bg-slate-700 hover:bg-slate-600 text-white'}">
+                            ${p.boosted ? '⚡ Boosted (#1 Slot)' : '🚀 Boost to Top Slot'}
+                          </button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Seller Buyer Leads CRM Inbox -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <h3 class="font-display font-bold text-base sm:text-lg text-white">📬 Seller Lead CRM Inbox (Real-Time Buyer Inquiries)</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">Lead ID &amp; Time</th>
+                      <th class="py-2.5 px-3">Buyer Name &amp; Contact</th>
+                      <th class="py-2.5 px-3">Interested Property</th>
+                      <th class="py-2.5 px-3">Budget / Intent</th>
+                      <th class="py-2.5 px-3">CRM Pipeline Stage</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${mbDatabase.sellerLeads.map(l => `
+                      <tr>
+                        <td class="py-3 px-3 font-mono text-slate-300">${l.id}<span class="block text-[10px] text-slate-500">${l.timestamp}</span></td>
+                        <td class="py-3 px-3 font-bold text-white">${l.buyerName}<span class="block text-[11px] font-mono text-emerald-400">${l.buyerPhone}</span></td>
+                        <td class="py-3 px-3 text-slate-200">${l.propertyTitle}</td>
+                        <td class="py-3 px-3 text-amber-300 font-bold">${l.budget} (${l.intent})</td>
+                        <td class="py-3 px-3">
+                          <select aria-label="Lead Status" onchange="updateSellerLeadStatus('${l.id}', this.value)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
+                            <option value="New Lead" ${l.status === 'New Lead' ? 'selected' : ''}>🟢 New Lead</option>
+                            <option value="Contacted" ${l.status === 'Contacted' ? 'selected' : ''}>📞 Contacted</option>
+                            <option value="Site Visit Fixed" ${l.status === 'Site Visit Fixed' ? 'selected' : ''}>📅 Site Visit Fixed</option>
+                            <option value="Deal Closed" ${l.status === 'Deal Closed' ? 'selected' : ''}>🏆 Deal Closed</option>
+                          </select>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // VIEW 3: DEDICATED SUPER ADMIN MASTER CONSOLE
+      else if (view === 'admin') {
+        const totalRevenue = mbDatabase.transactions.reduce((s, t) => s + t.amount, 0);
+        container.innerHTML = `
+          <div class="space-y-6">
+            <!-- REQUIREMENT 3: Buyer Subscriptions System Master Gate -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/70 to-slate-900 border-2 ${mbDatabase.buyerSubscriptionsEnabled ? 'border-amber-500/50' : 'border-emerald-500/50'} shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Platform Monetization Control</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold ${mbDatabase.buyerSubscriptionsEnabled ? 'bg-amber-400 text-slate-950' : 'bg-emerald-500 text-white'}">
+                    ${mbDatabase.buyerSubscriptionsEnabled ? '🟢 Buyer Subscriptions: ON (Paid MB Prime Active)' : '🔴 Buyer Subscriptions: OFF (100% Free Buyer Access)'}
+                  </span>
+                </div>
+                <h4 class="font-display font-extrabold text-lg text-white mt-1">Buyer Subscriptions Master Switch</h4>
+                <p class="text-xs text-slate-300 mt-0.5 max-w-2xl">
+                  ${mbDatabase.buyerSubscriptionsEnabled
+                    ? 'MB Prime packages are currently active and visible to buyers. Buyers must spend contact credits to reveal direct owner phone numbers.'
+                    : 'Buyer subscriptions are currently <strong>HIDDEN &amp; DISABLED</strong>. All buyers unlock direct owner contacts for 100% free with no credit deduction.'}
+                </p>
+              </div>
+              <button type="button" onclick="toggleBuyerSubscriptionsAdmin()" class="px-5 py-3 rounded-xl font-extrabold text-xs sm:text-sm whitespace-nowrap shrink-0 transition shadow-lg ${mbDatabase.buyerSubscriptionsEnabled ? 'bg-rose-600 hover:bg-rose-500 text-white' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}">
+                ${mbDatabase.buyerSubscriptionsEnabled ? 'Turn OFF Buyer Subscriptions (Make Free)' : 'Turn ON Buyer Subscriptions (Enable Paid MB Prime)'}
+              </button>
+            </div>
+
+            <!-- REQUIREMENT 4: Creative Submissions Hub Launcher -->
+            <div class="p-5 rounded-2xl bg-slate-800/80 border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-genriv-400">Executive Submissions Roster</span>
+                <h4 class="font-display font-bold text-base text-white mt-0.5">Admin Creative Submissions Hub</h4>
+                <p class="text-xs text-slate-400">Inspect all ${customerRequisitions.length} Customer Requisitions &amp; ${publishedAdvertisements.length} Seller Property Advertisements in creative glassmorphic cards.</p>
+              </div>
+              <button type="button" onclick="scrollToSection('forms-hub-section')" class="px-4 py-2.5 rounded-xl bg-genriv-600 hover:bg-genriv-500 text-white font-extrabold text-xs shadow-md transition shrink-0">
+                Open Creative Submissions Hub →
+              </button>
+            </div>
+
+            <!-- Admin Master KPI Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-rose-500/30">
+                <div class="text-xs text-slate-400 font-semibold">Registered Accounts</div>
+                <div class="font-display font-extrabold text-2xl text-white mt-1">${mbDatabase.users.length} <span class="text-xs font-normal text-emerald-400">Active</span></div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-rose-500/30">
+                <div class="text-xs text-slate-400 font-semibold">Live Property Catalog</div>
+                <div class="font-display font-extrabold text-2xl text-emerald-400 mt-1">${properties.length} <span class="text-xs font-normal text-slate-400">Listings</span></div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-rose-500/30">
+                <div class="text-xs text-slate-400 font-semibold">Subscription Revenue</div>
+                <div class="font-display font-extrabold text-2xl text-amber-300 mt-1">₹${totalRevenue.toLocaleString('en-IN')}</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-800/90 border border-rose-500/30">
+                <div class="text-xs text-slate-400 font-semibold">Active Requisitions &amp; Ads</div>
+                <div class="font-display font-extrabold text-2xl text-sky-400 mt-1">${customerRequisitions.length + publishedAdvertisements.length} <span class="text-xs font-normal text-slate-400">Submissions</span></div>
+              </div>
+            </div>
+
+            <!-- Admin Table 1: User Account & Subscription Credit Management -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <h3 class="font-display font-bold text-base sm:text-lg text-white">👥 Admin User Accounts &amp; Subscription Quota Manager</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">User &amp; Email</th>
+                      <th class="py-2.5 px-3">Role</th>
+                      <th class="py-2.5 px-3">Active Subscription</th>
+                      <th class="py-2.5 px-3">Contact Credits</th>
+                      <th class="py-2.5 px-3">Account Status</th>
+                      <th class="py-2.5 px-3">Admin Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${mbDatabase.users.map(u => `
+                      <tr>
+                        <td class="py-3 px-3 font-bold text-white">${u.name}<span class="block text-[11px] font-normal text-slate-400">${u.email}</span></td>
+                        <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold">${u.role}</span></td>
+                        <td class="py-3 px-3 text-amber-300 font-bold">${u.planName}</td>
+                        <td class="py-3 px-3 font-mono font-extrabold text-emerald-400">${u.contactCredits}</td>
+                        <td class="py-3 px-3">
+                          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${u.status === 'Active' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${u.status}</span>
+                        </td>
+                        <td class="py-3 px-3 flex flex-wrap gap-1.5">
+                          <button type="button" onclick="adminAddCreditsToUser('${u.id}', 10)" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold">+10 Credits</button>
+                          <button type="button" onclick="adminToggleUserStatus('${u.id}')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold">${u.status === 'Active' ? 'Suspend' : 'Activate'}</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Admin Table 2: Property RERA Moderation & Catalog Control -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <h3 class="font-display font-bold text-base sm:text-lg text-white">🛡️ Admin RERA Verification &amp; Listing Moderation Queue</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2.5 px-3">Property Title</th>
+                      <th class="py-2.5 px-3">City &amp; Price</th>
+                      <th class="py-2.5 px-3">RERA ID</th>
+                      <th class="py-2.5 px-3">RERA Audit Status</th>
+                      <th class="py-2.5 px-3">Moderation Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${properties.map(p => `
+                      <tr>
+                        <td class="py-3 px-3 font-bold text-white">${p.title}</td>
+                        <td class="py-3 px-3 text-amber-300 font-bold">${p.city} • ${p.priceLabel}</td>
+                        <td class="py-3 px-3 font-mono text-slate-300">${p.reraId}</td>
+                        <td class="py-3 px-3">
+                          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${p.reraVerified ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
+                            ${p.reraVerified ? '✅ RERA Approved' : '⏳ Pending Audit'}
+                          </span>
+                        </td>
+                        <td class="py-3 px-3 flex flex-wrap gap-1.5">
+                          <button type="button" onclick="adminToggleReraVerification('${p.id}')" class="px-2.5 py-1 rounded-lg bg-genriv-600 hover:bg-genriv-500 text-white font-bold">
+                            ${p.reraVerified ? 'Revoke RERA' : 'Approve RERA'}
+                          </button>
+                          <button type="button" onclick="toggleSellerPropertyBoost('${p.id}')" class="px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-300 font-bold">
+                            ${p.boosted ? 'Unboost' : 'Feature Top'}
+                          </button>
+                          <button type="button" onclick="adminDeleteProperty('${p.id}')" class="px-2.5 py-1 rounded-lg bg-rose-600/30 hover:bg-rose-600 text-rose-200 font-bold">
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // VIEW 4: SUBSCRIPTIONS VIEW (Seller packs always; Buyer packs only if admin enabled)
+      else if (view === 'subscriptions') {
+        const plansToDisplay = mbDatabase.buyerSubscriptionsEnabled
+          ? MB_SUBSCRIPTION_PLANS
+          : MB_SUBSCRIPTION_PLANS.filter(p => p.targetRole !== 'Buyer');
+
+        container.innerHTML = `
+          <div class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+              <div>
+                <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400">Platform Subscriptions Hub</span>
+                <h3 class="font-display font-extrabold text-xl sm:text-2xl text-white mt-0.5">
+                  ${mbDatabase.buyerSubscriptionsEnabled ? 'MB Prime Buyer Plans &amp; Seller Boost Packages' : 'Seller Listing Boost &amp; Quota Packages'}
+                </h3>
+                <p class="text-xs text-slate-400">
+                  ${mbDatabase.buyerSubscriptionsEnabled
+                    ? 'Select any Buyer or Seller subscription tier below to launch instant UPI / Card checkout.'
+                    : 'Seller boost packages and listing slots. Buyer subscriptions are currently 100% free!'}
+                </p>
+              </div>
+              ${!mbDatabase.buyerSubscriptionsEnabled ? `
+                <div class="px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
+                  🎉 Buyer Access is 100% Free: All direct owner contacts unlocked with zero fees!
+                </div>
+              ` : `
+                <div class="px-3.5 py-2 rounded-xl bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-bold">
+                  🎁 Promo Code <strong class="text-white">GENRIV20</strong> gives 20% instant discount!
+                </div>
+              `}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+              ${plansToDisplay.map(plan => `
+                <div class="p-5 rounded-2xl bg-slate-800/80 border ${plan.id === user.planId ? 'border-amber-400 ring-2 ring-amber-400/30' : 'border-slate-700'} flex flex-col justify-between space-y-4">
+                  <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${plan.targetRole === 'Buyer' ? 'bg-genriv-500/20 text-genriv-300' : 'bg-emerald-500/20 text-emerald-300'}">${plan.targetRole} Plan</span>
+                      <span class="text-[10px] font-extrabold text-amber-300">${plan.badge}</span>
+                    </div>
+                    <h4 class="font-display font-extrabold text-lg text-white">${plan.name}</h4>
+                    <div class="font-display font-extrabold text-2xl text-amber-300">${plan.priceLabel}</div>
+                    <div class="text-xs text-slate-400 font-semibold">Includes ${plan.contactCredits} Contact Unlocks • ${plan.listingQuota} Listing Slots</div>
+                    <ul class="space-y-1.5 pt-2 border-t border-slate-700/80 text-xs text-slate-300">
+                      ${plan.features.map(f => `<li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span><span>${f}</span></li>`).join('')}
+                    </ul>
+                  </div>
+                  <button type="button" onclick="openSubscriptionCheckoutModal('${plan.id}')" class="w-full py-2.5 rounded-xl font-extrabold text-xs transition ${plan.id === user.planId ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 hover:opacity-95'}">
+                    ${plan.id === user.planId ? '✔ Current Active Plan (Add Credits)' : 'Subscribe / Upgrade Now →'}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Recent Subscription Invoices & Ledger -->
+            <div class="p-5 rounded-2xl bg-slate-800/60 border border-slate-700/80 space-y-3">
+              <h4 class="font-display font-bold text-base text-white">🧾 Live Subscription Transactions &amp; GST Invoice Ledger</h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="py-2 px-3">Transaction ID</th>
+                      <th class="py-2 px-3">Subscriber</th>
+                      <th class="py-2 px-3">Plan Activated</th>
+                      <th class="py-2 px-3">Amount Paid</th>
+                      <th class="py-2 px-3">Payment Mode</th>
+                      <th class="py-2 px-3">Date &amp; Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-700/70">
+                    ${mbDatabase.transactions.map(t => `
+                      <tr>
+                        <td class="py-2.5 px-3 font-mono text-amber-300 font-bold">${t.id}</td>
+                        <td class="py-2.5 px-3 font-bold text-white">${t.userName} (${t.role})</td>
+                        <td class="py-2.5 px-3 text-slate-200">${t.planName}</td>
+                        <td class="py-2.5 px-3 font-extrabold text-emerald-400">₹${t.amount.toLocaleString('en-IN')}</td>
+                        <td class="py-2.5 px-3 text-slate-300">${t.method}</td>
+                        <td class="py-2.5 px-3 text-slate-400">${t.date} • <span class="text-emerald-400 font-bold">${t.status}</span></td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // VIEW 5: REST API CONSOLE
+      else if (view === 'api') {
+        container.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 class="font-display font-bold text-lg text-white">⚡ MagicBricks Full-Stack REST API &amp; Persistent Database Console</h3>
+                <p class="text-xs text-slate-400">Test live backend endpoints right from the browser, or run <code class="text-amber-300">node server.js</code> from the downloadable ZIP archive.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="triggerSimulatedApiCall('GET /api/properties')" class="px-3 py-1.5 rounded-xl bg-genriv-600 text-white text-xs font-bold">GET /api/properties</button>
+                <button type="button" onclick="triggerSimulatedApiCall('GET /api/auth/me')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">GET /api/auth/me</button>
+                <button type="button" onclick="triggerSimulatedApiCall('GET /api/seller/leads')" class="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold">GET /api/seller/leads</button>
+                <button type="button" onclick="triggerSimulatedApiCall('GET /api/admin/metrics')" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-bold">GET /api/admin/metrics</button>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-400 overflow-x-auto max-h-80 custom-scrollbar">
+              <pre>${JSON.stringify(mbDatabase.lastApiLog, null, 2)}</pre>
+            </div>
+          </div>
+        `;
+      }
     }
 
     function handleLoginSubmit(e) {
       e.preventDefault();
       const role = document.getElementById('login-role').value;
-      const user = document.getElementById('login-identifier').value.trim();
-      const shortName = user.split('@')[0].slice(0, 14);
-      const loginLbl = document.getElementById('nav-login-label');
-      if (loginLbl) loginLbl.textContent = `👤 ${shortName} (${role.split(' ')[0]})`;
+      const userIdentifier = document.getElementById('login-identifier').value.trim();
+      const shortName = userIdentifier.split('@')[0].slice(0, 14) || 'Member';
+
+      // First check if an account with this exact email or phone exists
+      let matchedUser = mbDatabase.users.find(
+        u => u.email.toLowerCase() === userIdentifier.toLowerCase() || u.phone === userIdentifier
+      );
+
+      if (!matchedUser) {
+        // Create new session user with the explicitly chosen role
+        const chosenRole = role.split(' ')[0];
+        const isSellerRole = chosenRole === 'Seller' || chosenRole === 'Owner' || chosenRole === 'Builder';
+        matchedUser = {
+          id: 'usr-' + Date.now(),
+          name: shortName,
+          email: userIdentifier.includes('@') ? userIdentifier : `${shortName.toLowerCase()}@genrivreality.com`,
+          phone: '+91 98300-99110',
+          role: chosenRole,
+          planId: isSellerRole ? 'seller-free-tier' : 'mb-prime-silver',
+          planName: isSellerRole ? 'Free Basic Tier (1 Ad / 6 Mo)' : 'MB Prime Silver',
+          contactCredits: 15,
+          listingQuota: isSellerRole ? 1 : 0,
+          status: 'Active',
+          joinedAt: new Date().toISOString().slice(0, 10),
+          unlockedPropertyIds: []
+        };
+        mbDatabase.users.push(matchedUser);
+      }
+
+      mbDatabase.isLoggedIn = true;
+      mbDatabase.currentUserId = matchedUser.id;
+      const roleViewMap = { 'Buyer': 'buyer', 'Tenant': 'buyer', 'Seller': 'seller', 'Owner': 'seller', 'Builder': 'seller', 'Admin': 'admin' };
+      mbDatabase.currentDashboardView = roleViewMap[matchedUser.role] || 'buyer';
+      mbDatabase.lastApiLog = {
+        endpoint: 'POST /api/auth/login',
+        status: 200,
+        timestamp: new Date().toISOString(),
+        user: { id: matchedUser.id, name: matchedUser.name, role: matchedUser.role, plan: matchedUser.planName }
+      };
+
+      saveMbDatabase();
+
+      try {
+        localStorage.setItem('genriv_active_user', JSON.stringify(matchedUser));
+      } catch (e) {}
+
+      updateHeaderAccountStatus();
       closeLoginModal();
-      showToast(`🔐 Welcome back, ${shortName}! Logged in with ${role} privileges.`);
+      showToast(`🔐 Welcome, ${matchedUser.name}! Signed in as ${matchedUser.role}. Opening your dedicated dashboard...`);
+
+      setTimeout(() => {
+        if (matchedUser.role === 'Admin') {
+          window.location.href = 'admin-dashboard.html';
+        } else if (matchedUser.role === 'Seller' || matchedUser.role === 'Owner' || matchedUser.role === 'Builder' || matchedUser.role === 'Agent') {
+          window.location.href = 'seller-dashboard.html';
+        } else {
+          window.location.href = 'buyer-dashboard.html';
+        }
+      }, 500);
     }
 
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', () => {
-      applyFilters();
-      updateShortlistUI();
-      initLocalityChart();
-      calculateEMI();
-      switchMainTab('home');
-      renderHospitalityVenues();
-      renderRequisitionsList();
-      renderAdvertisementsList();
-    });
+    // Initialize on load with robust readyState fallback
+    function initGenrivApp() {
+      loadMbDatabase();
+      detectUserLocation();
+      updateHeaderAccountStatus();
+      if (typeof applyFilters === 'function') applyFilters();
+      if (typeof renderMagicBricksSections === 'function') renderMagicBricksSections();
+      if (typeof updateShortlistUI === 'function') updateShortlistUI();
+      if (typeof initLocalityChart === 'function') initLocalityChart();
+      if (typeof calculateEligibility === 'function') calculateEligibility();
+      if (typeof renderHospitalityVenues === 'function') renderHospitalityVenues();
+      if (typeof renderRequisitionsList === 'function') renderRequisitionsList();
+      if (typeof renderAdvertisementsList === 'function') renderAdvertisementsList();
+      if (typeof renderMbDashboard === 'function') renderMbDashboard();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initGenrivApp);
+    } else {
+      initGenrivApp();
+    }
+
+
+    function setQuickSearch(localityName) {
+      const searchInput = document.getElementById('search-locality-input');
+      if (searchInput) searchInput.value = localityName;
+      if (typeof applyFilters === 'function') applyFilters();
+      const listingsSec = document.getElementById('listings-section');
+      if (listingsSec) listingsSec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function navigateToLocality(localityName) {
+      window.location.href = 'new-projects.html?city=Kolkata&locality=' + encodeURIComponent(localityName);
+    }

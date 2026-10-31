@@ -1,0 +1,110 @@
+Listing Period:Listing Period:Date:Date:Registration No:                  Registration No:
+Listing Period:
+Listing Period:
+Date:
+Date:
+Registration No:
+Registration No:
+PROPERTY ADVERTISEMENT FORM
+1. Advertising By *
+Property Owner
+Real Estate Agent / Broker
+Builder / Developer
+Authorized Representative
+Advertiser Name (This name display in the portal)*
+2. Project Name
+Project Name (This name display in the portal)*
+3. Property Category
+Residential
+Commercial
+Land / Plot
+Mess / PG
+4. Property Advertisement Purpose
+For Sale
+For Rent
+For Lease
+5. Possession Type *
+New Upcoming
+Under Construction
+Ready to Move / Ready for Possession
+Re-sale
+Expected period:
+6. Room Configuration / Property Size
+1 RK / Studio
+1 BHK
+2 BHK
+3 BHK
+4 BHK
+5+ BHK
+Independent House / Villa
+Area / Size
+7. Price Range
+Price Type *
+Sale Price (₹)
+Monthly Rent (₹/month)
+Monthly Lease (₹/month)
+Minimum Price (₹) *
+Maximum Price (₹) *
+For rent or lease, enter the monthly amount.
+8. Amenities & Facilities
+Select all facilities available at the property.
+Lift
+Car Parking
+Two-Wheeler Parking
+24×7 Water Supply
+Power Backup
+Security Guard
+CCTV
+Fire Safety
+Gated Community
+Garden
+Children's Play Area
+Gym
+Swimming Pool
+Community Hall
+Clubhouse
+Intercom
+Balcony
+Terrace
+Visitor Parking
+Rainwater Harvesting
+Solar Power
+Nearby School
+Nearby Hospital
+Nearby Market
+Nearby Public Transport
+9. Furnishing Status *
+Unfurnished
+Semi-furnished
+Fully furnished
+Additional Facilities / Special Features
+10. Property Photos
+Upload Property Photos
+Recommended: 5–15 clear photos of the exterior, rooms, kitchen, bathrooms and amenities.
+Photo filenames / notes (optional)
+Actual photo uploads require a website upload control and secure image storage.
+11. Contact Details
+Contact Person Name *
+Mobile Number *
+Email ID
+Property Location *
+Property Description
+12. Declaration, Terms & Conditions
+Declaration by Advertiser
+I hereby declare that:
+The information and documents submitted for this property advertisement are true and accurate to the best of my knowledge.
+I am the property owner, seller, authorized representative, real estate agent, or builder/developer authorized to submit this advertisement.
+I have the necessary rights and permissions to submit the property details and photographs for advertising.
+I understand that GENRIV may review, verify, edit for formatting, reject, suspend, or remove an advertisement that is inaccurate, misleading, incomplete, or violates applicable policies or laws.
+I consent to GENRIV using the submitted property details and photographs for the purpose of listing and advertising the property, subject to applicable law and the agreed service terms.
+I understand that submitting an advertisement does not guarantee a sale, rental, lease, buyer, tenant, or transaction.
+I agree to respond honestly to enquiries and to promptly inform GENRIV of any material change in the property's availability, price, ownership, or possession status.
+Terms & Conditions
+The advertiser is responsible for the accuracy of the listing and the legality of the advertisement.
+Property prices, measurements, possession status, amenities, approvals and ownership claims must not be misrepresented.
+GENRIV's role, advertising fees (if any), cancellation or refund policy, and other service obligations will be governed by the applicable service agreement.
+GENRIV does not guarantee that an advertisement will result in a transaction and is not a substitute for independent legal or property due diligence.
+Personal information and contact details will be handled in accordance with GENRIV's applicable privacy notice and relevant law.
+GENRIV may update its policies and terms in accordance with applicable law, with notice where required.
+I have read and understood the declaration, terms and conditions, and agree to them. *
+Confirm & Add Declaration

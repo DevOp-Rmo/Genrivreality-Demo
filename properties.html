@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <link rel="icon" type="image/png" href="images/genriv_logo-Photoroom.png" />
+  <link rel="apple-touch-icon" href="images/genriv_logo-Photoroom.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Properties for Sale & Rent in Kolkata & India - 100% Verified | Genriv Reality</title>
+  <meta name="description" content="Search 36+ verified residential & commercial properties for sale, rent, and lease across Kolkata, Mumbai, Bengaluru, Delhi NCR on Genriv Reality." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            genriv: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' },
+            acres: { 500: '#0ea5e9', 600: '#0284c7' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Cabinet Grotesk', 'Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen antialiased flex flex-col">
+
+  <!-- TOP HEADER -->
+  <!-- TOP ANNOUNCEMENT RIBBON (Fusion of Housing Edge + 99acres RERA Intelligence) -->
+  <div class="bg-gradient-to-r from-genriv-900 via-indigo-900 to-acres-700 text-white text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-400 text-slate-950">Genriv AI 2.0</span>
+        <span class="font-medium">India's First Hybrid Discovery Engine: Visual 360° Tours + RERA & Locality Price Intelligence</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-slate-200">
+        <button type="button" onclick="openServiceModal('rent-pay')" class="hover:text-amber-300 transition flex items-center gap-1">
+          <span>💳 Pay Rent on Credit Card (0% Convenience Promo)</span>
+        </button>
+        <span>•</span>
+        <button type="button" onclick="scrollToSection('insights-section')" class="hover:text-amber-300 transition flex items-center gap-1">
+          <span>📈 Live Q4 2026 Price Index</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER / NAVIGATION -->
+  <header class="sticky top-0 z-40 glass-panel shadow-sm transition-colors w-full">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 flex-nowrap">
+      <!-- Brand Logo -->
+      <a href="#top-hero" class="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none shrink-0 whitespace-nowrap">
+        <img src="images/genriv_logo-Photoroom.png" alt="Genrivreality Logo" class="w-9 h-9 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition shrink-0" />
+        <div class="whitespace-nowrap">
+          <div class="flex items-center gap-1 whitespace-nowrap">
+            <span class="font-display font-extrabold text-base sm:text-xl xl:text-2xl tracking-tight bg-gradient-to-r from-genriv-700 via-indigo-600 to-acres-500 dark:from-genriv-300 dark:via-indigo-300 dark:to-sky-400 bg-clip-text text-transparent">Genrivreality</span>
+            <span class="hidden sm:inline-block text-[9px] xl:text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">VERIFIED</span>
+          </div>
+          <p class="hidden sm:block text-[10px] text-slate-500 dark:text-slate-400 -mt-0.5 whitespace-nowrap">Next-Gen Living • Real Insights</p>
+        </div>
+      </a>
+
+      <!-- City Quick Selector Pill -->
+      <div class="hidden 2xl:flex items-center bg-slate-100 dark:bg-slate-800/90 rounded-full p-1 border border-slate-200/80 dark:border-slate-700 shrink-0 whitespace-nowrap">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 pl-2.5 pr-1 flex items-center gap-1 whitespace-nowrap">
+          <svg class="w-3.5 h-3.5 text-genriv-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          City:
+        </span>
+        <select id="header-city-select" aria-label="Select City" onchange="syncCityFilter(this.value)" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-100 pr-2.5 py-1 focus:outline-none cursor-pointer whitespace-nowrap">
+          <option value="All">All India (6 Metros)</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Bengaluru">Bengaluru</option>
+          <option value="Gurugram">Gurugram (NCR)</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Pune">Pune</option>
+        </select>
+      </div>
+
+      <!-- Desktop Nav Links (Spacious on large screens) -->
+      <nav class="pc-compact-nav hidden xl:flex items-center gap-2 2xl:gap-3 text-xs xl:text-sm font-semibold text-slate-700 dark:text-slate-200 shrink-0">
+        
+        <!-- Explore Properties Dropdown -->
+        <div class="magic-nav-dropdown py-2">
+          <button type="button" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1 transition font-bold">
+            <span>Explore Properties</span>
+            <span class="text-[9px] opacity-60">▾</span>
+          </button>
+          <div class="magic-dropdown-panel">
+            <div class="px-2 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Discover Homes</div>
+            <a href="new-projects.html?city=Kolkata" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">🏗️</span>
+              <div>
+                <div class="text-xs">New Projects in Kolkata</div>
+                <div class="text-[10px] text-slate-500 font-normal">22+ RERA upcoming townships &amp; towers</div>
+              </div>
+            </a>
+            <a href="properties.html?intent=Buy" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">🏡</span>
+              <div>
+                <div class="text-xs">Ready to Move Apartments</div>
+                <div class="text-[10px] text-slate-500 font-normal">Immediate possession flats across Kolkata</div>
+              </div>
+            </a>
+            <a href="properties.html?intent=Rent" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">🔑</span>
+              <div>
+                <div class="text-xs">Zero Brokerage Rentals</div>
+                <div class="text-[10px] text-slate-500 font-normal">Direct owner rental flats &amp; family homes</div>
+              </div>
+            </a>
+            <a href="properties.html" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-genriv-600 dark:text-genriv-400 font-extrabold transition">
+              <span class="text-base">🔍</span>
+              <div>
+                <div class="text-xs">Browse All 36+ Properties Pan-India</div>
+                <div class="text-[10px] text-slate-500 font-normal">Kolkata, Mumbai, Bengaluru, NCR, Hyderabad</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Top Agents Link (Question 5) -->
+        <a href="agents.html" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold flex items-center gap-1 transition">
+          <span>👨‍💼</span> <span>Top Agents</span>
+        </a>
+
+        <!-- Home Loans Dropdown -->
+        <div class="magic-nav-dropdown py-2">
+          <button type="button" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1 transition font-bold text-amber-600 dark:text-amber-400">
+            <span>Home Loans &amp; EMI</span>
+            <span class="text-[9px] opacity-60">▾</span>
+          </button>
+          <div class="magic-dropdown-panel">
+            <div class="px-2 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Banking &amp; Sanction</div>
+            <a href="loan-calculator.html" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-extrabold transition">
+              <span class="text-base">🧮</span>
+              <div>
+                <div class="text-xs">Home Loan Eligibility Calculator</div>
+                <div class="text-[10px] text-slate-500 font-normal">30-second MagicBricks borrowing capacity</div>
+              </div>
+            </a>
+            <a href="loan-calculator.html" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">🏦</span>
+              <div>
+                <div class="text-xs">Compare Partner Banks (8.35% p.a.)</div>
+                <div class="text-[10px] text-slate-500 font-normal">SBI, HDFC, ICICI, Axis Bank offers</div>
+              </div>
+            </a>
+            <a href="loan-calculator.html" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">📄</span>
+              <div>
+                <div class="text-xs">Instant Pre-Sanction Certificate</div>
+                <div class="text-[10px] text-slate-500 font-normal">Digital sanction letter valid for 90 days</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Price Trends Dropdown -->
+        <div class="magic-nav-dropdown py-2">
+          <button type="button" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1 transition font-bold">
+            <span>Price Trends</span>
+            <span class="text-[9px] opacity-60">▾</span>
+          </button>
+          <div class="magic-dropdown-panel">
+            <div class="px-2 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Market Intelligence</div>
+            <a href="#insights-section" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">📊</span>
+              <div>
+                <div class="text-xs">Kolkata Price Trends Index Q4 2026</div>
+                <div class="text-[10px] text-slate-500 font-normal">Avg ₹7,650/sq.ft. with +14.2% YoY growth</div>
+              </div>
+            </a>
+            <a href="#trending-localities-section" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold transition">
+              <span class="text-base">📈</span>
+              <div>
+                <div class="text-xs">Trending Localities Comparison</div>
+                <div class="text-[10px] text-slate-500 font-normal">New Town vs Salt Lake vs EM Bypass</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Action Buttons (Saved, Dark Mode, Contact & Login replacing Post Property) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap">
+        <!-- Shortlist Drawer Trigger -->
+        <button type="button" onclick="toggleShortlistDrawer()" class="relative p-1.5 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition shrink-0" aria-label="Saved Properties">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-rose-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span id="shortlist-badge" class="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center">2</span>
+        </button>
+
+        <!-- Dark Mode Toggle -->
+        <button type="button" onclick="toggleTheme()" class="p-1.5 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition shrink-0" aria-label="Toggle Dark or Light Mode">
+          <svg id="theme-icon-sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          <svg id="theme-icon-moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+
+        <!-- MB Prime & Subscriptions Quick Trigger (Controlled by Admin Toggle - Hidden for buyers by default) -->
+        <button type="button" onclick="openMbCommandCenter('subscriptions')" id="header-mb-prime-btn" class="hidden items-center gap-1 px-2.5 py-2 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-800 dark:text-amber-300 border border-amber-400/40 font-extrabold text-xs whitespace-nowrap shrink-0 transition">
+          <span>👑 MB Prime</span>
+          <span id="header-credits-pill" class="px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold">12 Credits</span>
+        </button>
+
+        <!-- Contact Button (Placed in Header on xl+ screens; also in the 12 tabs strip) -->
+        <button type="button" onclick="switchMainTab('contact')" id="nav-tab-contact" class="main-portal-tab hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-genriv-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 font-bold text-xs sm:text-sm whitespace-nowrap shrink-0 transition">
+          <span>Contact</span>
+        </button>
+
+        <!-- Login / User Account Button -->
+        <button type="button" onclick="switchMainTab('login')" id="nav-tab-login" class="main-portal-tab inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-genriv-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-genriv-600/25 whitespace-nowrap shrink-0 transition">
+          <span id="nav-login-label">Login</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button type="button" onclick="toggleMobileMenu()" class="lg:hidden p-1.5 sm:p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0" aria-label="Open Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    </div>
+
+    <!-- Mobile Slide-Down Navigation -->
+    <div id="mobile-menu-drawer" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Select Metro City</span>
+        <select id="mobile-city-select" aria-label="Select City Mobile" onchange="syncCityFilter(this.value)" class="bg-slate-100 dark:bg-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg">
+          <option value="All">All India (6 Metros)</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Bengaluru">Bengaluru</option>
+          <option value="Gurugram">Gurugram (NCR)</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Pune">Pune</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-1 text-sm font-semibold">
+        <a href="#listings-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">🏠 Explore Listings</a>
+        <a href="#edge-services-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">💳 Genriv Edge</a>
+        <a href="#insights-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">📈 Price Trends</a>
+        <a href="#emi-section" onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 hover:bg-genriv-50">🧮 EMI &amp; ROI Hub</a>
+      </div>
+      <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Portal Navigation Tabs</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-bold">
+          <button type="button" onclick="switchMainTab('home'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Home</button>
+          <button type="button" onclick="switchMainTab('sellers'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Sellers</button>
+          <button type="button" onclick="switchMainTab('buyers'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Buyers</button>
+          <button type="button" onclick="switchMainTab('owners'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Owners</button>
+          <button type="button" onclick="switchMainTab('tenants'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Tenants</button>
+          <button type="button" onclick="switchMainTab('listing-property'); toggleMobileMenu()" class="p-2 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-left">Listing your Property</button>
+          <button type="button" onclick="switchMainTab('customer-support'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Customer Support</button>
+          <button type="button" onclick="switchMainTab('bank-loan'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Bank Loan</button>
+          <button type="button" onclick="switchMainTab('legal-support'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Legal Support</button>
+          <button type="button" onclick="switchMainTab('publication'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Publication</button>
+          <button type="button" onclick="switchMainTab('contact'); toggleMobileMenu()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-left">Contact</button>
+          <button type="button" onclick="switchMainTab('login'); toggleMobileMenu()" class="p-2 rounded-lg bg-amber-400/20 text-amber-700 dark:text-amber-300 text-left">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTAL NAVIGATION TABS BAR (Strictly 1-Line Unnumbered Tabs) -->
+    <div class="border-t border-slate-200/80 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/95 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div id="main-12-tabs-nav" class="flex items-center justify-start lg:justify-between gap-1 xl:gap-2 py-2 overflow-x-auto lg:overflow-visible flex-nowrap custom-scrollbar">
+          <!-- Home -->
+          <a href="index.html" id="nav-tab-home" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap shrink-0 transition bg-gradient-to-r from-genriv-600 to-acres-500 text-white shadow-sm flex items-center gap-1.5">
+            <span>Home</span>
+          </a>
+
+          <!-- Sellers Dropdown -->
+          <div class="relative group shrink-0">
+            <button type="button" onclick="switchMainTab('sellers')" id="nav-tab-sellers" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1">
+              <span>Sellers</span>
+              <span class="text-[9px] opacity-60">▾</span>
+            </button>
+            <div class="hidden group-hover:block absolute left-0 top-full pt-1 z-50 w-64">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 space-y-1 text-xs">
+                <a href="seller-dashboard.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 font-bold text-slate-800 dark:text-white">
+                  <span>🏢</span> <span>Seller Dashboard &amp; CRM</span>
+                </a>
+                <a href="seller-dashboard.html#advertisement-form" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>📝</span> <span>12-Section Property Ad Form</span>
+                </a>
+                <a href="seller-dashboard.html#subscriptions" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>⭐</span> <span>Top-10 Front Listing Pricing</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buyers Dropdown -->
+          <div class="relative group shrink-0">
+            <button type="button" onclick="switchMainTab('buyers')" id="nav-tab-buyers" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1">
+              <span>Buyers</span>
+              <span class="text-[9px] opacity-60">▾</span>
+            </button>
+            <div class="hidden group-hover:block absolute left-0 top-full pt-1 z-50 w-64">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 space-y-1 text-xs">
+                <a href="buyer-dashboard.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 font-bold text-slate-800 dark:text-white">
+                  <span>👤</span> <span>Buyer Dashboard</span>
+                </a>
+                <a href="buyer-dashboard.html?new_signup=true" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>📋</span> <span>Customer Requisition Form</span>
+                </a>
+                <a href="new-projects.html?city=Kolkata" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>🏗️</span> <span>New Projects in Kolkata</span>
+                </a>
+                <a href="properties.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>🔍</span> <span>All 36+ Verified Properties</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Owners Dropdown -->
+          <div class="relative group shrink-0">
+            <button type="button" onclick="switchMainTab('owners')" id="nav-tab-owners" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1">
+              <span>Owners</span>
+              <span class="text-[9px] opacity-60">▾</span>
+            </button>
+            <div class="hidden group-hover:block absolute left-0 top-full pt-1 z-50 w-60">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 space-y-1 text-xs">
+                <a href="seller-dashboard.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 font-bold text-slate-800 dark:text-white">
+                  <span>➕</span> <span>Post Free Owner Ad (1/6 mo)</span>
+                </a>
+                <a href="properties.html?intent=Rent" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>🤝</span> <span>Zero-Brokerage Resale &amp; Rent</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tenants Dropdown -->
+          <div class="relative group shrink-0">
+            <button type="button" onclick="switchMainTab('tenants')" id="nav-tab-tenants" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1">
+              <span>Tenants</span>
+              <span class="text-[9px] opacity-60">▾</span>
+            </button>
+            <div class="hidden group-hover:block absolute left-0 top-full pt-1 z-50 w-60">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 space-y-1 text-xs">
+                <a href="properties.html?intent=Rent" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 font-bold text-slate-800 dark:text-white">
+                  <span>🔑</span> <span>Explore Rental Homes</span>
+                </a>
+                <a href="properties.html?category=Mess+%2F+PG" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>🛏️</span> <span>PG &amp; Co-Living Suites</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Listing your Property FREE (Dynamic) -->
+          <button type="button" onclick="window.location.href='seller-dashboard.html#advertisement-form'" id="nav-tab-listing-property" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Listing your Property</span>
+            <span class="px-1.5 py-0.2 rounded bg-emerald-500 text-white text-[9px] font-extrabold uppercase">FREE</span>
+          </button>
+
+          <!-- Customer Support -->
+          <button type="button" onclick="switchMainTab('customer-support')" id="nav-tab-customer-support" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Customer Support</span>
+          </button>
+
+          <!-- Bank Loan Dropdown (MagicBricks Style) -->
+          <div class="relative group shrink-0">
+            <button type="button" onclick="window.location.href='loan-calculator.html'" id="nav-tab-bank-loan" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1">
+              <span>Bank Loan</span>
+              <span class="text-[9px] opacity-60">▾</span>
+            </button>
+            <div class="hidden group-hover:block absolute right-0 top-full pt-1 z-50 w-64">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 space-y-1 text-xs">
+                <a href="loan-calculator.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 font-bold text-amber-600 dark:text-amber-400">
+                  <span>🧮</span> <span>Home Loan Eligibility Calculator</span>
+                </a>
+                <a href="loan-calculator.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>🏦</span> <span>Compare Bank Rates (8.35% p.a.)</span>
+                </a>
+                <a href="loan-calculator.html" class="flex items-center gap-2 p-2 rounded-xl hover:bg-genriv-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  <span>📄</span> <span>Instant Pre-Sanction Certificate</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legal Support -->
+          <button type="button" onclick="switchMainTab('legal-support')" id="nav-tab-legal-support" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Legal Support</span>
+          </button>
+
+          <!-- Publication -->
+          <button type="button" onclick="switchMainTab('publication')" id="nav-tab-publication" class="main-portal-tab px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-genriv-50 dark:hover:bg-slate-700 border border-slate-200/70 dark:border-slate-700 flex items-center gap-1.5">
+            <span>Publication</span>
+          </button>
+        </div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH & FILTER BAR STRIP -->
+  <section class="bg-slate-900 text-white py-6 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- Purpose Tabs (Buy / Rent / Lease / All) -->
+        <div class="inline-flex rounded-xl bg-slate-800 p-1 border border-slate-700">
+          <button onclick="setIntent('All')" id="tab-all" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-genriv-600 text-white shadow-sm transition">All</button>
+          <button onclick="setIntent('Buy')" id="tab-buy" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">Buy (Sale)</button>
+          <button onclick="setIntent('Rent')" id="tab-rent" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">Rent</button>
+          <button onclick="setIntent('Lease')" id="tab-lease" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">Lease</button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="flex-1 min-w-[200px]">
+          <input type="text" id="prop-search" oninput="filterProperties()" placeholder="Search locality, project name, or BHK (e.g. New Town, 3 BHK)..." class="w-full px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-genriv-500" />
+        </div>
+
+        <!-- Category Selector -->
+        <select id="prop-category-select" onchange="filterProperties()" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-white focus:outline-none">
+          <option value="All">All Categories</option>
+          <option value="Residential">Residential</option>
+          <option value="Commercial">Commercial</option>
+          <option value="Land / Plot">Land / Plot</option>
+          <option value="Mess / PG">Mess / PG</option>
+        </select>
+
+        <!-- Sort Select -->
+        <select id="prop-sort-select" onchange="filterProperties()" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-white focus:outline-none">
+          <option value="relevance">Relevance / Top 10</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="area-high">Area: Largest First</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTINGS FEED -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white" id="properties-count-title">
+        Verified Properties in Kolkata & Pan-India
+      </h1>
+      <span class="text-xs text-slate-500" id="filter-summary-pill">Showing matching properties</span>
+    </div>
+
+    <!-- Properties Grid -->
+    <div id="properties-catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated dynamically -->
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <img src="images/genriv_logo-Photoroom.png" alt="Genrivreality Logo" class="w-8 h-8 sm:w-10 sm:h-10 object-contain shrink-0" />
+            <span class="font-display font-extrabold text-xl text-white">Genrivreality</span>
+          </div>
+          <p class="text-xs leading-relaxed">
+            Blending Housing.com's visual spatial discovery with 99acres.com's deep RERA & locality price intelligence. Built for mobile, tablet, laptop, and desktop.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Top Metro Corridors</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button type="button" onclick="syncCityFilter('Mumbai'); scrollToSection('listings-section')" class="hover:text-white">Properties in Mumbai (Worli, Bandra)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Bengaluru'); scrollToSection('listings-section')" class="hover:text-white">Properties in Bengaluru (Whitefield)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Gurugram'); scrollToSection('listings-section')" class="hover:text-white">Properties in Gurugram (Golf Course Rd)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Hyderabad'); scrollToSection('listings-section')" class="hover:text-white">Properties in Hyderabad (HITEC City)</button></li>
+            <li><button type="button" onclick="syncCityFilter('Kolkata'); scrollToSection('listings-section')" class="hover:text-white">Properties in Kolkata (New Town)</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Genriv Edge & Intelligence</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button type="button" onclick="openServiceModal('rent-pay')" class="hover:text-white">Pay Rent on Credit Card</button></li>
+            <li><button type="button" onclick="openServiceModal('rent-agreement')" class="hover:text-white">Online Aadhaar Rent Agreement</button></li>
+            <li><button type="button" onclick="openServiceModal('ai-valuation')" class="hover:text-white">AI Fair Property Valuation</button></li>
+            <li><button type="button" onclick="openServiceModal('rera-Verify')" class="hover:text-white">RERA Project Compliance Check</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-white mb-3">Instant Price Alert Newsletter</h4>
+          <p class="text-xs mb-3">Receive weekly RERA new-launch alerts & locality price appreciation digests.</p>
+          <form onsubmit="handleNewsletterSubmit(event)" class="flex gap-2">
+            <input id="newsletter-email" type="email" required placeholder="Enter your email" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-genriv-500" />
+            <button type="submit" class="px-4 py-2 rounded-xl bg-genriv-600 hover:bg-genriv-500 text-white text-xs font-bold shrink-0">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs gap-2">
+        <p>© 2026 Genrivreality Technologies Pvt. Ltd. All RERA IDs verified against state portals.</p>
+        <div class="flex gap-4">
+          <button type="button" onclick="showToast('All listings comply with state RERA transparency mandates.')" class="hover:text-white">RERA Compliance</button>
+          <button type="button" onclick="showToast('Zero-Spam Privacy Shield is active on your session.')" class="hover:text-white">Privacy Shield</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="properties-data.js"></script>
+  <script>
+    let allProps = window.GENRIV_GLOBAL_PROPERTIES || [];
+    let currentIntent = 'All';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('genriv_theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const cityParam = urlParams.get('city');
+      const intentParam = urlParams.get('intent');
+      const localityParam = urlParams.get('locality');
+
+      const citySelect = document.getElementById('city-filter-select') || document.getElementById('header-city-select');
+      if (cityParam && citySelect) citySelect.value = cityParam;
+      if (localityParam && document.getElementById('prop-search')) document.getElementById('prop-search').value = localityParam;
+      if (intentParam) setIntent(intentParam);
+      else filterProperties();
+    });
+
+    function setIntent(intent) {
+      currentIntent = intent;
+      ['all', 'buy', 'rent', 'lease'].forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (!btn) return;
+        if (t === intent.toLowerCase()) {
+          btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-genriv-600 text-white shadow-sm transition";
+        } else {
+          btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition";
+        }
+      });
+      filterProperties();
+    }
+
+    function filterProperties() {
+      const citySelect = document.getElementById('city-filter-select') || document.getElementById('header-city-select');
+      const city = citySelect ? citySelect.value : 'All';
+      const search = (document.getElementById('prop-search').value || '').toLowerCase().trim();
+      const category = document.getElementById('prop-category-select').value;
+      const sort = document.getElementById('prop-sort-select').value;
+
+      let list = allProps.filter(p => {
+        if (city !== 'All' && p.city.toLowerCase() !== city.toLowerCase()) return false;
+        if (currentIntent !== 'All') {
+          if (currentIntent === 'Buy' && p.intent !== 'Buy') return false;
+          if (currentIntent === 'Rent' && p.intent !== 'Rent') return false;
+          if (currentIntent === 'Lease' && p.purpose !== 'For Lease') return false;
+        }
+        if (category !== 'All' && p.category !== category) return false;
+        if (search) {
+          const t = (p.title || '').toLowerCase();
+          const l = (p.locality || '').toLowerCase();
+          const b = (p.bhk || '').toLowerCase();
+          if (!t.includes(search) && !l.includes(search) && !b.includes(search)) return false;
+        }
+        return true;
+      });
+
+      // Sorting
+      if (sort === 'price-low') {
+        list.sort((a, b) => (a.priceCr || 0) - (b.priceCr || 0));
+      } else if (sort === 'price-high') {
+        list.sort((a, b) => (b.priceCr || 0) - (a.priceCr || 0));
+      } else if (sort === 'area-high') {
+        list.sort((a, b) => (b.areaSqft || 0) - (a.areaSqft || 0));
+      } else {
+        list.sort((a, b) => (b.isTopTen ? 1 : 0) - (a.isTopTen ? 1 : 0));
+      }
+
+      renderList(list, city);
+    }
+
+    function renderList(list, city) {
+      document.getElementById('properties-count-title').textContent = `${list.length} Properties in ${city === 'All' ? 'All Indian Metros' : city}`;
+      const grid = document.getElementById('properties-catalog-grid');
+      grid.innerHTML = '';
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800">
+            <div class="text-4xl mb-3">🏡</div>
+            <h3 class="font-display font-extrabold text-base text-slate-800 dark:text-white">No Properties Found</h3>
+            <p class="text-xs text-slate-500 mt-1">Try changing your search terms or metro location.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col";
+        card.innerHTML = `
+          <div class="relative h-48 overflow-hidden bg-slate-800">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+            <div class="absolute top-3 left-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold ${p.intent === 'Rent' ? 'bg-amber-400 text-slate-950' : 'bg-genriv-600 text-white'} uppercase">${p.purpose || p.intent}</span>
+              ${p.isTopTen ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-slate-950">⭐ TOP 10</span>' : ''}
+            </div>
+            <div class="absolute bottom-3 right-3 px-2 py-1 rounded bg-black/70 backdrop-blur text-white text-[10px] font-mono">
+              🛡️ ${p.rera || 'Verified'}
+            </div>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>${p.category}</span>
+                <span>${p.possessionType}</span>
+              </div>
+              <h3 class="font-display font-extrabold text-base text-slate-900 dark:text-white hover:text-genriv-600 transition">
+                <a href="property-detail.html?id=${p.id}">${p.title}</a>
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">📍 ${p.locality}, ${p.city}</p>
+
+              <div class="flex items-baseline justify-between my-3 py-2 border-y border-slate-100 dark:border-slate-800">
+                <div>
+                  <span class="font-extrabold text-lg text-genriv-600 dark:text-genriv-400">${p.priceLabel}</span>
+                  ${p.pricePerSqft ? `<span class="text-[10px] text-slate-400 block">₹${p.pricePerSqft}/sq.ft.</span>` : ''}
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-xs text-slate-800 dark:text-slate-200">${p.bhk}</span>
+                  <span class="text-[10px] text-slate-500 block">${p.areaSqft} sq.ft.</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-3">
+                ${p.description}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+              <a href="property-detail.html?id=${p.id}" class="flex-1 text-center py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold transition">
+                Explore Property →
+              </a>
+              <button onclick="quickContact('${p.title.replace(/'/g, "\\'")}', '${p.contactPhone || '+91 98310-77890'}')" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+                Call Seller
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function quickContact(title, phone) {
+      alert(`📞 Direct Seller Contact for ${title}:\n\nPhone: ${phone}\n\nCall now or click Explore Property to schedule an in-person site visit!`);
+    }
+  </script>
+  <script src="header-nav.js"></script>
+</body>
+</html>

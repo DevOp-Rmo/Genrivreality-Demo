@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <link rel="icon" type="image/png" href="images/genriv_logo-Photoroom.png" />
+  <link rel="apple-touch-icon" href="images/genriv_logo-Photoroom.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard — Genrivreality | Listings, Leads CRM & Boost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          },
+          colors: {
+            genriv: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#843dff',
+              600: '#7022f7',
+              700: '#5c12dc',
+              800: '#4c0eb8',
+              900: '#3c0a96'
+            },
+            housing: { 500: '#0078db', 600: '#0062b3' },
+            magic: { 500: '#e60023', 600: '#cc001f' },
+            acres: { 500: '#0d9488', 600: '#0f766e' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP EXECUTIVE NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <!-- Left: Logo & Portal Badge -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="images/genriv_logo-Photoroom.png" alt="Genrivreality Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-contain bg-white p-1 border border-slate-200 shadow-sm shrink-0" />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-display font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight">Genrivreality</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px] font-extrabold uppercase">Seller Command</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">Listing Inventory, Buyer Leads CRM & Boost Engine</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center: Navigation Links -->
+      <div class="hidden md:flex items-center gap-4 text-xs font-bold">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          ← Return to Public Website
+        </a>
+        <button type="button" id="seller-header-post-btn" onclick="openPostPropertyForm()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow-sm transition flex items-center gap-1.5">
+          <span id="seller-header-post-icon">+</span>
+          <span id="seller-header-post-text">Post a Property</span>
+        </button>
+      </div>
+
+      <!-- Right: User Profile, Theme & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Theme Toggle -->
+        <button type="button" onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition" aria-label="Toggle Theme">
+          <span id="theme-btn-text">🌙</span>
+        </button>
+
+        <!-- User Profile Pill -->
+        <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div class="w-7 h-7 rounded-full bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center">
+            <span id="seller-avatar-initial">S</span>
+          </div>
+          <div class="text-left hidden sm:block">
+            <div id="seller-nav-name" class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Pinnacle Developers</div>
+            <div id="seller-nav-role" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Verified Seller • Quota: 5 Slots</div>
+          </div>
+        </div>
+
+        <!-- Logout CTA -->
+        <button type="button" onclick="logoutSeller()" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-300 border border-rose-200 dark:border-rose-800 text-xs font-bold transition">
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SELLER REASSURANCE STRIP -->
+  <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-xs sm:text-sm py-2.5 px-4 border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🚀</span>
+        <span>
+          <strong>100% Free Listing Promotion:</strong> Post unlimited verified residential and commercial properties with <strong>₹0 Brokerage</strong> and reach 1.4M+ pre-screened home buyers.
+        </span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-extrabold uppercase">RERA Priority Audit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD CONTENT WRAPPER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+    <!-- SELLER KYC VERIFICATION STATUS BANNER (Gating Alert) -->
+    <div id="seller-kyc-alert-banner" class="p-5 rounded-3xl bg-amber-500/10 border-2 border-amber-500/30 text-xs text-amber-950 dark:text-amber-200 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      <div class="flex items-start sm:items-center gap-3.5">
+        <div class="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 font-bold text-xl flex items-center justify-center shrink-0 shadow-sm">
+          ⏳
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-display font-extrabold text-sm sm:text-base text-amber-800 dark:text-amber-300">
+              Advertiser KYC Verification Under Super Admin Review
+            </span>
+            <span id="banner-reg-pill" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono font-extrabold text-[11px]">
+              REG-2026-9041
+            </span>
+            <span id="banner-status-pill" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-extrabold text-[10px] uppercase">
+              Posting Locked
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+            As per real-estate platform governance, new &amp; updated advertiser credentials must be approved by Super Admin before properties can be published to the public front-end.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 shrink-0 self-start md:self-auto">
+        <button type="button" onclick="openEditKycModal()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow-sm transition">
+          ✏️ Edit Profile KYC
+        </button>
+        
+        <span class="px-3.5 py-1.5 rounded-xl bg-amber-400/20 text-amber-800 dark:text-amber-300 font-bold text-xs border border-amber-400/30 flex items-center gap-1.5">
+          <span>⏳</span>
+          <span>Status: Super Admin Review Pending</span>
+        </span>
+
+      </div>
+    </div>
+
+
+    <!-- ACTIVE SUBSCRIPTION STATUS & VALIDITY COUNTDOWN (Requirement 6 & 10) -->
+    <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-emerald-950 via-teal-950 to-slate-900 text-white border-2 border-emerald-500/40 shadow-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="seller-status-plan-badge" class="px-3 py-1 rounded-full bg-emerald-400 text-slate-950 text-xs font-extrabold uppercase shadow-sm">
+            Active: Free Basic Plan (₹0 / 6 Mo)
+          </span>
+          <span id="seller-status-validity-badge" class="px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold border border-white/15">
+            ⏳ Valid for 164 Days (Renews Oct 2026)
+          </span>
+          <span id="seller-status-quota-badge" class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+            📊 Listing Quota: 1/1 Free Ad Used
+          </span>
+          <span id="seller-status-top10-badge" class="px-3 py-1 rounded-full bg-indigo-400/20 text-indigo-300 text-xs font-bold border border-indigo-400/30">
+            ⭐ Top 10 Front-Page: Standard Placement
+          </span>
+        </div>
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white">
+          Seller Membership &amp; Quota Governance
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+          <strong>1st-Time Registration Benefit:</strong> Every registered seller and owner gets <strong>1 Free Property Posting per 6 Months / 1 Year</strong>. To post multiple properties, unlock instant buyer contact leads, or feature in the <strong>Top 10 Spotlight on the Front Page</strong>, select a booster plan below.
+        </p>
+      </div>
+      <div class="shrink-0 flex flex-col sm:flex-row gap-3">
+        <button type="button" onclick="openPostPropertyForm()" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-lg transition flex items-center justify-center gap-1.5">
+          <span>+</span>
+          <span>Post a Property</span>
+        </button>
+        <button type="button" onclick="switchSellerTab('boost')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-extrabold text-xs shadow-lg transition text-center">
+          ⚡ Upgrade Subscriptions
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI STATS SUMMARY ROW -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Published Listings</div>
+        <div id="kpi-seller-listings" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">3</div>
+        <div class="text-[11px] text-slate-500">Live on Genriv Marketplace</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Buyer Impressions</div>
+        <div id="kpi-seller-views" class="text-2xl sm:text-3xl font-extrabold text-genriv-600 dark:text-genriv-400">2,840</div>
+        <div class="text-[11px] text-slate-500">+18% increase this week</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Buyer Leads & Inquiries</div>
+        <div id="kpi-seller-leads" class="text-2xl sm:text-3xl font-extrabold text-housing-500">34</div>
+        <div class="text-[11px] text-slate-500">Verified buyers unlocked contact</div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Inquiry Response Rate</div>
+        <div class="text-2xl sm:text-3xl font-extrabold text-amber-500">96%</div>
+        <div class="text-[11px] text-slate-500">Avg. response within 12 mins</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SECTION TABS -->
+    <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto flex-nowrap">
+      <button type="button" onclick="switchSellerTab('listings')" id="btn-seller-tab-listings" class="seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-emerald-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap">
+        <span>🏡</span>
+        <span>My Published Listings (<span id="listings-tab-count">3</span>)</span>
+      </button>
+      <button type="button" onclick="switchSellerTab('crm')" id="btn-seller-tab-crm" class="seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>🎯</span>
+        <span>Buyer Leads CRM (<span id="crm-tab-count">4</span>)</span>
+      </button>
+      <button type="button" onclick="switchSellerTab('boost')" id="btn-seller-tab-boost" class="seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>🚀</span>
+        <span>Subscription Plans &amp; Pricing Table</span>
+      </button>
+      <button type="button" onclick="switchSellerTab('kyc')" id="btn-seller-tab-kyc" class="seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>📄</span>
+        <span>Advertiser KYC Profile (12 Sections)</span>
+      </button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: MY PROPERTY LISTINGS -->
+    <!-- ============================================================== -->
+    <section id="section-seller-listings" class="space-y-6">
+
+      <!-- GATED LOGIC CONTAINER: ACTIVE LISTINGS OVERVIEW -->
+      <div id="seller-active-listings-container" class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div>
+            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+              My Published Property Advertisements
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500">
+              Manage your active inventory, check RERA verification badges, and boost properties to top search rankings.
+            </p>
+          </div>
+          <button type="button" onclick="openPostPropertyForm()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-md transition flex items-center gap-1.5 shrink-0">
+            <span>+</span>
+            <span>Post a Property</span>
+          </button>
+        </div>
+
+        <!-- Live Seller Listings Grid -->
+        <div id="seller-listings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- BLANK PROPERTY ADVERTISEMENT FORM (Toggled via button or shown if seller has 0 listings) -->
+      <div id="seller-ad-form-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/40 transition-all duration-300">
+        <div class="p-5 sm:p-7 bg-gradient-to-r from-emerald-800 via-teal-800 to-acres-700 text-white flex items-center justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Official 12-Section Specification</span>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1">PROPERTY ADVERTISEMENT FORM</h3>
+            <p class="text-xs text-emerald-100">Official GenRiv Seller, Owner, Builder & Broker Listing Registration</p>
+          </div>
+          <button type="button" onclick="togglePostPropertyForm(false)" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+            Close ✕
+          </button>
+        </div>
+
+        
+        <form id="seller-page-advertisement-form" onsubmit="handleSellerAdSubmit(event)" class="p-4 sm:p-7 space-y-6 text-xs sm:text-sm">
+          
+          <!-- Top Metadata Header (as in Word file) -->
+          <div class="p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-400/30 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-amber-700 dark:text-amber-300">Listing Period:</span>
+              <input type="text" id="ad-listing-period" value="180 Days (6 Months Free)" readonly class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-amber-700 dark:text-amber-300">Date:</span>
+              <input type="date" id="ad-form-date" value="2026-10-31" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-amber-700 dark:text-amber-300">Registration No:</span>
+              <input type="text" id="ad-reg-no" value="GENRIV-AD-801392" readonly class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono font-bold text-xs" />
+            </div>
+          </div>
+
+          <!-- Section 1: Advertising By * -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              1. Advertising By *
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-by-role" value="Property Owner" checked class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Property Owner</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-by-role" value="Real Estate Agent / Broker" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Real Estate Agent / Broker</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-by-role" value="Builder / Developer" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Builder / Developer</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-by-role" value="Authorized Representative" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Authorized Representative</span>
+              </label>
+            </div>
+            <div class="mt-3">
+              <label for="ad-advertiser-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Advertiser Name (This name will display in the portal) *
+              </label>
+              <input type="text" id="ad-advertiser-name" required placeholder="e.g. Debashis Sen / Sen Estates" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold" />
+            </div>
+          </div>
+
+          <!-- Section 2: Project Name * -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              2. Project Name *
+            </h4>
+            <div>
+              <label for="ad-project-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Project Name (This name will display in the portal) *
+              </label>
+              <input type="text" id="ad-project-name" required placeholder="e.g. Botanica Waterfront Sky-Forest Towers" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold" />
+            </div>
+          </div>
+
+          <!-- Section 3: Property Category -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              3. Property Category *
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-category" value="Residential" checked class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Residential</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-category" value="Commercial" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Commercial</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-category" value="Land / Plot" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Land / Plot</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-category" value="Mess / PG" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Mess / PG</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 4: Property Advertisement Purpose -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              4. Property Advertisement Purpose *
+            </h4>
+            <div class="grid grid-cols-3 gap-2.5">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-purpose" value="For Sale" checked class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">For Sale</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-purpose" value="For Rent" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">For Rent</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-purpose" value="For Lease" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">For Lease</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 5: Possession Type * -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              5. Possession Type *
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-possession" value="New Upcoming" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">New Upcoming</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-possession" value="Under Construction" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Under Construction</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-possession" value="Ready to Move / Ready for Possession" checked class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Ready to Move</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-possession" value="Re-sale" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Re-sale</span>
+              </label>
+            </div>
+            <div class="mt-2">
+              <label for="ad-expected-period" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Expected period:</label>
+              <input type="text" id="ad-expected-period" placeholder="e.g. Immediate / December 2026" class="w-full sm:w-1/2 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+            </div>
+          </div>
+
+          <!-- Section 6: Room Configuration / Property Size -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              6. Room Configuration / Property Size *
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="1 RK / Studio" class="text-genriv-600" />
+                <span>1 RK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="1 BHK" class="text-genriv-600" />
+                <span>1 BHK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="2 BHK" class="text-genriv-600" />
+                <span>2 BHK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="3 BHK" checked class="text-genriv-600" />
+                <span>3 BHK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="4 BHK" class="text-genriv-600" />
+                <span>4 BHK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="5+ BHK" class="text-genriv-600" />
+                <span>5+ BHK</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                <input type="radio" name="ad-room-config" value="Independent House / Villa" class="text-genriv-600" />
+                <span>Villa</span>
+              </label>
+            </div>
+            <div class="mt-2">
+              <label for="ad-area-size" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Area / Size (sq. ft.) *</label>
+              <input type="number" id="ad-area-size" required placeholder="e.g. 1850" class="w-full sm:w-1/2 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold" />
+            </div>
+          </div>
+
+          <!-- Section 7: Price Range -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              7. Price Range *
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Price Type *</label>
+                <select id="ad-price-type" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold">
+                  <option value="Sale Price (₹)">Sale Price (₹)</option>
+                  <option value="Monthly Rent (₹/month)">Monthly Rent (₹/month)</option>
+                  <option value="Monthly Lease (₹/month)">Monthly Lease (₹/month)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ad-min-price" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Minimum Price (₹) *</label>
+                <input type="text" id="ad-min-price" required placeholder="e.g. ₹1,40,00,000" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold" />
+              </div>
+              <div>
+                <label for="ad-max-price" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Maximum Price (₹) *</label>
+                <input type="text" id="ad-max-price" required placeholder="e.g. ₹1,55,00,000" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold" />
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-500 italic">*For rent or lease, enter the monthly amount.</p>
+          </div>
+
+          <!-- Section 8: Amenities & Facilities (25 Exact Facilities) -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+                8. Amenities &amp; Facilities
+              </h4>
+              <span class="text-xs text-slate-500">Select all facilities available at the property</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs">
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Lift" class="rounded text-genriv-600" />
+                  <span class="truncate">Lift</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Car Parking" class="rounded text-genriv-600" />
+                  <span class="truncate">Car Parking</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Two-Wheeler Parking" class="rounded text-genriv-600" />
+                  <span class="truncate">Two-Wheeler Parking</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="24×7 Water Supply" class="rounded text-genriv-600" />
+                  <span class="truncate">24×7 Water Supply</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Power Backup" class="rounded text-genriv-600" />
+                  <span class="truncate">Power Backup</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Security Guard" class="rounded text-genriv-600" />
+                  <span class="truncate">Security Guard</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="CCTV" class="rounded text-genriv-600" />
+                  <span class="truncate">CCTV</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Fire Safety" class="rounded text-genriv-600" />
+                  <span class="truncate">Fire Safety</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Gated Community" class="rounded text-genriv-600" />
+                  <span class="truncate">Gated Community</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Garden" class="rounded text-genriv-600" />
+                  <span class="truncate">Garden</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Children's Play Area" class="rounded text-genriv-600" />
+                  <span class="truncate">Children's Play Area</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Gym" class="rounded text-genriv-600" />
+                  <span class="truncate">Gym</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Swimming Pool" class="rounded text-genriv-600" />
+                  <span class="truncate">Swimming Pool</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Community Hall" class="rounded text-genriv-600" />
+                  <span class="truncate">Community Hall</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Clubhouse" class="rounded text-genriv-600" />
+                  <span class="truncate">Clubhouse</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Intercom" class="rounded text-genriv-600" />
+                  <span class="truncate">Intercom</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Balcony" class="rounded text-genriv-600" />
+                  <span class="truncate">Balcony</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Terrace" class="rounded text-genriv-600" />
+                  <span class="truncate">Terrace</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Visitor Parking" class="rounded text-genriv-600" />
+                  <span class="truncate">Visitor Parking</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Rainwater Harvesting" class="rounded text-genriv-600" />
+                  <span class="truncate">Rainwater Harvesting</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Solar Power" class="rounded text-genriv-600" />
+                  <span class="truncate">Solar Power</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Nearby School" class="rounded text-genriv-600" />
+                  <span class="truncate">Nearby School</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Nearby Hospital" class="rounded text-genriv-600" />
+                  <span class="truncate">Nearby Hospital</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Nearby Market" class="rounded text-genriv-600" />
+                  <span class="truncate">Nearby Market</span>
+                </label>
+              
+                <label class="flex items-center gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-400">
+                  <input type="checkbox" name="ad-amenities" value="Nearby Public Transport" class="rounded text-genriv-600" />
+                  <span class="truncate">Nearby Public Transport</span>
+                </label>
+              
+            </div>
+          </div>
+
+          <!-- Section 9: Furnishing Status * -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              9. Furnishing Status *
+            </h4>
+            <div class="grid grid-cols-3 gap-2.5">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-furnishing" value="Unfurnished" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Unfurnished</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-furnishing" value="Semi-furnished" checked class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Semi-furnished</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-genriv-500">
+                <input type="radio" name="ad-furnishing" value="Fully furnished" class="text-genriv-600 focus:ring-genriv-500" />
+                <span class="font-bold">Fully furnished</span>
+              </label>
+            </div>
+            <div class="mt-2">
+              <label for="ad-additional-facilities" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Additional Facilities / Special Features</label>
+              <textarea id="ad-additional-facilities" rows="2" placeholder="e.g. Italian marble flooring, 11-ft ceilings, double-glazed soundproof glass..." class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700"></textarea>
+            </div>
+          </div>
+
+          <!-- Section 10: Property Photos & Documents -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              10. Property Photos &amp; Documents
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Photos -->
+              <div class="p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-center space-y-2">
+                <div class="text-2xl">📸</div>
+                <div class="font-bold text-slate-900 dark:text-white">Upload Property Photos</div>
+                <p class="text-[11px] text-slate-500">Recommended: 5–15 clear photos of exterior, rooms, kitchen, bathrooms & amenities.</p>
+                <input type="file" id="ad-photos-input" multiple accept="image/*" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-genriv-50 file:text-genriv-700 dark:file:bg-slate-800 dark:file:text-slate-300" />
+              </div>
+              <!-- Documents -->
+              <div class="p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-center space-y-2">
+                <div class="text-2xl">📑</div>
+                <div class="font-bold text-slate-900 dark:text-white">Upload Legal Documents</div>
+                <p class="text-[11px] text-slate-500">Title Deed, Approved Building Plan, RERA Certificate, Property Tax Receipt</p>
+                <input type="file" id="ad-docs-input" multiple accept=".pdf,.png,.jpg,.jpeg" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-emerald-50 file:text-emerald-700 dark:file:bg-slate-800 dark:file:text-slate-300" />
+              </div>
+            </div>
+            <div>
+              <label for="ad-photo-notes" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Photo filenames / notes (optional)</label>
+              <input type="text" id="ad-photo-notes" placeholder="e.g. balcony_lakeview.jpg, master_bedroom.jpg" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+            </div>
+          </div>
+
+          <!-- Section 11: Contact Details * -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">
+              11. Contact Details *
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label for="ad-contact-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Contact Person Name *</label>
+                <input type="text" id="ad-contact-name" required placeholder="Full Name" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="ad-contact-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Mobile Number *</label>
+                <input type="tel" id="ad-contact-phone" required placeholder="+91 98310-XXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="ad-contact-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Email ID</label>
+                <input type="email" id="ad-contact-email" placeholder="contact@domain.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+              <div>
+                <label for="ad-property-location" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Property Location *</label>
+                <input type="text" id="ad-property-location" required placeholder="e.g. Action Area II, New Town, Kolkata" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="ad-property-desc" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Property Description</label>
+                <textarea id="ad-property-desc" rows="2" placeholder="Key highlights, nearby landmarks, metro proximity..." class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 12: Declaration, Terms & Conditions (Verbatim from docx) -->
+          <div class="p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300/80 dark:border-amber-800/80 space-y-4 text-xs leading-relaxed">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-amber-900 dark:text-amber-200 uppercase tracking-wide">
+              12. Declaration, Terms &amp; Conditions
+            </h4>
+            
+            <div class="space-y-2 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 p-4 rounded-xl border border-amber-200 dark:border-amber-900/60 max-h-56 overflow-y-auto custom-scrollbar">
+              <strong class="text-slate-900 dark:text-white block font-bold">Declaration by Advertiser:</strong>
+              <p>I hereby declare that:</p>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>The information and documents submitted for this property advertisement are true and accurate to the best of my knowledge.</li>
+                <li>I am the property owner, seller, authorized representative, real estate agent, or builder/developer authorized to submit this advertisement.</li>
+                <li>I have the necessary rights and permissions to submit the property details and photographs for advertising.</li>
+                <li>I understand that GENRIV may review, verify, edit for formatting, reject, suspend, or remove an advertisement that is inaccurate, misleading, incomplete, or violates applicable policies or laws.</li>
+                <li>I consent to GENRIV using the submitted property details and photographs for the purpose of listing and advertising the property, subject to applicable law and the agreed service terms.</li>
+                <li>I understand that submitting an advertisement does not guarantee a sale, rental, lease, buyer, tenant, or transaction.</li>
+                <li>I agree to respond honestly to enquiries and to promptly inform GENRIV of any material change in the property's availability, price, ownership, or possession status.</li>
+              </ul>
+
+              <strong class="text-slate-900 dark:text-white block font-bold pt-2">Terms &amp; Conditions:</strong>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>The advertiser is responsible for the accuracy of the listing and the legality of the advertisement.</li>
+                <li>Property prices, measurements, possession status, amenities, approvals and ownership claims must not be misrepresented.</li>
+                <li>GENRIV's role, advertising fees (if any), cancellation or refund policy, and other service obligations will be governed by the applicable service agreement.</li>
+                <li>GENRIV does not guarantee that an advertisement will result in a transaction and is not a substitute for independent legal or property due diligence.</li>
+                <li>Personal information and contact details will be handled in accordance with GENRIV's applicable privacy notice and relevant law.</li>
+                <li>GENRIV may update its policies and terms in accordance with applicable law, with notice where required.</li>
+              </ul>
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+              <input type="checkbox" id="ad-declaration-agree" required class="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+              <label for="ad-declaration-agree" class="font-bold text-slate-900 dark:text-white text-xs cursor-pointer">
+                I have read and understood the declaration, terms and conditions, and agree to them. *
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-acres-600 hover:from-emerald-700 hover:to-acres-700 text-white font-extrabold text-sm sm:text-base shadow-xl transition flex items-center justify-center gap-2">
+            <span>Confirm &amp; Add Declaration</span>
+            <span>→</span>
+            <span>Publish Property Advertisement</span>
+          </button>
+        </form>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: BUYER LEADS & INQUIRIES CRM -->
+    <!-- ============================================================== -->
+    <section id="section-seller-crm" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+            Buyer Leads & Inquiries CRM
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Real-time pre-qualified buyers who requested site visits or unlocked direct contact with your properties.
+          </p>
+        </div>
+        <span class="px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+          Instant WhatsApp Sync
+        </span>
+      </div>
+
+      <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200 dark:border-slate-800">
+              <tr>
+                <th class="p-4">Buyer Name & Contact</th>
+                <th class="p-4">Inquired Property</th>
+                <th class="p-4">Budget / Req</th>
+                <th class="p-4">Inquiry Date</th>
+                <th class="p-4">Status & Follow-up</th>
+                <th class="p-4 text-right">Instant Action</th>
+              </tr>
+            </thead>
+            <tbody id="seller-leads-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: SUBSCRIPTION PLANS & BENEFITS COMPARISON TABLE -->
+    <!-- ============================================================== -->
+    <section id="section-seller-boost" class="hidden space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">MagicBricks-Grade Monetization</span>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white mt-1">
+            Seller Subscriptions &amp; Benefits Table
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Compare packages, upgrade quotas, and unlock the guaranteed #1 Top 10 Front-Page Showcase.
+          </p>
+        </div>
+      </div>
+
+      <!-- COMPREHENSIVE SUBSCRIPTIONS COMPARISON TABLE (Requirement 10) -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+        <div class="p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
+          <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">Plan Comparison &amp; Benefits Matrix</h3>
+          <p class="text-xs text-slate-500">Transparent pricing for property owners, certified brokers, and corporate developers.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-500 uppercase text-[10px] font-extrabold tracking-wider border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th class="p-4 sm:p-5">Feature / Benefit</th>
+                <th class="p-4 sm:p-5 text-center">Free Basic (Welcome)</th>
+                <th class="p-4 sm:p-5 text-center">Silver Boost Pack</th>
+                <th class="p-4 sm:p-5 text-center bg-indigo-50/50 dark:bg-indigo-950/20">Gold Featured</th>
+                <th class="p-4 sm:p-5 text-center bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300">Titanium Builder Pro ⭐</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 font-semibold text-slate-700 dark:text-slate-300">
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Price (GST Included)</td>
+                <td class="p-4 sm:p-5 text-center font-extrabold text-emerald-600 text-sm">₹0 (Free)</td>
+                <td class="p-4 sm:p-5 text-center font-extrabold text-sm">₹1,499 / 3 Mo</td>
+                <td class="p-4 sm:p-5 text-center font-extrabold text-sm bg-indigo-50/30 dark:bg-indigo-950/10">₹2,499 / 3 Mo</td>
+                <td class="p-4 sm:p-5 text-center font-extrabold text-amber-600 dark:text-amber-300 text-base bg-amber-50/50 dark:bg-amber-950/20">₹3,999 / 6 Mo</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Listing Posting Quota</td>
+                <td class="p-4 sm:p-5 text-center">1 Property per 6 Mo / 1 Yr</td>
+                <td class="p-4 sm:p-5 text-center">Up to 5 Listings</td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">Up to 12 Listings</td>
+                <td class="p-4 sm:p-5 text-center font-bold text-slate-900 dark:text-white bg-amber-50/50 dark:bg-amber-950/20">Up to 25 Listings</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Placement &amp; Ranking</td>
+                <td class="p-4 sm:p-5 text-center text-slate-400">Standard Search</td>
+                <td class="p-4 sm:p-5 text-center">2 Boosted to Top 5</td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">5 City-Wide Boosts</td>
+                <td class="p-4 sm:p-5 text-center font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/50 dark:bg-amber-950/20">⭐ Pinned to Top 10 Front-Page</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Active Plan Validity</td>
+                <td class="p-4 sm:p-5 text-center">180 Days (6 Months)</td>
+                <td class="p-4 sm:p-5 text-center">90 Days (3 Months)</td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">90 Days (3 Months)</td>
+                <td class="p-4 sm:p-5 text-center font-bold bg-amber-50/50 dark:bg-amber-950/20">180 Days (6 Months)</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Buyer Leads &amp; CRM Access</td>
+                <td class="p-4 sm:p-5 text-center">Basic Inquiries</td>
+                <td class="p-4 sm:p-5 text-center">Instant WhatsApp Alerts</td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">Buyer Matching Engine</td>
+                <td class="p-4 sm:p-5 text-center font-bold bg-amber-50/50 dark:bg-amber-950/20">Dedicated CRM + Priority RM</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">RERA Priority Verification</td>
+                <td class="p-4 sm:p-5 text-center">Standard Queue (48h)</td>
+                <td class="p-4 sm:p-5 text-center">Priority Audit (12h)</td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">Fast-Track Audit (6h)</td>
+                <td class="p-4 sm:p-5 text-center font-bold text-emerald-600 bg-amber-50/50 dark:bg-amber-950/20">Instant VIP Whitelist</td>
+              </tr>
+              <tr>
+                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Status / Action</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-extrabold text-[11px]">
+                    ✓ Current Active Plan
+                  </span>
+                </td>
+                <td class="p-4 sm:p-5 text-center">
+                  <button type="button" onclick="activateBoostPack('Silver Boost Pack')" class="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition">
+                    Upgrade (₹1,499)
+                  </button>
+                </td>
+                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">
+                  <button type="button" onclick="activateBoostPack('Gold Featured')" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition">
+                    Upgrade (₹2,499)
+                  </button>
+                </td>
+                <td class="p-4 sm:p-5 text-center bg-amber-50/50 dark:bg-amber-950/20">
+                  <button type="button" onclick="activateBoostPack('Titanium Builder Pro')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold shadow-md hover:opacity-95 transition">
+                    Upgrade (₹3,999) ⭐
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: ADVERTISER KYC PROFILE (12 SECTIONS REGISTERED DATA) -->
+    <!-- ============================================================== -->
+    <section id="section-seller-kyc" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-extrabold uppercase">1st-Time Registration Data</span>
+            <span id="kyc-badge-status" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold">⏳ Pending Admin Verification</span>
+          </div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white mt-1">
+            Advertiser Registration Profile (Official KYC)
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            System Registration ID is locked. To modify contact or company details, request permission below for admin re-approval.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="openEditKycModal()" class="px-4 py-2.5 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5">
+            <span>✏️</span> <span>Request Permission to Edit Profile</span>
+          </button>
+          
+        </div>
+      </div>
+
+      <!-- KYC Profile Details Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 1. System Identity & Category -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs shadow-sm">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-slate-400 uppercase font-extrabold text-[10px]">1. Advertiser Registration ID</span>
+            <span class="text-slate-400">🔒 System Locked</span>
+          </div>
+          <div>
+            
+          <div class="flex items-center gap-3.5">
+            <img id="kyc-display-avatar" src="images/genriv_logo-Photoroom.png" alt="Advertiser Logo" class="w-14 h-14 rounded-2xl object-cover border-2 border-indigo-500 shadow-sm shrink-0" />
+            <div>
+              <div class="font-mono font-extrabold text-base text-genriv-600 dark:text-genriv-400" id="kyc-display-reg-id">REG-2026-9041</div>
+              <div class="text-[11px] text-slate-400">Permanent Unique Platform Identifier</div>
+            </div>
+          </div>
+            <div class="text-[11px] text-slate-400">Permanent Unique Platform Identifier</div>
+          </div>
+          <div class="space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="text-slate-500">Company Name: <strong class="text-slate-900 dark:text-white" id="kyc-display-company">Curated Proper</strong></div>
+            <div class="text-slate-500">Advertiser Category: <strong class="text-slate-900 dark:text-white" id="kyc-display-cat">Builder / Developer</strong></div>
+          </div>
+        </div>
+
+        <!-- 2. Legal & Regulatory -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs shadow-sm">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-slate-400 uppercase font-extrabold text-[10px]">2. Regulatory Credentials</span>
+            <span class="text-emerald-600 font-bold">RERA Tracked</span>
+          </div>
+          <div class="space-y-1.5">
+            <div class="text-slate-500">RERA Registration ID:</div>
+            <div class="font-mono font-bold text-emerald-600 text-xs" id="kyc-display-rera">WBRERA/A/KOL/2024/000188</div>
+          </div>
+          <div class="space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="text-slate-500">PAN: <strong class="font-mono text-slate-800 dark:text-slate-200" id="kyc-display-pan">AACCS5489J</strong></div>
+            <div class="text-slate-500">GSTIN: <strong class="font-mono text-slate-800 dark:text-slate-200" id="kyc-display-gstin">19AACCS5489J1ZM</strong></div>
+            <div class="text-[10px] text-slate-400 italic">*GSTIN optional for individual direct owners</div>
+          </div>
+        </div>
+
+        <!-- 3. Contact & Documents -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs shadow-sm">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-slate-400 uppercase font-extrabold text-[10px]">3. Contact &amp; Attached Proofs</span>
+            <span class="text-indigo-600 font-bold">Verified Channels</span>
+          </div>
+          <div class="space-y-1">
+            <div class="text-slate-500">Primary Phone: <strong class="text-slate-900 dark:text-white" id="kyc-display-phone">+91 98300-99110</strong></div>
+            <div class="text-slate-500">Official Email: <strong class="text-slate-900 dark:text-white" id="kyc-display-email">curated.proper@genrivreality.com</strong></div>
+          </div>
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+              <span>Audited KYC Certificates:</span>
+              <span id="seller-doc-count-badge" class="px-2 py-0.2 rounded-full bg-emerald-500/15 text-emerald-600 text-[10px] font-extrabold">2 Active</span>
+            </div>
+            
+            <!-- Certificate 1: RERA Sanction -->
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 font-mono">
+                  📄 RERA_Sanction_Certificate.pdf
+                </span>
+                <span id="badge-cert-status-rera" class="px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[9px] font-bold">
+                  ✓ Verified
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5 pt-1">
+                <button type="button" onclick="sellerViewCertificate('rera')" class="px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold hover:bg-slate-300 transition">
+                  👁️ View
+                </button>
+                <button type="button" onclick="sellerDownloadCertificate('rera')" class="px-2 py-1 rounded-lg bg-indigo-600 text-white text-[10px] font-bold hover:bg-indigo-700 transition">
+                  📥 Download
+                </button>
+                <button type="button" onclick="triggerCertFileInput('rera')" class="px-2 py-1 rounded-lg bg-amber-500 text-slate-950 text-[10px] font-extrabold hover:bg-amber-400 transition">
+                  🔄 Re-upload
+                </button>
+              </div>
+            </div>
+
+            <!-- Certificate 2: PAN Card -->
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 font-mono">
+                  💳 PAN_Incorporation_Scan.jpg
+                </span>
+                <span id="badge-cert-status-pan" class="px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[9px] font-bold">
+                  ✓ Verified
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5 pt-1">
+                <button type="button" onclick="sellerViewCertificate('pan')" class="px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold hover:bg-slate-300 transition">
+                  👁️ View
+                </button>
+                <button type="button" onclick="sellerDownloadCertificate('pan')" class="px-2 py-1 rounded-lg bg-indigo-600 text-white text-[10px] font-bold hover:bg-indigo-700 transition">
+                  📥 Download
+                </button>
+                <button type="button" onclick="triggerCertFileInput('pan')" class="px-2 py-1 rounded-lg bg-amber-500 text-slate-950 text-[10px] font-extrabold hover:bg-amber-400 transition">
+                  🔄 Re-upload
+                </button>
+              </div>
+            </div>
+
+            <!-- Hidden File Inputs for Re-upload -->
+            <input type="file" id="reupload-file-rera" accept=".pdf,.jpg,.jpeg,.png" onchange="handleCertFileSelected('rera', event)" class="hidden" />
+            <input type="file" id="reupload-file-pan" accept=".pdf,.jpg,.jpeg,.png" onchange="handleCertFileSelected('pan', event)" class="hidden" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- QUICK POST PROPERTY MODAL (Streamlined 30-Second Listing for Returning Sellers) -->
+  
+  <div id="modal-quick-post-property" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 my-auto">
+      <div class="p-5 bg-gradient-to-r from-emerald-700 via-teal-700 to-acres-700 text-white flex items-center justify-between">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase">Quick Listing</span>
+          <h3 class="font-display font-extrabold text-xl mt-1">Post a Property</h3>
+          <p class="text-xs text-emerald-100">Upload photos, documents & details in 60 seconds</p>
+        </div>
+        <button type="button" onclick="closeQuickPostModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25 font-bold">✕</button>
+      </div>
+
+      <form onsubmit="handleQuickPostSubmit(event)" class="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
+        
+        <!-- Purpose Selector -->
+        <div>
+          <label class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Property Purpose *</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer font-bold">
+              <input type="radio" name="quick-purpose" value="For Sale" checked class="text-emerald-600" />
+              <span>For Sale</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer font-bold">
+              <input type="radio" name="quick-purpose" value="For Rent" class="text-emerald-600" />
+              <span>For Rent</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer font-bold">
+              <input type="radio" name="quick-purpose" value="For Lease" class="text-emerald-600" />
+              <span>For Lease</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="quick-prop-title" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Property / Project Title *</label>
+          <input id="quick-prop-title" type="text" required placeholder="e.g. Botanica Riverside Luxury Suites" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="quick-prop-city" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Metro City *</label>
+            <select id="quick-prop-city" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">
+              <option value="Kolkata">Kolkata</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Gurugram">Gurugram (NCR)</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Pune">Pune</option>
+            </select>
+          </div>
+          <div>
+            <label for="quick-prop-locality" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Locality / Sector *</label>
+            <input id="quick-prop-locality" type="text" required placeholder="e.g. Action Area II, New Town" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label for="quick-prop-bhk" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">BHK *</label>
+            <select id="quick-prop-bhk" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">
+              <option value="1 BHK">1 BHK</option>
+              <option value="2 BHK">2 BHK</option>
+              <option value="3 BHK" selected>3 BHK</option>
+              <option value="4 BHK">4 BHK</option>
+              <option value="Villa">Villa</option>
+            </select>
+          </div>
+          <div>
+            <label for="quick-prop-price" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Price Label *</label>
+            <input id="quick-prop-price" type="text" required placeholder="e.g. ₹1.25 Cr / ₹35,000/mo" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white" />
+          </div>
+          <div>
+            <label for="quick-prop-area" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Area (sq.ft.) *</label>
+            <input id="quick-prop-area" type="number" required placeholder="1450" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
+          </div>
+        </div>
+
+        <!-- Photos & Documents Upload Section (Requirement 12) -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+          <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between">
+            <span>📸 Property Images &amp; Documents Attachment</span>
+            <span class="text-[10px] text-emerald-600 font-extrabold uppercase">Required</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="block text-[11px] text-slate-500 mb-1">Select Property Photos</span>
+              <input type="file" id="quick-prop-images" accept="image/*" multiple class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-emerald-100 file:text-emerald-800 font-semibold" />
+            </div>
+            <div>
+              <span class="block text-[11px] text-slate-500 mb-1">Attach RERA / Title Deed (PDF)</span>
+              <input type="file" id="quick-prop-docs" accept=".pdf,.doc,.docx" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-sky-100 file:text-sky-800 font-semibold" />
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-xs text-amber-800 dark:text-amber-200 flex items-center gap-2">
+          <span>🛡️</span>
+          <span>Admin Property Approval Workflow: Listing is sent to Super Admin CRM for verification and will go live once verified.</span>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-acres-600 hover:from-emerald-700 text-white font-extrabold text-sm shadow-lg transition">
+          Submit Listing for Admin Approval →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- SCRIPT ENGINE FOR SELLER DASHBOARD -->
+  <script>
+    let sellerProperties = [
+      {
+        id: 'prop-1',
+        title: 'Genriv Celestia Sky Penthouse',
+        city: 'Mumbai',
+        locality: 'Worli Sea Face, South Mumbai',
+        bhk: '4 BHK',
+        priceLabel: '₹8.40 Cr',
+        areaSqft: 3250,
+        reraId: 'P51900028491',
+        reraVerified: true,
+        views: 1840,
+        leadsCount: 24,
+        boosted: true,
+        image: 'images/prop1.jpg'
+      },
+      {
+        id: 'prop-3',
+        title: 'Aura Horizon Sky Suites',
+        city: 'Gurugram',
+        locality: 'Golf Course Extension Road',
+        bhk: '3 BHK',
+        priceLabel: '₹3.45 Cr',
+        areaSqft: 2450,
+        reraId: 'GGM/412/144/2020/28',
+        reraVerified: true,
+        views: 980,
+        leadsCount: 14,
+        boosted: false,
+        image: 'images/prop3.jpg'
+      },
+      {
+        id: 'prop-5',
+        title: 'Genriv Heritage Manor & Lawn',
+        city: 'Kolkata',
+        locality: 'New Town Action Area II, Kolkata',
+        bhk: '3 BHK',
+        priceLabel: '₹1.45 Cr',
+        areaSqft: 1750,
+        reraId: 'WBRERA/P/NOR/2023/000188',
+        reraVerified: true,
+        views: 2150,
+        leadsCount: 31,
+        boosted: true,
+        image: 'images/prop5.jpg'
+      }
+    ];
+
+    let sellerLeads = [
+      {
+        id: 'LEAD-101',
+        name: 'Sourav Mukherjee',
+        phone: '+91 98301-44210',
+        propertyTitle: 'Genriv Heritage Manor & Lawn (Kolkata)',
+        budget: '₹1.35 Cr – ₹1.55 Cr',
+        date: '2026-10-28',
+        status: 'Site Visit Scheduled'
+      },
+      {
+        id: 'LEAD-102',
+        name: 'Priya & Arjun Nair',
+        phone: '+91 98450-88122',
+        propertyTitle: 'Genriv Celestia Sky Penthouse (Mumbai)',
+        budget: '₹8.00 Cr – ₹8.50 Cr',
+        date: '2026-10-27',
+        status: 'Contacted'
+      },
+      {
+        id: 'LEAD-103',
+        name: 'Vikramaditya Roy',
+        phone: '+91 98110-33499',
+        propertyTitle: 'Aura Horizon Sky Suites (Gurugram)',
+        budget: '₹3.20 Cr – ₹3.50 Cr',
+        date: '2026-10-26',
+        status: 'New Lead'
+      },
+      {
+        id: 'LEAD-104',
+        name: 'Ananya Deshmukh',
+        phone: '+91 98220-77114',
+        propertyTitle: 'Genriv Celestia Sky Penthouse (Mumbai)',
+        budget: '₹8.40 Cr Outright',
+        date: '2026-10-25',
+        status: 'Deal Closed'
+      }
+    ];
+
+    let currentSeller = null;
+
+    function initSellerDashboard() {
+      // Load Database from localStorage
+      let db = null;
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) db = JSON.parse(raw);
+      } catch (e) {}
+
+      if (db && db.users) {
+        currentSeller = db.users.find(u => u.role === 'Seller') || db.users.find(u => u.id === db.currentUserId);
+      }
+      if (!currentSeller) {
+        currentSeller = {
+          name: 'Genriv Pinnacle Developers',
+          role: 'Seller / Developer',
+          email: 'sales@genrivreality.com',
+          phone: '+91 98201-11001',
+          listingQuota: 5
+        };
+      }
+
+      document.getElementById('seller-nav-name').textContent = currentSeller.name;
+      document.getElementById('seller-avatar-initial').textContent = (currentSeller.name[0] || 'S').toUpperCase();
+
+      // Check localStorage for extra advertisements
+      try {
+        const advRaw = localStorage.getItem('genriv_advertisements_v1');
+        if (advRaw) {
+          const ads = JSON.parse(advRaw);
+          if (Array.isArray(ads) && ads.length) {
+            ads.forEach(ad => {
+              if (!sellerProperties.some(p => p.id === ad.id)) {
+                sellerProperties.unshift({
+                  id: ad.id,
+                  title: ad.title || 'Verified Property Listing',
+                  city: ad.city || 'Kolkata',
+                  locality: ad.locality || 'Prime Locality',
+                  bhk: '3 BHK',
+                  priceLabel: ad.price || '₹1.50 Cr',
+                  areaSqft: 1800,
+                  reraId: 'WBRERA/P/NOR/2026/000912',
+                  reraVerified: true,
+                  views: 120,
+                  leadsCount: 3,
+                  boosted: false,
+                  image: 'images/prop4.jpg'
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
+
+      renderSellerListings();
+      renderSellerLeads();
+    }
+
+    function openPostPropertyForm() {
+      switchSellerTab('listings');
+      const container = document.getElementById('seller-active-listings-container');
+      const formCard = document.getElementById('seller-ad-form-card');
+      if (formCard) {
+        formCard.classList.remove('hidden');
+        if (container) container.classList.add('hidden');
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      showToast('📋 Opened official 12-Section PROPERTY ADVERTISEMENT FORM.');
+    }
+    window.openPostPropertyForm = openPostPropertyForm;
+    window.openQuickPostModal = openPostPropertyForm;
+
+    function closeQuickPostModal() {
+      const modal = document.getElementById('modal-quick-post-property');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeQuickPostModal = closeQuickPostModal;
+
+    function handleQuickPostSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('quick-prop-title').value.trim();
+      const city = document.getElementById('quick-prop-city').value;
+      const locality = document.getElementById('quick-prop-locality').value.trim();
+      const bhk = document.getElementById('quick-prop-bhk').value;
+      const price = document.getElementById('quick-prop-price').value.trim();
+      const area = parseInt(document.getElementById('quick-prop-area').value, 10) || 1800;
+
+      const newProp = {
+        id: 'prop-ad-' + Date.now(),
+        title,
+        city,
+        locality,
+        bhk,
+        priceLabel: price,
+        areaSqft: area,
+        reraId: 'WBRERA/P/KOL/2026/' + Math.floor(1000 + Math.random() * 9000),
+        reraVerified: true,
+        approvalStatus: 'Pending Admin Approval',
+        isTopTen: false,
+        views: 1,
+        leadsCount: 0,
+        boosted: false,
+        image: 'images/prop2.jpg',
+        postedBy: 'Seller',
+        owner: currentSeller ? currentSeller.name : 'Genriv Seller'
+      };
+
+      sellerProperties.unshift(newProp);
+
+      // Save to localStorage
+      try {
+        let ads = [];
+        const raw = localStorage.getItem('genriv_advertisements_v1');
+        if (raw) ads = JSON.parse(raw);
+        ads.unshift({
+          id: newProp.id,
+          owner: newProp.owner,
+          title,
+          city,
+          locality,
+          price,
+          plan: `${bhk} • ${area} sq.ft.`,
+          approvalStatus: 'Pending Admin Approval'
+        });
+        localStorage.setItem('genriv_advertisements_v1', JSON.stringify(ads));
+
+        // Sync with global properties store for front-end
+        let allProps = [];
+        const pRaw = localStorage.getItem('genriv_properties_v2');
+        if (pRaw) allProps = JSON.parse(pRaw);
+        allProps.unshift(newProp);
+        localStorage.setItem('genriv_properties_v2', JSON.stringify(allProps));
+      } catch (err) {}
+
+      renderSellerListings();
+      closeQuickPostModal();
+      showToast('🎉 Property submitted! Status: Pending Admin Review. Once approved, it will be published to the front-end.');
+    }
+    window.handleQuickPostSubmit = handleQuickPostSubmit;
+
+    function renderSellerListings() {
+      const grid = document.getElementById('seller-listings-grid');
+      const countEl = document.getElementById('kpi-seller-listings');
+      const tabCountEl = document.getElementById('listings-tab-count');
+      const container = document.getElementById('seller-active-listings-container');
+      const formCard = document.getElementById('seller-ad-form-card');
+
+      if (countEl) countEl.textContent = sellerProperties.length;
+      if (tabCountEl) tabCountEl.textContent = sellerProperties.length;
+
+      if (!grid) return;
+      grid.innerHTML = sellerProperties.map(p => {
+        const isApproved = (p.approvalStatus || 'Approved') === 'Approved';
+        return `
+        <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-xl transition flex flex-col justify-between">
+          <div>
+            <div class="relative h-44 bg-slate-800 overflow-hidden">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+              <div class="absolute top-3 left-3 flex flex-col gap-1 items-start">
+                <span class="px-2.5 py-1 rounded-full ${isApproved ? 'bg-emerald-500 text-white' : 'bg-amber-400 text-slate-950'} text-[10px] font-extrabold shadow-sm">
+                  ${isApproved ? '✓ Live & Approved' : '⏳ Pending Admin Review'}
+                </span>
+                ${p.boosted ? `
+                  <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold shadow-sm">
+                    ⚡ Top Slot Boost
+                  </span>
+                ` : ''}
+              </div>
+              <div class="absolute bottom-3 left-3 px-3 py-1 rounded-xl bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold">
+                ${p.priceLabel}
+              </div>
+            </div>
+            <div class="p-5 space-y-2.5">
+              <h4 class="font-display font-extrabold text-base text-slate-900 dark:text-white leading-snug">
+                ${p.title}
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                📍 ${p.locality} • ${p.city}
+              </p>
+              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-center">
+                  <span class="text-slate-400 block text-[10px] font-bold">Total Views</span>
+                  <strong class="text-slate-900 dark:text-white">${(p.views || 0).toLocaleString()}</strong>
+                </div>
+                <div class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-center">
+                  <span class="text-emerald-700 dark:text-emerald-300 block text-[10px] font-bold">Buyer Leads</span>
+                  <strong class="text-emerald-600 dark:text-emerald-400">${p.leadsCount || 0}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center gap-2">
+            <button type="button" onclick="toggleBoostProperty('${p.id}')" class="flex-1 py-2.5 rounded-xl ${p.boosted ? 'bg-amber-400 text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'} text-xs font-extrabold transition">
+              ${p.boosted ? '⚡ Pinned #1 Top Slot' : '⚡ 1-Click Boost'}
+            </button>
+            <button type="button" onclick="deleteSellerProperty('${p.id}')" class="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-600 text-xs font-bold transition" title="Delete Listing">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `}).join('');
+    }
+
+    function toggleEditAdvertiserKYC() {
+      showToast('✏️ KYC Profile editing opened. Changes reflect across all RERA registrations.');
+    }
+    window.toggleEditAdvertiserKYC = toggleEditAdvertiserKYC;
+
+    function togglePostPropertyForm(show) {
+      const container = document.getElementById('seller-active-listings-container');
+      const formCard = document.getElementById('seller-ad-form-card');
+
+      if (show) {
+        formCard.classList.remove('hidden');
+        container.classList.add('hidden');
+        formCard.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        formCard.classList.add('hidden');
+        container.classList.remove('hidden');
+      }
+    }
+
+    function handleSellerAdSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('seller-form-title').value.trim();
+      const city = document.getElementById('seller-form-city').value;
+      const locality = document.getElementById('seller-form-locality').value.trim();
+      const bhk = document.getElementById('seller-form-bhk').value;
+      const price = document.getElementById('seller-form-price').value.trim();
+      const area = parseInt(document.getElementById('seller-form-area').value, 10) || 1800;
+      const rera = document.getElementById('seller-form-rera').value.trim();
+      const ownerName = document.getElementById('seller-form-owner-name').value.trim();
+
+      const newProp = {
+        id: 'prop-ad-' + Date.now(),
+        title,
+        city,
+        locality,
+        bhk,
+        priceLabel: price,
+        areaSqft: area,
+        reraId: rera,
+        reraVerified: true,
+        views: 1,
+        leadsCount: 0,
+        boosted: false,
+        image: 'images/prop2.jpg'
+      };
+
+      sellerProperties.unshift(newProp);
+
+      // Save to localStorage
+      try {
+        let ads = [];
+        const raw = localStorage.getItem('genriv_advertisements_v1');
+        if (raw) ads = JSON.parse(raw);
+        ads.unshift({
+          id: newProp.id,
+          owner: ownerName,
+          title,
+          city,
+          locality,
+          price,
+          plan: `${bhk} • ${area} sq.ft.`
+        });
+        localStorage.setItem('genriv_advertisements_v1', JSON.stringify(ads));
+      } catch (err) {}
+
+      renderSellerListings();
+      togglePostPropertyForm(false);
+      showToast('🎉 Property Advertisement published live with 100% Free promotional coverage!');
+    }
+
+    function toggleBoostProperty(propId) {
+      const prop = sellerProperties.find(p => p.id === propId);
+      if (prop) {
+        prop.boosted = !prop.boosted;
+        renderSellerListings();
+        showToast(prop.boosted ? '⚡ Pinned to Top Search Slot! Expect 3x more buyer inquiries.' : 'Boost deactivated.');
+      }
+    }
+
+    function deleteSellerProperty(propId) {
+      if (confirm('Are you sure you want to remove this property listing?')) {
+        sellerProperties = sellerProperties.filter(p => p.id !== propId);
+        renderSellerListings();
+        showToast('Listing removed.');
+      }
+    }
+
+    function renderSellerLeads() {
+      const tbody = document.getElementById('seller-leads-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = sellerLeads.map(lead => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+          <td class="p-4">
+            <strong class="text-slate-900 dark:text-white block">${lead.name}</strong>
+            <span class="text-slate-500 font-mono text-[11px]">${lead.phone}</span>
+          </td>
+          <td class="p-4 text-slate-700 dark:text-slate-300">
+            ${lead.propertyTitle}
+          </td>
+          <td class="p-4 text-emerald-600 dark:text-emerald-400 font-bold">
+            ${lead.budget}
+          </td>
+          <td class="p-4 text-slate-500 text-[11px]">
+            ${lead.date}
+          </td>
+          <td class="p-4">
+            <select onchange="updateLeadStatus('${lead.id}', this.value)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300">
+              <option value="New Lead" ${lead.status === 'New Lead' ? 'selected' : ''}>New Lead</option>
+              <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+              <option value="Site Visit Scheduled" ${lead.status === 'Site Visit Scheduled' ? 'selected' : ''}>Site Visit Scheduled</option>
+              <option value="Deal Closed" ${lead.status === 'Deal Closed' ? 'selected' : ''}>Deal Closed</option>
+            </select>
+          </td>
+          <td class="p-4 text-right">
+            <a href="https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=Hi%20${encodeURIComponent(lead.name)},%20following%20up%20on%20your%20inquiry%20for%20${encodeURIComponent(lead.propertyTitle)}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold inline-flex items-center gap-1">
+              💬 WhatsApp
+            </a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateLeadStatus(leadId, newStatus) {
+      const lead = sellerLeads.find(l => l.id === leadId);
+      if (lead) {
+        lead.status = newStatus;
+        showToast(`Lead status updated to: ${newStatus}`);
+      }
+    }
+
+    function activateBoostPack(packName) {
+      if (currentSeller) {
+        currentSeller.planName = packName;
+        currentSeller.listingQuota = packName.includes('Titanium') ? 25 : (packName.includes('Gold') ? 12 : 5);
+      }
+
+      const planBadge = document.getElementById('seller-status-plan-badge');
+      const valBadge = document.getElementById('seller-status-validity-badge');
+      const quotaBadge = document.getElementById('seller-status-quota-badge');
+      const top10Badge = document.getElementById('seller-status-top10-badge');
+
+      if (planBadge) planBadge.textContent = `Active: ${packName}`;
+      if (valBadge) valBadge.textContent = `⏳ Valid for ${packName.includes('Titanium') ? '180' : '90'} Days Remaining`;
+      if (quotaBadge) quotaBadge.textContent = `📊 Quota: Up to ${packName.includes('Titanium') ? '25' : (packName.includes('Gold') ? '12' : '5')} Active Listings`;
+      if (top10Badge) {
+        if (packName.includes('Titanium')) {
+          top10Badge.className = 'px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold shadow-sm';
+          top10Badge.textContent = '⭐ Top 10 Front-Page: Pinned #1 Spotlight Active';
+        } else {
+          top10Badge.className = 'px-3 py-1 rounded-full bg-indigo-400/20 text-indigo-300 text-xs font-bold border border-indigo-400/30';
+          top10Badge.textContent = '⭐ Top 10 Front-Page: Standard Placement';
+        }
+      }
+
+      showToast(`🚀 Successfully upgraded to ${packName}! Increased listing quota & visibility applied.`);
+    }
+    window.activateBoostPack = activateBoostPack;
+
+    function switchSellerTab(tabKey) {
+      const sections = {
+        'listings': document.getElementById('section-seller-listings'),
+        'crm': document.getElementById('section-seller-crm'),
+        'boost': document.getElementById('section-seller-boost'),
+        'kyc': document.getElementById('section-seller-kyc')
+      };
+      const buttons = {
+        'listings': document.getElementById('btn-seller-tab-listings'),
+        'crm': document.getElementById('btn-seller-tab-crm'),
+        'boost': document.getElementById('btn-seller-tab-boost'),
+        'kyc': document.getElementById('btn-seller-tab-kyc')
+      };
+
+      Object.keys(sections).forEach(k => {
+        if (k === tabKey) {
+          sections[k]?.classList.remove('hidden');
+          if (buttons[k]) {
+            buttons[k].className = 'seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-emerald-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap';
+          }
+        } else {
+          sections[k]?.classList.add('hidden');
+          if (buttons[k]) {
+            buttons[k].className = 'seller-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap';
+          }
+        }
+      });
+    }
+    window.switchSellerTab = switchSellerTab;
+
+    function logoutSeller() {
+      try {
+        const raw = localStorage.getItem('genriv_mb_db_v1');
+        if (raw) {
+          const db = JSON.parse(raw);
+          db.isLoggedIn = false;
+          localStorage.setItem('genriv_mb_db_v1', JSON.stringify(db));
+        }
+      } catch (e) {}
+      window.location.href = 'index.html';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      document.getElementById('theme-btn-text').textContent = isDark ? '☀️' : '🌙';
+      try { localStorage.setItem('genriv_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const c = document.getElementById('toast-container');
+      const t = document.createElement('div');
+      t.className = 'px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-white/20 animate-bounce pointer-events-auto flex items-center gap-2';
+      t.innerHTML = `<span>✨</span><span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => { t.remove(); }, 4000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('genriv_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-btn-text').textContent = '☀️';
+      }
+      initSellerDashboard();
+    });
+  
+
+        // ==============================================================
+    // SELLER KYC & ADVERTISER REGISTRATION STATE ENGINE (Points 2, 3, 5)
+    // ==============================================================
+    function getSellerProfile() {
+      let profile = null;
+      try {
+        const raw = localStorage.getItem('genriv_seller_profile');
+        if (raw) profile = JSON.parse(raw);
+      } catch (e) {}
+
+      if (!profile) {
+        // Auto-generate Registration ID upon 1st signup/onboarding
+        profile = {
+          regId: 'REG-2026-9041',
+          companyName: 'Curated Proper',
+          reraId: 'WBRERA/A/KOL/2024/000188',
+          category: 'Builder / Developer',
+          pan: 'AACCS5489J',
+          gstin: '19AACCS5489J1ZM',
+          phone: '+91 98300-99110',
+          email: 'curated.proper@genrivreality.com',
+          status: 'pending', // 'pending' | 'verified'
+          reVerificationRequested: false,
+          quota: 1,
+          planName: 'Free Basic (1 Ad / 6 Mo)',
+          documents: ['RERA_Sanction_Certificate.pdf', 'PAN_Incorporation_Scan.jpg'],
+          submittedAt: new Date().toISOString()
+        };
+        localStorage.setItem('genriv_seller_profile', JSON.stringify(profile));
+      }
+
+      // Sync to admin pending queue if not verified
+      try {
+        let pending = [];
+        const rawPending = localStorage.getItem('genriv_pending_sellers');
+        if (rawPending) pending = JSON.parse(rawPending);
+        if (!pending.some(s => s.regId === profile.regId)) {
+          pending.push(profile);
+          localStorage.setItem('genriv_pending_sellers', JSON.stringify(pending));
+        }
+      } catch (e) {}
+
+      return profile;
+    }
+    window.getSellerProfile = getSellerProfile;
+
+    
+    function handleKycPhotoSelect(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const preview = document.getElementById('kyc-photo-preview');
+        if (preview) preview.src = evt.target.result;
+        showToast('📷 Image preview loaded! Click "Submit & Save KYC" to save changes.');
+      };
+      reader.readAsDataURL(file);
+    }
+    window.handleKycPhotoSelect = handleKycPhotoSelect;
+
+    function setKycPhotoPreset(url) {
+      const preview = document.getElementById('kyc-photo-preview');
+      if (preview) preview.src = url;
+      showToast('Image preset selected.');
+    }
+    window.setKycPhotoPreset = setKycPhotoPreset;
+
+    function updateSellerKycUI() {
+      const p = getSellerProfile();
+
+      // Sync Photo / Avatar
+      const userImg = p.image || 'images/genriv_logo-Photoroom.png';
+      const previewEl = document.getElementById('kyc-photo-preview');
+      if (previewEl) previewEl.src = userImg;
+      const avatarEl = document.getElementById('kyc-display-avatar');
+      if (avatarEl) avatarEl.src = userImg;
+
+
+      // Sync Registration IDs (Locked)
+      const regPills = ['banner-reg-pill', 'kyc-display-reg-id', 'modal-alert-reg-id'];
+      regPills.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = p.regId;
+      });
+      const inputReg = document.getElementById('kyc-reg-id');
+      if (inputReg) inputReg.value = p.regId;
+
+      // Sync KYC Tab Fields
+      const map = {
+        'kyc-display-company': p.companyName,
+        'kyc-display-cat': p.category,
+        'kyc-display-rera': p.reraId,
+        'kyc-display-pan': p.pan,
+        'kyc-display-gstin': p.gstin || 'Exempt / Not Applicable (Individual Owner)',
+        'kyc-display-phone': p.phone,
+        'kyc-display-email': p.email,
+        'seller-nav-name': p.companyName
+      };
+      for (const [id, val] of Object.entries(map)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      }
+
+      const initial = document.getElementById('seller-avatar-initial');
+      if (initial && p.companyName) initial.textContent = (p.companyName[0] || 'S').toUpperCase();
+
+      // Sync Edit Modal Inputs (Pre-fill)
+      if (document.getElementById('kyc-company-name')) document.getElementById('kyc-company-name').value = p.companyName;
+      if (document.getElementById('kyc-rera-id')) document.getElementById('kyc-rera-id').value = p.reraId;
+      if (document.getElementById('kyc-category')) document.getElementById('kyc-category').value = p.category;
+      if (document.getElementById('kyc-pan')) document.getElementById('kyc-pan').value = p.pan;
+      if (document.getElementById('kyc-gstin')) document.getElementById('kyc-gstin').value = p.gstin || '';
+      if (document.getElementById('kyc-phone')) document.getElementById('kyc-phone').value = p.phone;
+      if (document.getElementById('kyc-email')) document.getElementById('kyc-email').value = p.email;
+
+      // GATING LOGIC & VISUAL BADGES (Points 2, 4, 5)
+      const headerBtn = document.getElementById('seller-header-post-btn');
+      const headerText = document.getElementById('seller-header-post-text');
+      const headerIcon = document.getElementById('seller-header-post-icon');
+      const banner = document.getElementById('seller-kyc-alert-banner');
+      const bannerPill = document.getElementById('banner-status-pill');
+      const kycStatusBadge = document.getElementById('kyc-badge-status');
+
+      if (p.status === 'verified') {
+        // VERIFIED PUBLISHER
+        if (headerBtn) {
+          headerBtn.className = 'px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow-sm transition flex items-center gap-1.5';
+          if (headerIcon) headerIcon.textContent = '+';
+          if (headerText) headerText.textContent = 'Post a Property';
+        }
+        if (banner) {
+          banner.className = 'p-4 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-950 dark:text-emerald-200 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm';
+          banner.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-2xl bg-emerald-600 text-white font-bold text-lg flex items-center justify-center shrink-0">✓</div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-display font-extrabold text-sm text-emerald-800 dark:text-emerald-300">Verified Publisher Account</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-500 text-white font-mono font-bold text-[10px]">${p.regId}</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-[10px]">Posting Active</span>
+                </div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">KYC Verified by Super Admin. You have active posting privileges under ${p.planName || 'Free Basic'}.</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="openPostPropertyForm()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm transition">
+                + Post a Property
+              </button>
+              <button type="button" onclick="openEditKycModal()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs transition">
+                ✏️ Edit KYC
+              </button>
+            </div>
+          `;
+        }
+        if (kycStatusBadge) {
+          kycStatusBadge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-extrabold';
+          kycStatusBadge.textContent = '✓ Verified & Audit Cleared';
+        }
+      } else {
+        // PENDING ADMIN APPROVAL (POSTING GATED)
+        if (headerBtn) {
+          headerBtn.className = 'px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold shadow-sm transition flex items-center gap-1.5';
+          if (headerIcon) headerIcon.textContent = '⏳';
+          if (headerText) headerText.textContent = 'Verification Pending';
+        }
+        if (bannerPill) {
+          bannerPill.className = 'px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-extrabold text-[10px] uppercase';
+          bannerPill.textContent = 'Posting Locked';
+        }
+        if (kycStatusBadge) {
+          kycStatusBadge.className = 'px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold';
+          kycStatusBadge.textContent = '⏳ Pending Admin Verification';
+        }
+      }
+    }
+    window.updateSellerKycUI = updateSellerKycUI;
+
+    function openPostPropertyForm() {
+      const p = getSellerProfile();
+      // Gating Rule (Point 2): Seller CANNOT post any property until verified from admin end!
+      if (p.status !== 'verified') {
+        const modal = document.getElementById('modal-pending-kyc-alert');
+        if (modal) modal.classList.remove('hidden');
+        showToast('🔒 Posting locked! Your advertiser profile is awaiting Super Admin verification.');
+        return;
+      }
+
+      switchSellerTab('listings');
+      const container = document.getElementById('seller-active-listings-container');
+      const formCard = document.getElementById('seller-ad-form-card');
+      if (formCard) {
+        formCard.classList.remove('hidden');
+        if (container) container.classList.add('hidden');
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      showToast('📋 Opened official PROPERTY ADVERTISEMENT FORM.');
+    }
+    window.openPostPropertyForm = openPostPropertyForm;
+    window.openQuickPostModal = openPostPropertyForm;
+
+    function closePendingKycModal() {
+      const modal = document.getElementById('modal-pending-kyc-alert');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closePendingKycModal = closePendingKycModal;
+
+    function openEditKycModal() {
+      const p = getSellerProfile();
+      if (document.getElementById('kyc-reg-id')) document.getElementById('kyc-reg-id').value = p.regId;
+      if (document.getElementById('kyc-company-name')) document.getElementById('kyc-company-name').value = p.companyName;
+      if (document.getElementById('kyc-rera-id')) document.getElementById('kyc-rera-id').value = p.reraId;
+      if (document.getElementById('kyc-category')) document.getElementById('kyc-category').value = p.category;
+      if (document.getElementById('kyc-pan')) document.getElementById('kyc-pan').value = p.pan;
+      if (document.getElementById('kyc-gstin')) document.getElementById('kyc-gstin').value = p.gstin || '';
+      if (document.getElementById('kyc-phone')) document.getElementById('kyc-phone').value = p.phone;
+      if (document.getElementById('kyc-email')) document.getElementById('kyc-email').value = p.email;
+
+      const modal = document.getElementById('modal-edit-kyc');
+      if (modal) modal.classList.remove('hidden');
+    }
+    window.openEditKycModal = openEditKycModal;
+
+    function closeEditKycModal() {
+      const modal = document.getElementById('modal-edit-kyc');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeEditKycModal = closeEditKycModal;
+
+    // Point 3: Advertiser Registration Profile can't be edited. If need to edit request permission from admin:
+    // Only Company / Advertiser Name *, Primary Phone *, PAN Number, Advertiser Category & Official Email can be edited.
+    // Then submit again. Wait for approval from admin, then post.
+    function handleSaveKyc(e) {
+      e.preventDefault();
+      const p = getSellerProfile();
+
+      // Read only the 5 allowed fields
+      const newName = document.getElementById('kyc-company-name').value.trim();
+      const newPhone = document.getElementById('kyc-phone').value.trim();
+      const newPan = document.getElementById('kyc-pan').value.trim().toUpperCase();
+      const newCategory = document.getElementById('kyc-category').value;
+      const newEmail = document.getElementById('kyc-email').value.trim();
+      const newGstin = document.getElementById('kyc-gstin').value.trim().toUpperCase();
+
+      // Update allowed fields and lock posting until Admin re-verifies!
+      
+      const preview = document.getElementById('kyc-photo-preview');
+      if (preview && preview.src) {
+        p.image = preview.src;
+      }
+
+      p.companyName = newName || p.companyName;
+      p.phone = newPhone || p.phone;
+      p.pan = newPan || p.pan;
+      p.category = newCategory || p.category;
+      p.email = newEmail || p.email;
+      p.gstin = newGstin;
+      p.status = 'pending'; // Re-locked for admin approval
+      p.reVerificationRequested = true;
+      p.submittedAt = new Date().toISOString();
+
+      localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+
+      // Push / Update in Admin Pending Queue
+      try {
+        let pending = [];
+        const rawPending = localStorage.getItem('genriv_pending_sellers');
+        if (rawPending) pending = JSON.parse(rawPending);
+        pending = pending.filter(s => s.regId !== p.regId);
+        pending.unshift(p);
+        localStorage.setItem('genriv_pending_sellers', JSON.stringify(pending));
+      } catch (err) {}
+
+      closeEditKycModal();
+      updateSellerKycUI();
+      showToast('⏳ Profile updated! Re-verification request submitted to Super Admin. Posting locked until approved.');
+    }
+    window.handleSaveKyc = handleSaveKyc;
+
+    // Attach KYC UI initialization to DOMContentLoaded
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSellerKycUI();
+    });
+</script>
+
+  <!-- Working Edit Profile KYC Modal (Point 3) -->
+  <div id="modal-edit-kyc" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 my-auto">
+      <div class="p-5 bg-gradient-to-r from-genriv-700 via-indigo-700 to-acres-700 text-white flex items-center justify-between">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase">Profile &amp; KYC Verification</span>
+          <h3 class="font-display font-extrabold text-xl mt-1">Edit Advertiser KYC Profile</h3>
+          <p class="text-xs text-indigo-100">Update company credentials, RERA ID, GST &amp; banking info</p>
+        </div>
+        <button type="button" onclick="closeEditKycModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25 font-bold">✕</button>
+      </div>
+
+      <form onsubmit="handleSaveKyc(event)" class="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
+        
+        <!-- Registration ID: Read-only & Non-Editable -->
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            Advertiser Registration ID <span class="text-amber-500 font-bold text-[10px]">(System Generated • Non-Editable 🔒)</span>
+          </label>
+          <div class="relative">
+            <input type="text" id="kyc-reg-id" readonly disabled value="REG-2026-9041" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 font-mono font-extrabold text-slate-500 dark:text-slate-400 cursor-not-allowed" />
+            <span class="absolute right-3.5 top-2.5 text-slate-400 text-xs">🔒 Locked</span>
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">Permanent platform registration identity assigned upon 1st signup.</p>
+        </div>
+
+        <!-- 1. Editable: Company / Advertiser Name -->
+        <div>
+          
+        <!-- Profile Photo / Company Logo Upload (Point 4) -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 text-xs">
+            Advertiser Profile Photo / Company Logo *
+          </label>
+          <div class="flex items-center gap-4">
+            <div class="relative w-16 h-16 rounded-2xl border-2 border-indigo-500 overflow-hidden bg-white shadow-sm shrink-0 flex items-center justify-center">
+              <img id="kyc-photo-preview" src="images/genriv_logo-Photoroom.png" alt="Profile Preview" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <input type="file" id="kyc-photo-file-input" accept="image/*" onchange="handleKycPhotoSelect(event)" class="hidden" />
+                <button type="button" onclick="document.getElementById('kyc-photo-file-input').click()" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5">
+                  <span>📷</span> <span>Upload Custom Image</span>
+                </button>
+                <button type="button" onclick="setKycPhotoPreset('images/genriv_logo-Photoroom.png')" class="px-2.5 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold hover:bg-slate-300 transition">
+                  Official Logo
+                </button>
+                <button type="button" onclick="setKycPhotoPreset('images/agent1.jpg')" class="px-2.5 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold hover:bg-slate-300 transition">
+                  Broker Photo
+                </button>
+              </div>
+              <p class="text-[10px] text-slate-400">PNG, JPG, or WEBP up to 5MB. Will be showcased in Top Agents directory upon verification.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="kyc-company-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            Company / Advertiser Name *
+          </label>
+          <input type="text" id="kyc-company-name" required value="Curated Proper" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- RERA Registration ID: Locked -->
+          <div>
+            <label for="kyc-rera-id" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+              RERA Registration ID * <span class="text-amber-500 text-[10px]">(Locked 🔒)</span>
+            </label>
+            <input type="text" id="kyc-rera-id" readonly disabled value="WBRERA/A/KOL/2024/000188" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 font-mono font-bold text-emerald-600 cursor-not-allowed" />
+          </div>
+
+          <!-- 2. Editable: Advertiser Category -->
+          <div>
+            <label for="kyc-category" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+              Advertiser Category *
+            </label>
+            <select id="kyc-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">
+              <option value="Builder / Developer" selected>Builder / Developer</option>
+              <option value="Property Owner">Direct Property Owner</option>
+              <option value="Real Estate Agent / Broker">Real Estate Agent / Broker</option>
+              <option value="Authorized Representative">Authorized Representative</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- 3. Editable: PAN Number -->
+          <div>
+            <label for="kyc-pan" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">PAN Number</label>
+            <input type="text" id="kyc-pan" value="AACCS5489J" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 uppercase font-mono font-bold text-slate-900 dark:text-white" />
+          </div>
+
+          <!-- GSTIN: Optional for direct owners -->
+          <div>
+            <label for="kyc-gstin" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+              GSTIN <span class="text-slate-400 font-normal text-[10px]">(Companies Only)</span>
+            </label>
+            <input type="text" id="kyc-gstin" value="19AACCS5489J1ZM" placeholder="Ex: 19AACCS5489J1ZM" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 uppercase font-mono text-slate-900 dark:text-white" />
+            <p class="text-[9px] text-slate-400 mt-0.5">Optional for individual owners; required for registered companies.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- 4. Editable: Primary Phone -->
+          <div>
+            <label for="kyc-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Primary Phone *</label>
+            <input type="tel" id="kyc-phone" required value="+91 98300-99110" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white" />
+          </div>
+
+          <!-- 5. Editable: Official Email -->
+          <div>
+            <label for="kyc-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Official Email</label>
+            <input type="email" id="kyc-email" value="curated.proper@genrivreality.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
+          </div>
+        </div>
+
+        <!-- Document Preview & Re-Upload Proofs (Point 4) -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-700 dark:text-slate-300">📁 Attached KYC &amp; Verification Documents</span>
+            <span class="text-emerald-600 font-bold text-[10px]">2 Attached</span>
+          </div>
+          
+          <div class="space-y-2">
+            <!-- RERA Certificate Row -->
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-700/60 border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <span class="block text-xs font-bold text-slate-800 dark:text-slate-200 truncate font-mono">
+                  📄 RERA_Sanction_Certificate.pdf
+                </span>
+                <span class="text-[10px] text-slate-400">Audit Status: Super Admin Verified</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="sellerViewCertificate('rera')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-[10px] font-bold">
+                  👁️ View
+                </button>
+                <button type="button" onclick="sellerDownloadCertificate('rera')" class="px-2 py-1 rounded bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-[10px] font-bold">
+                  📥 Download
+                </button>
+                <button type="button" onclick="triggerCertFileInput('rera')" class="px-2 py-1 rounded bg-amber-400 hover:bg-amber-500 text-slate-950 text-[10px] font-extrabold">
+                  🔄 Re-upload
+                </button>
+              </div>
+            </div>
+
+            <!-- PAN Proof Row -->
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-700/60 border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <span class="block text-xs font-bold text-slate-800 dark:text-slate-200 truncate font-mono">
+                  💳 PAN_Incorporation_Scan.jpg
+                </span>
+                <span class="text-[10px] text-slate-400">Audit Status: Income Tax Verified</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="sellerViewCertificate('pan')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-[10px] font-bold">
+                  👁️ View
+                </button>
+                <button type="button" onclick="sellerDownloadCertificate('pan')" class="px-2 py-1 rounded bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-[10px] font-bold">
+                  📥 Download
+                </button>
+                <button type="button" onclick="triggerCertFileInput('pan')" class="px-2 py-1 rounded bg-amber-400 hover:bg-amber-500 text-slate-950 text-[10px] font-extrabold">
+                  🔄 Re-upload
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400">Re-uploading any certificate will pause posting and submit your account for Super Admin re-approval.</p>
+        </div>
+
+        <!-- Super Admin Re-verification Rule Notice -->
+        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2.5">
+          <span class="text-base shrink-0">⚠️</span>
+          <div class="text-[11px] leading-relaxed">
+            <strong>Re-verification Governance Rule:</strong> Per Point 3, modifying Company Name, Phone, PAN, Category, or Email requires submitting for Super Admin re-approval. Property posting is paused until Admin re-verifies.
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-genriv-600 to-indigo-600 hover:from-genriv-700 hover:to-indigo-700 text-white font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2">
+          <span>💾</span>
+          <span>Submit for Admin Re-Approval &amp; Save KYC</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PENDING KYC POSTING LOCK MODAL -->
+  <div id="modal-pending-kyc-alert" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/40 p-6 space-y-4 text-center my-auto">
+      <div class="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-600 text-3xl flex items-center justify-center mx-auto">
+        ⏳
+      </div>
+      <div>
+        <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">
+          Advertiser Verification Required
+        </h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          Your profile (<span id="modal-alert-reg-id" class="font-mono font-bold text-amber-600">REG-2026-9041</span>) is currently in <strong class="text-amber-600">Pending Admin Verification</strong> queue.
+        </p>
+      </div>
+      <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 text-left space-y-1.5">
+        <div class="font-bold">🔒 Platform Governance Rule:</div>
+        <div>Sellers cannot post properties until verified by Super Admin. Once approved, your quota under your subscription plan will become active.</div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 pt-2">
+        
+        <button type="button" onclick="closePendingKycModal(); openEditKycModal();" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs shadow-sm transition text-center">
+          ✏️ Review My KYC Profile
+        </button>
+
+        <button type="button" onclick="closePendingKycModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="header-nav.js">
+    // ==============================================================
+    // SELLER CERTIFICATES VIEW, DOWNLOAD & RE-UPLOAD LOGIC (Point 4)
+    // ==============================================================
+    function triggerCertFileInput(certType) {
+      const input = document.getElementById(certType === 'rera' ? 'reupload-file-rera' : 'reupload-file-pan');
+      if (input) input.click();
+    }
+    window.triggerCertFileInput = triggerCertFileInput;
+
+    function handleCertFileSelected(certType, e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const p = getSellerProfile();
+      const timestamp = Date.now();
+      const ext = file.name.split('.').pop() || 'pdf';
+      const cleanSeller = (p.companyName || 'Curated_Proper').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const uniqueName = `DOC-${p.regId}-${timestamp}-${certType.toUpperCase()}_Certificate.${ext}`;
+      const targetPath = `images/sellers/${cleanSeller}/documents/${uniqueName}`;
+
+      // Read file
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        // Save in localStorage
+        if (!p.reuploadedDocs) p.reuploadedDocs = {};
+        p.reuploadedDocs[certType] = {
+          name: uniqueName,
+          originalName: file.name,
+          path: targetPath,
+          uploadedAt: new Date().toISOString(),
+          dataUrl: evt.target.result
+        };
+
+        // Gating Rule (Point 4): Re-uploading puts seller back into Pending Super Admin Verification!
+        p.status = 'pending';
+        p.reVerificationRequested = true;
+        p.reVerificationReason = `New ${certType.toUpperCase()} Certificate re-uploaded: ${uniqueName}`;
+        localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+
+        // Push to Admin Pending Queue
+        try {
+          let pending = [];
+          const rawPending = localStorage.getItem('genriv_pending_sellers');
+          if (rawPending) pending = JSON.parse(rawPending);
+          pending = pending.filter(s => s.regId !== p.regId);
+          pending.unshift(p);
+          localStorage.setItem('genriv_pending_sellers', JSON.stringify(pending));
+        } catch (err) {}
+
+        // Call backend upload endpoint if server is running
+        try {
+          fetch('/api/seller/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sellerName: cleanSeller,
+              folderType: 'documents',
+              fileName: uniqueName,
+              id: `DOC-${p.regId}`,
+              base64Data: evt.target.result
+            })
+          }).catch(() => {});
+        } catch (err) {}
+
+        updateSellerKycUI();
+        showToast(`📄 ${file.name} re-uploaded! Saved to seller folder. Super Admin re-approval is required before property posting.`);
+      };
+      reader.readAsDataURL(file);
+    }
+    window.handleCertFileSelected = handleCertFileSelected;
+
+    function sellerViewCertificate(certType) {
+      const p = getSellerProfile();
+      const titleEl = document.getElementById('seller-cert-modal-title');
+      const bodyEl = document.getElementById('seller-cert-modal-body');
+      const downloadBtn = document.getElementById('seller-cert-download-btn');
+
+      if (certType === 'rera') {
+        if (titleEl) titleEl.textContent = 'WB RERA Sanction Certificate';
+        if (bodyEl) {
+          bodyEl.innerHTML = `
+            <div class="space-y-2">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+                <span class="text-emerald-600 font-bold">✓ Government Sanctioned</span>
+                <span class="font-mono text-[10px] text-slate-400">${p.regId}</span>
+              </div>
+              <div class="space-y-1 font-mono text-xs">
+                <div>Holder: <strong class="text-slate-900 dark:text-white">${p.companyName}</strong></div>
+                <div>RERA License: <strong class="text-emerald-600">${p.reraId || 'WBRERA/A/KOL/2024/000188'}</strong></div>
+                <div>Issuing Body: <strong>West Bengal Real Estate Regulatory Authority</strong></div>
+                <div>Storage Location: <code>images/sellers/${(p.companyName||'Curated_Proper').replace(/[^a-zA-Z0-9_-]/g, '_')}/documents/</code></div>
+                <div>Audit Status: <strong class="${p.status === 'verified' ? 'text-emerald-600' : 'text-amber-500'}">${p.status === 'verified' ? '✓ Cleared & Verified' : '⏳ Super Admin Audit Pending'}</strong></div>
+              </div>
+            </div>
+          `;
+        }
+      } else {
+        if (titleEl) titleEl.textContent = 'PAN Card & Corporate Registration Scan';
+        if (bodyEl) {
+          bodyEl.innerHTML = `
+            <div class="space-y-2">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+                <span class="text-indigo-600 font-bold">✓ Income Tax Dept Tracked</span>
+                <span class="font-mono text-[10px] text-slate-400">${p.regId}</span>
+              </div>
+              <div class="space-y-1 font-mono text-xs">
+                <div>Company / Owner: <strong class="text-slate-900 dark:text-white">${p.companyName}</strong></div>
+                <div>PAN Number: <strong class="text-slate-900 dark:text-white">${p.pan || 'AACCS5489J'}</strong></div>
+                <div>GSTIN: <strong class="text-slate-900 dark:text-white">${p.gstin || '19AACCS5489J1ZM'}</strong></div>
+                <div>Storage Location: <code>images/sellers/${(p.companyName||'Curated_Proper').replace(/[^a-zA-Z0-9_-]/g, '_')}/documents/</code></div>
+                <div>Audit Status: <strong class="${p.status === 'verified' ? 'text-emerald-600' : 'text-amber-500'}">${p.status === 'verified' ? '✓ Cleared & Verified' : '⏳ Super Admin Audit Pending'}</strong></div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      if (downloadBtn) {
+        downloadBtn.onclick = () => sellerDownloadCertificate(certType);
+      }
+
+      const modal = document.getElementById('modal-seller-cert-preview');
+      if (modal) modal.classList.remove('hidden');
+    }
+    window.sellerViewCertificate = sellerViewCertificate;
+
+    function closeSellerCertModal() {
+      const modal = document.getElementById('modal-seller-cert-preview');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeSellerCertModal = closeSellerCertModal;
+
+    function sellerDownloadCertificate(certType) {
+      const p = getSellerProfile();
+      let filename = '';
+      let content = '';
+
+      if (certType === 'rera') {
+        filename = `DOC-${p.regId}-${Date.now()}-RERA_Sanction_Certificate.pdf`;
+        content = `%PDF-1.4 Official WB RERA Sanction Certificate\nRegistration ID: ${p.regId}\nLicense No: ${p.reraId || 'WBRERA/A/KOL/2024/000188'}\nHolder: ${p.companyName}\nWest Bengal Real Estate Regulatory Authority\nApproved: 100% Litigation Free`;
+      } else {
+        filename = `DOC-${p.regId}-${Date.now()}-PAN_Incorporation_Scan.txt`;
+        content = `Permanent Account Number & Business Incorporation Record\nRegistration ID: ${p.regId}\nHolder: ${p.companyName}\nPAN: ${p.pan || 'AACCS5489J'}\nGSTIN: ${p.gstin || '19AACCS5489J1ZM'}\nDepartment of Revenue, Govt of India`;
+      }
+
+      const blob = new Blob([content], { type: certType === 'rera' ? 'application/pdf' : 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast(`📥 Downloaded ${filename}`);
+    }
+    window.sellerDownloadCertificate = sellerDownloadCertificate;
+</script>
+
+  <!-- MODAL: SELLER CERTIFICATE PREVIEW (Point 4) -->
+  <div id="modal-seller-cert-preview" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 my-auto">
+      <div class="p-5 bg-gradient-to-r from-genriv-700 via-indigo-700 to-acres-700 text-white flex items-center justify-between">
+        <div>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-400 text-slate-950 text-[10px] font-extrabold uppercase">Official Verification</span>
+          <h3 class="font-display font-extrabold text-lg mt-1" id="seller-cert-modal-title">Certificate Inspection</h3>
+        </div>
+        <button type="button" onclick="closeSellerCertModal()" class="p-2 rounded-xl bg-white/15 text-white hover:bg-white/25 font-bold">✕</button>
+      </div>
+
+      <div class="p-6 space-y-4 text-xs sm:text-sm">
+        <div id="seller-cert-modal-body" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="button" id="seller-cert-download-btn" class="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-sm transition flex items-center justify-center gap-1.5">
+            <span>📥</span> <span>Download Official Certificate</span>
+          </button>
+          <button type="button" onclick="closeSellerCertModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
