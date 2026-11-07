@@ -8,6 +8,7 @@
   <title>Property Details &amp; Specifications — RERA Verified | Genriv Reality</title>
   <meta name="description" content="Detailed property specifications, carpet area, verified legal documents, price breakdown, and direct owner/developer contact on Genriv Reality." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="db-manager.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -802,7 +803,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('genriv_theme');
-      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+      if (savedTheme === 'dark') { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark'); }
 
       const urlParams = new URLSearchParams(window.location.search);
       const propId = urlParams.get('id') || 'prop-kol-1';
@@ -880,14 +881,57 @@
     }
 
     function revealDirectContact() {
+      const check = hasContactAccess();
+
+      if (!check.allowed) {
+        if (check.reason === 'NOT_LOGGED_IN') {
+          showToast('🔒 Please Sign In to view direct advertiser contact numbers.');
+          openUniversalLoginModal('signin');
+          return;
+        } else if (check.reason === 'REQUISITION_REQUIRED') {
+          alert('📋 Customer Requisition Form Required:\n\nPlatform Rule: To view direct advertiser phone numbers, you must complete your Customer Requisition Form first.\n\nRedirecting you to your Buyer Dashboard to fill the form...');
+          window.location.href = 'buyer-dashboard.html';
+          return;
+        }
+      }
+      
+      const user = check.user;
+
+      // Reveal Phone
       document.getElementById('direct-phone-box').classList.remove('hidden');
       document.getElementById('btn-reveal-contact').classList.add('hidden');
+
+      // Trigger simulated notification to seller & create lead in Seller CRM
+      const sellerTitle = currentProp ? currentProp.title : 'Property';
+      const sellerName = currentProp ? (currentProp.sellerName || 'Advertiser') : 'Advertiser';
+      showToast(`📩 Alert to Seller (${sellerName}): "${user.name} (${user.phone})" is interested in your property!`);
+
+      if (window.GenrivDB) {
+        GenrivDB.addLead({
+          id: 'LEAD-' + Math.floor(100 + Math.random() * 900),
+          propertyId: currentProp ? currentProp.id : 'prop-custom',
+          propertyTitle: sellerTitle,
+          buyerName: user.name,
+          buyerPhone: user.phone,
+          buyerEmail: user.email,
+          status: 'New Lead',
+          timestamp: new Date().toISOString().slice(0, 16).replace('T', ' ')
+        });
+      }
     }
 
     function handleContactSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('buyer-name').value;
-      const phone = document.getElementById('buyer-phone').value;
+      const name = document.getElementById('buyer-name').value.trim();
+      const phoneRaw = document.getElementById('buyer-phone').value.trim();
+      const cleanPhone = phoneRaw.replace(/\D/g, '').slice(-10);
+
+      // Strict validation: 10 digits
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        alert('Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
+        return;
+      }
+      const phone = cleanPhone;
       const date = document.getElementById('visit-date').value || 'Tomorrow';
       alert(`🎉 Site Visit Confirmed, ${name}!
 

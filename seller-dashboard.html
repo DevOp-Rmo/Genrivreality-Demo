@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="db-manager.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -784,6 +785,7 @@
           </table>
         </div>
       </div>
+
     </section>
 
     <!-- ============================================================== -->
@@ -804,6 +806,28 @@
 
       <!-- COMPREHENSIVE SUBSCRIPTIONS COMPARISON TABLE (Requirement 10) -->
       <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+        <!-- Test Kit / Trial Mode Action Bar (Requirement 6) -->
+        <div class="p-4 bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-indigo-500/30">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-lg shadow shrink-0">
+              🧪
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-display font-extrabold text-sm text-amber-300">Demo Test Kit &amp; Trial Tools</span>
+                <span id="trial-kyc-status-pill" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold border border-emerald-500/40">KYC Verified</span>
+              </div>
+              <p class="text-[11px] text-slate-300">Use this test kit to test the Payment Gateway checkout without waiting for admin approval.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="testKitToggleVerification()" id="btn-test-kit-toggle" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
+              <span>⚡</span>
+              <span id="btn-test-kit-toggle-text">Toggle KYC Status (Test Mode)</span>
+            </button>
+          </div>
+        </div>
+
         <div class="p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
           <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">Plan Comparison &amp; Benefits Matrix</h3>
           <p class="text-xs text-slate-500">Transparent pricing for property owners, certified brokers, and corporate developers.</p>
@@ -862,33 +886,14 @@
                 <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">Fast-Track Audit (6h)</td>
                 <td class="p-4 sm:p-5 text-center font-bold text-emerald-600 bg-amber-50/50 dark:bg-amber-950/20">Instant VIP Whitelist</td>
               </tr>
-              <tr>
-                <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Status / Action</td>
-                <td class="p-4 sm:p-5 text-center">
-                  <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-extrabold text-[11px]">
-                    ✓ Current Active Plan
-                  </span>
-                </td>
-                <td class="p-4 sm:p-5 text-center">
-                  <button type="button" onclick="activateBoostPack('Silver Boost Pack')" class="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition">
-                    Upgrade (₹1,499)
-                  </button>
-                </td>
-                <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">
-                  <button type="button" onclick="activateBoostPack('Gold Featured')" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition">
-                    Upgrade (₹2,499)
-                  </button>
-                </td>
-                <td class="p-4 sm:p-5 text-center bg-amber-50/50 dark:bg-amber-950/20">
-                  <button type="button" onclick="activateBoostPack('Titanium Builder Pro')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold shadow-md hover:opacity-95 transition">
-                    Upgrade (₹3,999) ⭐
-                  </button>
-                </td>
+              <tr id="seller-plan-action-row">
+                <!-- Dynamically populated by renderSubscriptionMatrixStatus() -->
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+
     </section>
 
     <!-- ============================================================== -->
@@ -1026,6 +1031,7 @@
           </div>
         </div>
       </div>
+
     </section>
 
   </main>
@@ -1232,7 +1238,39 @@
 
     let currentSeller = null;
 
+    
+    function renderPaymentHistoryTable() {
+      const container = document.getElementById('seller-payment-history-tbody');
+      if (!container) return;
+
+      let payments = [];
+      try {
+        payments = JSON.parse(localStorage.getItem('genriv_payments_v1') || '[]');
+      } catch (e) {}
+
+      if (payments.length === 0) {
+        container.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">No payment transactions recorded yet.</td></tr>';
+        return;
+      }
+
+      container.innerHTML = payments.map(pm => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+          <td class="p-3.5 font-mono font-bold text-indigo-600 dark:text-indigo-400">${pm.paymentId}</td>
+          <td class="p-3.5 font-bold text-slate-900 dark:text-white">${pm.planName}</td>
+          <td class="p-3.5 font-mono font-extrabold text-emerald-600">₹${(pm.amount || 0).toLocaleString()}</td>
+          <td class="p-3.5 text-slate-500">${pm.date}</td>
+          <td class="p-3.5 font-mono text-[11px] text-slate-400">${pm.returnRef || 'SUCCESS'}</td>
+          <td class="p-3.5">
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 text-[10px] font-extrabold">✓ ${pm.status || 'PAID'}</span>
+          </td>
+        </tr>
+      `).join('');
+    }
+    window.renderPaymentHistoryTable = renderPaymentHistoryTable;
+
     function initSellerDashboard() {
+      renderSubscriptionMatrixStatus();
+      renderPaymentHistoryTable();
       // Load Database from localStorage
       let db = null;
       try {
@@ -1565,20 +1603,270 @@
       }
     }
 
-    function activateBoostPack(packName) {
-      if (currentSeller) {
-        currentSeller.planName = packName;
-        currentSeller.listingQuota = packName.includes('Titanium') ? 25 : (packName.includes('Gold') ? 12 : 5);
+    // Active selected package in payment checkout
+    let pendingCheckoutPack = null;
+
+    
+    function testKitToggleVerification() {
+      const p = getSellerProfile();
+      p.status = (p.status === 'verified') ? 'pending' : 'verified';
+      try { localStorage.setItem('genriv_seller_profile', JSON.stringify(p)); } catch(e) {}
+      
+      const pill = document.getElementById('trial-kyc-status-pill');
+      const btnText = document.getElementById('btn-test-kit-toggle-text');
+      if (pill) {
+        if (p.status === 'verified') {
+          pill.textContent = 'KYC Verified';
+          pill.className = 'px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold border border-emerald-500/40';
+        } else {
+          pill.textContent = 'KYC Under Review';
+          pill.className = 'px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-extrabold border border-amber-500/40';
+        }
+      }
+      showToast(p.status === 'verified' ? '🧪 Test Mode: Status toggled to VERIFIED (Payment unlocked)' : '🧪 Test Mode: Status toggled to PENDING (Payment locked)');
+    }
+    window.testKitToggleVerification = testKitToggleVerification;
+
+    function testKitInstantVerifyAndProceed() {
+      const p = getSellerProfile();
+      p.status = 'verified';
+      try { localStorage.setItem('genriv_seller_profile', JSON.stringify(p)); } catch(e) {}
+      closePaymentLockedModal();
+      showToast('🧪 Verified successfully via Test Kit! Opening Payment Gateway...');
+      setTimeout(() => { openPaymentGatewayModal(pendingCheckoutPack || 'Gold Featured'); }, 300);
+    }
+    window.testKitInstantVerifyAndProceed = testKitInstantVerifyAndProceed;
+
+    
+    // Dynamically render the Plan Comparison Matrix & Top Governance Banner according to current paid subscription
+    function renderSubscriptionMatrixStatus() {
+      const p = getSellerProfile();
+      const currentPlan = (p.planName || 'Free Basic').toLowerCase();
+
+      // 1. Update Top Banner Badges (Shown in screenshot 2)
+      const planBadge = document.getElementById('seller-status-plan-badge');
+      const valBadge = document.getElementById('seller-status-validity-badge');
+      const quotaBadge = document.getElementById('seller-status-quota-badge');
+      const top10Badge = document.getElementById('seller-status-top10-badge');
+
+      const isTitanium = currentPlan.includes('titanium');
+      const isGold = currentPlan.includes('gold');
+      const isSilver = currentPlan.includes('silver');
+      const isFree = !isTitanium && !isGold && !isSilver;
+
+      const activeDays = isTitanium ? 180 : (isGold ? 90 : (isSilver ? 90 : 180));
+      const activeQuota = isTitanium ? 25 : (isGold ? 12 : (isSilver ? 5 : 1));
+      const activeName = isTitanium ? 'Titanium Builder Pro ⭐' : (isGold ? 'Gold Featured' : (isSilver ? 'Silver Boost Pack' : 'Free Basic Plan (₹0 / 6 Mo)'));
+
+      if (planBadge) {
+        planBadge.textContent = `ACTIVE: ${activeName.toUpperCase()}`;
+        planBadge.className = isTitanium 
+          ? 'px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold shadow-sm'
+          : (isGold ? 'px-3 py-1 rounded-full bg-indigo-600 text-white text-xs font-extrabold shadow-sm' : 'px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-extrabold border border-emerald-500/30');
       }
 
+      if (valBadge) valBadge.textContent = `⏳ Valid for ${activeDays} Days (Active Subscription)`;
+      if (quotaBadge) quotaBadge.textContent = `📊 Listing Quota: Up to ${activeQuota} Active Listings`;
+      
+      if (top10Badge) {
+        if (isTitanium) {
+          top10Badge.className = 'px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold shadow-sm';
+          top10Badge.textContent = '⭐ Top 10 Front-Page: Pinned #1 Spotlight Active';
+        } else {
+          top10Badge.className = 'px-3 py-1 rounded-full bg-indigo-400/20 text-indigo-300 text-xs font-bold border border-indigo-400/30';
+          top10Badge.textContent = '⭐ Top 10 Front-Page: Standard Placement';
+        }
+      }
+
+      // 2. Update Status / Action row in Pricing Matrix (Shown in screenshot 3)
+      const actionRow = document.getElementById('seller-plan-action-row');
+      if (actionRow) {
+        const activeBadgeHtml = `
+          <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-extrabold text-xs border border-emerald-500/40">
+            <span>✓</span> <span>Current Active Plan</span>
+          </span>
+        `;
+
+        actionRow.innerHTML = `
+          <td class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Status / Action</td>
+          <td class="p-4 sm:p-5 text-center">
+            ${isFree ? activeBadgeHtml : '<span class="text-xs text-slate-400 font-semibold">Included Basic</span>'}
+          </td>
+          <td class="p-4 sm:p-5 text-center">
+            ${isSilver ? activeBadgeHtml : `<button type="button" onclick="activateBoostPack('Silver Boost Pack')" class="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition shadow-sm">Upgrade (₹1,499)</button>`}
+          </td>
+          <td class="p-4 sm:p-5 text-center bg-indigo-50/30 dark:bg-indigo-950/10">
+            ${isGold ? activeBadgeHtml : `<button type="button" onclick="activateBoostPack('Gold Featured')" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition shadow-sm">Upgrade (₹2,499)</button>`}
+          </td>
+          <td class="p-4 sm:p-5 text-center bg-amber-50/50 dark:bg-amber-950/20">
+            ${isTitanium ? activeBadgeHtml : `<button type="button" onclick="activateBoostPack('Titanium Builder Pro')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold shadow-md hover:opacity-95 transition">Upgrade (₹3,999) ⭐</button>`}
+          </td>
+        `;
+      }
+    }
+    window.renderSubscriptionMatrixStatus = renderSubscriptionMatrixStatus;
+
+    function activateBoostPack(packName) {
+      const p = getSellerProfile();
+      
+      // Gating Rule (Requirement 4): Seller CAN ONLY access payment after getting verified from admin!
+      if (p.status !== 'verified') {
+        openPaymentLockedModal();
+        return;
+      }
+
+      // Open Demo Payment Gateway Checkout Form Modal
+      openPaymentGatewayModal(packName);
+    }
+
+    function openPaymentLockedModal() {
+      const modal = document.getElementById('modal-payment-locked');
+      if (modal) modal.classList.remove('hidden');
+    }
+    function closePaymentLockedModal() {
+      const modal = document.getElementById('modal-payment-locked');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openPaymentGatewayModal(packName) {
+      pendingCheckoutPack = packName;
+      const p = getSellerProfile();
+
+      let basePrice = 1499;
+      let durationDays = 90;
+      let quota = 5;
+
+      if (packName.includes('Gold')) {
+        basePrice = 2499;
+        durationDays = 90;
+        quota = 12;
+      } else if (packName.includes('Titanium')) {
+        basePrice = 3999;
+        durationDays = 180;
+        quota = 25;
+      }
+
+      const gst = Math.round(basePrice * 0.18);
+      const total = basePrice + gst;
+
+      // Auto fetch existing details into the gateway form
+      document.getElementById('gw-plan-title').textContent = packName;
+      document.getElementById('gw-plan-quota').textContent = `Up to ${quota} Active Listings • ${durationDays} Days`;
+      document.getElementById('gw-base-price').textContent = `₹${basePrice.toLocaleString()}`;
+      document.getElementById('gw-gst').textContent = `₹${gst.toLocaleString()}`;
+      document.getElementById('gw-total').textContent = `₹${total.toLocaleString()}`;
+      document.getElementById('gw-btn-pay-amount').textContent = `Pay ₹${total.toLocaleString()} to Proceed`;
+
+      // Auto-prefill billing details
+      document.getElementById('gw-payer-name').value = p.companyName || '';
+      document.getElementById('gw-payer-phone').value = p.phone || '';
+      document.getElementById('gw-payer-email').value = p.email || '';
+      document.getElementById('gw-payer-pan').value = p.pan || '';
+      const elGstin = document.getElementById('gw-payer-gstin'); if (elGstin) elGstin.value = p.gstin || '';
+
+      document.getElementById('modal-payment-gateway').classList.remove('hidden');
+    }
+
+    function closePaymentGatewayModal() {
+      document.getElementById('modal-payment-gateway').classList.add('hidden');
+    }
+
+    function handleGatewayPaymentSubmit(e) {
+      e.preventDefault();
+
+      const phone = document.getElementById('gw-payer-phone').value.trim();
+      const pan = document.getElementById('gw-payer-pan').value.trim();
+
+      // Mobile validation (10 digits)
+      const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        alert('Please enter a valid 10-digit Indian phone number.');
+        return;
+      }
+
+      // Hide form modal, show processing animation
+      closePaymentGatewayModal();
+      document.getElementById('modal-gateway-processing').classList.remove('hidden');
+
+      setTimeout(() => {
+        document.getElementById('modal-gateway-processing').classList.add('hidden');
+        completePaymentAndUpgrade(pendingCheckoutPack);
+      }, 1600);
+    }
+
+    function completePaymentAndUpgrade(packName) {
+      const p = getSellerProfile();
+      const quota = packName.includes('Titanium') ? 25 : (packName.includes('Gold') ? 12 : 5);
+      const days = packName.includes('Titanium') ? 180 : 90;
+      const basePrice = packName.includes('Titanium') ? 3999 : (packName.includes('Gold') ? 2499 : 1499);
+      const gst = Math.round(basePrice * 0.18);
+      const total = basePrice + gst;
+
+      const paymentId = 'PAY-2026-' + Math.floor(10000 + Math.random() * 90000);
+      const txnRef = 'TXN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      const returnRef = 'RET-CONF-' + Math.floor(100000 + Math.random() * 900000);
+      const nowStr = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+      const nowIso = new Date().toISOString();
+
+      const paymentRecord = {
+        paymentId: paymentId,
+        transactionRef: txnRef,
+        date: nowStr,
+        timestamp: nowIso,
+        user: {
+          id: p.regId || 'REG-2026-9041',
+          name: p.companyName || 'Sen Estates Advisory',
+          email: p.email || 'debashis.seller@genrivreality.com',
+          phone: p.phone || '+91 98310-77890',
+          pan: p.pan || 'AACCS5489J',
+          gstin: p.gstin || '19AACCS5489J1ZM'
+        },
+        planName: packName,
+        quota: quota,
+        validityDays: days,
+        baseAmount: basePrice,
+        gstAmount: gst,
+        amount: total,
+        paymentMethod: 'UPI Instant / Net Banking',
+        status: 'SUCCESS',
+        returnStatus: 'PAID_VERIFIED',
+        returnRef: returnRef,
+        invoiceNumber: 'INV-' + paymentId.replace('PAY-', '')
+      };
+
+      // 1. Save to Client LocalStorage Database
+      let allPayments = [];
+      try {
+        allPayments = JSON.parse(localStorage.getItem('genriv_payments_v1') || '[]');
+      } catch (e) {}
+      allPayments.unshift(paymentRecord);
+      localStorage.setItem('genriv_payments_v1', JSON.stringify(allPayments));
+
+      // 2. Save to Server Database via API (db/payments.json)
+      try {
+        fetch('/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentRecord)
+        }).catch(() => {});
+      } catch(e) {}
+
+      // 3. Update Seller Profile
+      p.planName = packName;
+      p.listingQuota = quota;
+      p.lastTransaction = paymentRecord;
+      localStorage.setItem('genriv_seller_profile', JSON.stringify(p));
+      renderSubscriptionMatrixStatus();
+
+      // 4. Update UI Badges
       const planBadge = document.getElementById('seller-status-plan-badge');
       const valBadge = document.getElementById('seller-status-validity-badge');
       const quotaBadge = document.getElementById('seller-status-quota-badge');
       const top10Badge = document.getElementById('seller-status-top10-badge');
 
       if (planBadge) planBadge.textContent = `Active: ${packName}`;
-      if (valBadge) valBadge.textContent = `⏳ Valid for ${packName.includes('Titanium') ? '180' : '90'} Days Remaining`;
-      if (quotaBadge) quotaBadge.textContent = `📊 Quota: Up to ${packName.includes('Titanium') ? '25' : (packName.includes('Gold') ? '12' : '5')} Active Listings`;
+      if (valBadge) valBadge.textContent = `⏳ Valid for ${days} Days Remaining`;
+      if (quotaBadge) quotaBadge.textContent = `📊 Quota: Up to ${quota} Active Listings`;
       if (top10Badge) {
         if (packName.includes('Titanium')) {
           top10Badge.className = 'px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold shadow-sm';
@@ -1589,7 +1877,24 @@
         }
       }
 
-      showToast(`🚀 Successfully upgraded to ${packName}! Increased listing quota & visibility applied.`);
+      // 5. Populate and show Official Tax Invoice Receipt
+      const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setEl('receipt-txn-id', paymentId);
+      setEl('receipt-date', nowStr);
+      setEl('receipt-plan', packName);
+      setEl('receipt-quota', `${quota} Properties (${days} Days)`);
+      setEl('receipt-amount', '₹' + total.toLocaleString());
+      setEl('receipt-company', p.companyName || 'Sen Estates Advisory');
+      setEl('receipt-return-ref', returnRef);
+
+      const receiptModal = document.getElementById('modal-payment-receipt');
+      if (receiptModal) receiptModal.classList.remove('hidden');
+      renderPaymentHistoryTable();
+      showToast(`🎉 Payment Successful! ${packName} activated for ${days} days.`);
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('modal-payment-receipt').classList.add('hidden');
     }
     window.activateBoostPack = activateBoostPack;
 
@@ -1655,7 +1960,12 @@
       const savedTheme = localStorage.getItem('genriv_theme');
       if (savedTheme === 'dark') {
         document.documentElement.classList.add('dark');
-        document.getElementById('theme-btn-text').textContent = '☀️';
+        const themeBtn = document.getElementById('theme-btn-text');
+        if (themeBtn) themeBtn.textContent = '☀️';
+      } else {
+        document.documentElement.classList.remove('dark');
+        const themeBtn = document.getElementById('theme-btn-text');
+        if (themeBtn) themeBtn.textContent = '🌙';
       }
       initSellerDashboard();
     });
@@ -1675,14 +1985,14 @@
         // Auto-generate Registration ID upon 1st signup/onboarding
         profile = {
           regId: 'REG-2026-9041',
-          companyName: 'Curated Proper',
+          companyName: 'Sen Estates Advisory (Debashis Sen)',
           reraId: 'WBRERA/A/KOL/2024/000188',
           category: 'Builder / Developer',
           pan: 'AACCS5489J',
           gstin: '19AACCS5489J1ZM',
           phone: '+91 98300-99110',
-          email: 'curated.proper@genrivreality.com',
-          status: 'pending', // 'pending' | 'verified'
+          email: 'debashis.seller@genrivreality.com',
+          status: 'verified', // 'pending' | 'verified'
           reVerificationRequested: false,
           quota: 1,
           planName: 'Free Basic (1 Ad / 6 Mo)',
@@ -1971,9 +2281,6 @@
           <p class="text-[10px] text-slate-400 mt-1">Permanent platform registration identity assigned upon 1st signup.</p>
         </div>
 
-        <!-- 1. Editable: Company / Advertiser Name -->
-        <div>
-          
         <!-- Profile Photo / Company Logo Upload (Point 4) -->
         <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
           <label class="block font-bold text-slate-700 dark:text-slate-300 text-xs">
@@ -2347,6 +2654,180 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- PAYMENT LOCKED WARNING MODAL (Gating Rule) -->
+  <div id="modal-payment-locked" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full border border-amber-500/40 shadow-2xl overflow-hidden p-6 text-center space-y-4">
+      <div class="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-500 text-3xl flex items-center justify-center mx-auto">
+        🔒
+      </div>
+      <h3 class="font-display font-extrabold text-xl text-slate-900 dark:text-white">Payment Gateway Locked</h3>
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        As per real-estate platform governance, <strong>sellers can only access payment and upgrade plans after getting verified by the Super Admin</strong>.
+      </p>
+      <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-200 font-semibold">
+        Your Advertiser KYC Status is currently under review. Once Super Admin approves your credentials, payment checkout will unlock automatically.
+      </div>
+      <button type="button" onclick="testKitInstantVerifyAndProceed()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-extrabold text-xs shadow-lg transition flex items-center justify-center gap-2">
+        <span>🧪</span>
+        <span>Test Kit: Instant Verify &amp; Proceed to Payment</span>
+      </button>
+      <button type="button" onclick="closePaymentLockedModal()" class="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs transition">
+        Understood, Return to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- DEMO PAYMENT GATEWAY CHECKOUT MODAL -->
+  <div id="modal-payment-gateway" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8">
+      <div class="p-6 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white flex items-center justify-between border-b border-indigo-500/30">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-400/40 flex items-center justify-center text-xl">
+            💳
+          </div>
+          <div>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Verified Seller Checkout</span>
+            <h3 class="font-display font-extrabold text-lg mt-0.5">Demo Payment Gateway</h3>
+          </div>
+        </div>
+        <button type="button" onclick="closePaymentGatewayModal()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs">✕</button>
+      </div>
+
+      <form onsubmit="handleGatewayPaymentSubmit(event)" class="p-6 space-y-5 text-xs sm:text-sm">
+        <!-- Order Summary Box -->
+        <!-- Test Kit Quick Fill Button -->
+        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
+          <div>
+            <strong class="text-amber-800 dark:text-amber-300 font-bold">🧪 Test Kit Mode:</strong>
+            <span class="text-slate-500 dark:text-slate-400 ml-1">Pre-fill test banking credentials</span>
+          </div>
+          <button type="button" onclick="testKitAutoFillPayment()" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-[11px] shadow-sm transition">
+            ⚡ Auto-Fill Test Info
+          </button>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500 font-bold">Plan Name:</span>
+            <strong id="gw-plan-title" class="font-bold text-slate-900 dark:text-white text-sm">Titanium Builder Pro</strong>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-500">Listing Quota &amp; Validity:</span>
+            <span id="gw-plan-quota" class="font-semibold text-indigo-600 dark:text-indigo-400">Up to 25 Listings • 180 Days</span>
+          </div>
+          <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs">
+            <span class="text-slate-500">Base Price:</span>
+            <span id="gw-base-price" class="font-mono text-slate-800 dark:text-slate-200">₹3,999</span>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-500">GST (18%):</span>
+            <span id="gw-gst" class="font-mono text-slate-800 dark:text-slate-200">₹720</span>
+          </div>
+          <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-sm font-extrabold">
+            <span class="text-slate-900 dark:text-white">Total Payable Amount:</span>
+            <span id="gw-total" class="font-mono text-emerald-600 dark:text-emerald-400 text-base">₹4,719</span>
+          </div>
+        </div>
+
+        <!-- Pre-filled Seller Billing Details -->
+        <div class="space-y-3">
+          <div class="font-display font-extrabold text-xs uppercase tracking-wider text-slate-400">Payer Billing Information (Auto-Fetched)</div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-600 dark:text-slate-300 text-[11px] mb-1">Company / Advertiser Name *</label>
+              <input id="gw-payer-name" type="text" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-semibold text-xs" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 dark:text-slate-300 text-[11px] mb-1">Primary Mobile Number *</label>
+              <input id="gw-payer-phone" type="tel" required maxlength="10" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono font-bold text-xs" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 dark:text-slate-300 text-[11px] mb-1">Official Email ID *</label>
+              <input id="gw-payer-email" type="email" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 dark:text-slate-300 text-[11px] mb-1">PAN Card Number</label>
+              <input id="gw-payer-pan" type="text" maxlength="10" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono uppercase text-xs" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 dark:text-slate-300 text-[11px] mb-1">GSTIN (Companies / Agencies)</label>
+              <input id="gw-payer-gstin" type="text" maxlength="15" placeholder="e.g. 19AACCS5489J1ZM" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono uppercase text-xs" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="space-y-2">
+          <label class="block font-display font-extrabold text-xs uppercase tracking-wider text-slate-400">Select Payment Instrument</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/40 cursor-pointer text-center">
+              <input type="radio" name="gw_method" value="upi" checked class="sr-only" />
+              <span class="text-base mb-1">📱</span>
+              <strong class="text-xs text-indigo-700 dark:text-indigo-300">UPI / QR</strong>
+              <span class="text-[9px] text-slate-400">GPay, PhonePe</span>
+            </label>
+            <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer text-center hover:border-slate-400">
+              <input type="radio" name="gw_method" value="cards" class="sr-only" />
+              <span class="text-base mb-1">💳</span>
+              <strong class="text-xs text-slate-700 dark:text-slate-300">Card</strong>
+              <span class="text-[9px] text-slate-400">Visa, RuPay</span>
+            </label>
+            <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer text-center hover:border-slate-400">
+              <input type="radio" name="gw_method" value="netbanking" class="sr-only" />
+              <span class="text-base mb-1">🏦</span>
+              <strong class="text-xs text-slate-700 dark:text-slate-300">Net Banking</strong>
+              <span class="text-[9px] text-slate-400">SBI, HDFC</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit CTA -->
+        <button type="submit" id="gw-btn-pay-amount" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-extrabold text-sm sm:text-base shadow-xl transition flex items-center justify-center gap-2">
+          Pay ₹4,719 to Proceed →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- GATEWAY PROCESSING SPINNER MODAL -->
+  <div id="modal-gateway-processing" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-8 text-center space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div class="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">Processing Transaction...</h3>
+      <p class="text-xs text-slate-500">Contacting banking payment network. Please do not close or refresh this window.</p>
+    </div>
+  </div>
+
+  <!-- PAYMENT SUCCESS RECEIPT MODAL -->
+  <div id="modal-payment-receipt" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full border border-emerald-500/40 shadow-2xl overflow-hidden p-6 space-y-4">
+      <div class="text-center space-y-2">
+        <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-500 text-3xl flex items-center justify-center mx-auto">
+          ✓
+        </div>
+        <h3 class="font-display font-extrabold text-xl text-slate-900 dark:text-white">Payment Successful!</h3>
+        <p class="text-xs text-slate-500">Official GST Tax Invoice &amp; Subscription Upgrade Confirmed</p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+        <div class="flex justify-between"><span class="text-slate-500 font-bold">Payment ID:</span><strong id="receipt-txn-id" class="font-mono text-indigo-600 dark:text-indigo-400">PAY-2026-99120</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-bold">Return Reference:</span><span id="receipt-return-ref" class="font-mono text-slate-700 dark:text-slate-300">RET-CONF-00000</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Billed To:</span><strong id="receipt-company" class="text-slate-900 dark:text-white">Sen Estates Advisory</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Date &amp; Time:</span><span id="receipt-date" class="text-slate-700 dark:text-slate-300">Just now</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Active Package:</span><strong id="receipt-plan" class="text-indigo-600 dark:text-indigo-400">Titanium Builder Pro</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Total Paid (incl. GST):</span><strong id="receipt-amount" class="text-emerald-600 font-mono text-sm">₹4,719</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Listing Quota:</span><strong id="receipt-quota" class="text-emerald-600 dark:text-emerald-400">25 Properties</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Payment Status:</span><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">✓ COMPLETED</span></div>
+      </div>
+
+      <button type="button" onclick="closeReceiptModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-xs shadow-md transition">
+        Return to Seller Dashboard
+      </button>
     </div>
   </div>
 

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="db-manager.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -191,27 +192,40 @@
           </div>
         </div>
 
-        <!-- Requisition Parameters Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 text-xs">
+        <!-- Requisition Parameters Grid (Populated Directly From Form) -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 text-xs">
           <div>
-            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Registered Buyer</span>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Customer Name & Type</span>
             <span id="summary-buyer-name" class="font-extrabold text-slate-900 dark:text-white text-sm">Anirban Chatterjee</span>
-            <span id="summary-buyer-contact" class="text-slate-500 block text-[11px]">+91 98301-44210</span>
+            <span id="summary-customer-type" class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold inline-block mt-0.5">Individual</span>
+            <span id="summary-buyer-contact" class="text-slate-500 block text-[11px] mt-0.5">+91 98301-44210</span>
           </div>
           <div>
-            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Requirement & Purpose</span>
-            <span id="summary-req-purpose" class="font-extrabold text-slate-900 dark:text-white text-sm">Residential Buy (3 BHK)</span>
-            <span id="summary-req-category" class="text-slate-500 block text-[11px]">Flat / Luxury Penthouse</span>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Purpose & Category</span>
+            <span id="summary-req-purpose" class="font-extrabold text-slate-900 dark:text-white text-sm">Buy</span>
+            <span id="summary-req-category" class="text-slate-500 block text-[11px]">Residential • Flat/Apartment</span>
           </div>
           <div>
-            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Target Locality & City</span>
-            <span id="summary-req-location" class="font-extrabold text-slate-900 dark:text-white text-sm">New Town & Salt Lake</span>
-            <span id="summary-req-city" class="text-slate-500 block text-[11px]">Kolkata / Mumbai</span>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Configuration & Area</span>
+            <span id="summary-req-config" class="font-extrabold text-slate-900 dark:text-white text-sm">3 BHK</span>
+            <span id="summary-req-area" class="text-slate-500 block text-[11px]">1400 - 1800 sq.ft.</span>
           </div>
           <div>
-            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Budget & Financing</span>
-            <span id="summary-req-budget" class="font-extrabold text-emerald-600 dark:text-emerald-400 text-sm">₹1.20 Cr – ₹2.50 Cr</span>
-            <span id="summary-req-loan" class="text-slate-500 block text-[11px]">Bank Pre-Approved (SBI)</span>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Preferred Locality</span>
+            <span id="summary-req-location" class="font-extrabold text-slate-900 dark:text-white text-sm">New Town</span>
+            <span id="summary-req-alt-loc" class="text-slate-500 block text-[11px]">Alt: Salt Lake Sector V</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Budget & Loan Status</span>
+            <span id="summary-req-budget" class="font-extrabold text-emerald-600 dark:text-emerald-400 text-sm">₹1.20 Cr – ₹1.60 Cr</span>
+            <span id="summary-req-loan" class="text-slate-500 block text-[11px]">Loan: Pre-Approved</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">Declaration & Signature</span>
+            <div id="summary-sig-container" class="mt-1">
+              <span class="text-[10px] text-slate-400 italic">Verified Electronic Filing</span>
+            </div>
+            <span id="summary-req-date" class="text-slate-400 block text-[10px] mt-0.5">Date: 2026-11-07</span>
           </div>
         </div>
 
@@ -238,106 +252,578 @@
       </div>
 
       <!-- BLANK / EDIT CUSTOMER REQUISITION FORM (Toggled or shown if buyer hasn't filled yet) -->
-      <div id="buyer-requisition-form-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-2 border-genriv-500/40 transition-all duration-300">
-        <div class="p-5 sm:p-7 bg-gradient-to-r from-genriv-800 via-indigo-800 to-acres-700 text-white flex items-center justify-between">
+      <div id="buyer-requisition-form-card" class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-2 border-genriv-500/40 transition-all duration-300">
+        <div class="p-5 sm:p-7 bg-gradient-to-r from-genriv-800 via-indigo-800 to-acres-700 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Official Word-Doc Template</span>
-            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1">CUSTOMER REQUISITION FORM</h3>
-            <p class="text-xs text-slate-200">Customer Registration & Property Requirement Details</p>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Official Form Format</span>
+              <span class="text-xs text-amber-200">Requisition No. &amp; Date are auto-generated</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl mt-1 tracking-tight">CUSTOMER REQUISITION FORM</h3>
+            <p class="text-xs text-slate-200">Customer Registration &amp; Property Requirement Details</p>
           </div>
-          <button type="button" onclick="toggleEditRequisitionForm()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
-            Close ✕
-          </button>
+          <div class="flex items-center gap-3">
+            <div class="bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/20 text-xs">
+              <span class="text-slate-300 text-[10px] block uppercase font-bold">Auto Requisition No.</span>
+              <strong id="form-auto-req-no" class="font-mono text-amber-300 font-bold">REQ-2026-8491</strong>
+            </div>
+            <div class="bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/20 text-xs">
+              <span class="text-slate-300 text-[10px] block uppercase font-bold">Date</span>
+              <strong id="form-auto-date" class="font-mono text-white font-bold">2026-11-07</strong>
+            </div>
+            <button type="button" id="btn-close-form" onclick="toggleEditRequisitionForm()" class="hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+              Close ✕
+            </button>
+          </div>
         </div>
 
-        <form id="buyer-page-requisition-form" onsubmit="handleBuyerRequisitionSave(event)" class="p-4 sm:p-7 space-y-6 text-xs sm:text-sm">
-          <!-- 1. Customer Information -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
-            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">1. Customer Information</h4>
+        <form id="buyer-page-requisition-form" onsubmit="handleBuyerRequisitionSave(event)" class="p-5 sm:p-8 space-y-6 text-xs sm:text-sm">
+          
+          <!-- Hidden locked fields for programmatic access -->
+          <input type="hidden" id="buyer-req-id" value="REQ-2026-8491" />
+          <input type="hidden" id="buyer-req-date" value="2026-11-07" />
+
+          <!-- SECTION 1: CUSTOMER INFORMATION -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+              <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-genriv-600 text-white inline-flex items-center justify-center text-xs font-bold">1</span>
+                <span>CUSTOMER INFORMATION</span>
+              </h4>
+              <span class="text-[11px] text-slate-500 font-semibold">* Required fields</span>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label for="buyer-req-name" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Customer Name *</label>
-                <input id="buyer-req-name" type="text" required placeholder="Full Name" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-name" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Customer Name *</label>
+                <input id="buyer-req-name" type="text" required placeholder="Full Name" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold" />
               </div>
               <div>
-                <label for="buyer-req-phone" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Contact No. (Mobile) *</label>
-                <input id="buyer-req-phone" type="tel" required placeholder="+91 98300-12345" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-phone" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Mobile Number (10 Digits) *</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-slate-400 font-bold">+91</span>
+                  <input id="buyer-req-phone" type="tel" maxlength="10" required placeholder="9830012345" class="w-full pl-12 pr-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono font-bold" />
+                </div>
+                <p class="text-[10px] text-slate-400 mt-0.5">Strict 10-digit mobile number</p>
               </div>
               <div>
-                <label for="buyer-req-whatsapp" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">WhatsApp No. *</label>
-                <input id="buyer-req-whatsapp" type="tel" placeholder="+91 98300-12345" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-whatsapp" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">WhatsApp Number (10 Digits) *</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-slate-400 font-bold">+91</span>
+                  <input id="buyer-req-whatsapp" type="tel" maxlength="10" required placeholder="9830012345" class="w-full pl-12 pr-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono font-bold" />
+                </div>
               </div>
               <div>
-                <label for="buyer-req-email" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Email ID *</label>
-                <input id="buyer-req-email" type="email" required placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-email" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Email ID *</label>
+                <input id="buyer-req-email" type="email" required placeholder="customer@example.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
               </div>
-              <div>
-                <label for="buyer-req-role" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Client Profile</label>
-                <select id="buyer-req-role" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
-                  <option value="Direct Homebuyer">Direct Homebuyer (Individual)</option>
-                  <option value="Corporate / Company">Corporate / Company Investor</option>
-                  <option value="NRI Investor">NRI / Global Indian</option>
-                </select>
+              <div class="sm:col-span-2">
+                <label for="buyer-req-address" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Present Address *</label>
+                <input id="buyer-req-address" type="text" required placeholder="Current Residential Address with PIN Code" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
               </div>
-              <div>
-                <label for="buyer-req-purpose" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Purpose of Requisition *</label>
-                <select id="buyer-req-purpose" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
-                  <option value="Buy">Outright Purchase (Self Use / Investment)</option>
-                  <option value="Rent">Rental / Long-Term Lease</option>
-                </select>
+              <div class="sm:col-span-3">
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Customer Type *</label>
+                <div class="flex flex-wrap items-center gap-4">
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_customer_type" value="Individual" checked class="text-genriv-600 focus:ring-genriv-500" />
+                    <span>Individual</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_customer_type" value="Company" class="text-genriv-600 focus:ring-genriv-500" />
+                    <span>Company</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_customer_type" value="Investor" class="text-genriv-600 focus:ring-genriv-500" />
+                    <span>Investor</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_customer_type" value="NRI" class="text-genriv-600 focus:ring-genriv-500" />
+                    <span>NRI</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- 2. Requisition Specifications & Property Type -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
-            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide">2. Property Specifications & Criteria</h4>
+          <!-- SECTION 2: PROPERTY REQUIREMENT -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <span class="w-6 h-6 rounded-full bg-genriv-600 text-white inline-flex items-center justify-center text-xs font-bold">2</span>
+              <span>PROPERTY REQUIREMENT</span>
+            </h4>
+            
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Purpose -->
               <div>
-                <label for="buyer-req-specs" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">BHK Configuration *</label>
-                <select id="buyer-req-specs" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
-                  <option value="2 BHK">2 BHK Luxury Home</option>
-                  <option value="3 BHK" selected>3 BHK Premium Residence</option>
-                  <option value="4 BHK">4 BHK Sky Villa / Penthouse</option>
-                  <option value="5+ BHK">5+ BHK Grand Estate</option>
-                </select>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Purpose *</label>
+                <div class="flex items-center gap-3">
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_purpose" value="Buy" checked class="text-genriv-600" />
+                    <span>Buy</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_purpose" value="Rent" class="text-genriv-600" />
+                    <span>Rent</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_purpose" value="Lease" class="text-genriv-600" />
+                    <span>Lease</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Property Category -->
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Property Category *</label>
+                <div class="flex items-center gap-3">
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_prop_category" value="Residential" checked class="text-genriv-600" />
+                    <span>Residential</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_prop_category" value="Commercial" class="text-genriv-600" />
+                    <span>Commercial</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_prop_category" value="Land/Plot" class="text-genriv-600" />
+                    <span>Land/Plot</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Preferred Configuration -->
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Preferred Configuration *</label>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="flex items-center gap-1 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_bhk_config" value="1 BHK" class="text-genriv-600" />
+                    <span>1 BHK</span>
+                  </label>
+                  <label class="flex items-center gap-1 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_bhk_config" value="2 BHK" class="text-genriv-600" />
+                    <span>2 BHK</span>
+                  </label>
+                  <label class="flex items-center gap-1 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_bhk_config" value="3 BHK" checked class="text-genriv-600" />
+                    <span>3 BHK</span>
+                  </label>
+                  <label class="flex items-center gap-1 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                    <input type="radio" name="buyer_bhk_config" value="4+ BHK" class="text-genriv-600" />
+                    <span>4+ BHK</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Property Type -->
+              <div class="sm:col-span-3">
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Property Type * (Select one or specify)</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Flat/Apartment" checked class="text-genriv-600" />
+                    <span>Flat/Apartment</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Independent House" class="text-genriv-600" />
+                    <span>Independent House</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Villa" class="text-genriv-600" />
+                    <span>Villa</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Office" class="text-genriv-600" />
+                    <span>Office</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Shop" class="text-genriv-600" />
+                    <span>Shop</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Showroom" class="text-genriv-600" />
+                    <span>Showroom</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Warehouse" class="text-genriv-600" />
+                    <span>Warehouse</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="Land/Plot" class="text-genriv-600" />
+                    <span>Land/Plot</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_prop_type" value="PG/Mess" class="text-genriv-600" />
+                    <span>PG/Mess</span>
+                  </label>
+                  <div class="flex items-center gap-1.5 bg-white dark:bg-slate-900 p-1.5 px-2 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="text-xs font-semibold shrink-0">Other:</span>
+                    <input id="buyer-prop-type-other" type="text" placeholder="Specify" class="w-full text-xs bg-transparent border-0 outline-none" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Locations -->
+              <div>
+                <label for="buyer-req-location" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Preferred Location/Locality *</label>
+                <input id="buyer-req-location" type="text" required placeholder="e.g. New Town, Salt Lake" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold" />
               </div>
               <div>
-                <label for="buyer-req-location" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Preferred Locality / Area *</label>
-                <input id="buyer-req-location" type="text" required placeholder="e.g. New Town, Salt Lake, Worli" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-alt-location" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Alternative Location</label>
+                <input id="buyer-req-alt-location" type="text" placeholder="e.g. Rajarhat, EM Bypass" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
               </div>
               <div>
-                <label for="buyer-req-city" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Metro City *</label>
-                <select id="buyer-req-city" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
+                <label for="buyer-req-city" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Metro City *</label>
+                <select id="buyer-req-city" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold">
                   <option value="Kolkata">Kolkata</option>
                   <option value="Mumbai">Mumbai</option>
                   <option value="Bengaluru">Bengaluru</option>
-                  <option value="Gurugram">Gurugram</option>
+                  <option value="Delhi / NCR">Delhi / NCR</option>
                   <option value="Hyderabad">Hyderabad</option>
                   <option value="Pune">Pune</option>
                 </select>
               </div>
+
+              <!-- Area Dropdowns (Requirement 2) -->
               <div>
-                <label for="buyer-req-budget-min" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Min Budget (₹)</label>
-                <input id="buyer-req-budget-min" type="text" placeholder="e.g. ₹95 Lakh" value="₹1.20 Cr" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <label for="buyer-req-area-pref" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Preferred Area (sq. ft.) *</label>
+                <select id="buyer-req-area-pref" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold">
+                  <option value="400 sq. ft.">400 sq. ft.</option>
+                  <option value="600 sq. ft.">600 sq. ft.</option>
+                  <option value="800 sq. ft.">800 sq. ft.</option>
+                  <option value="1000 sq. ft.">1,000 sq. ft.</option>
+                  <option value="1200 sq. ft.">1,200 sq. ft.</option>
+                  <option value="1400 sq. ft.">1,400 sq. ft.</option>
+                  <option value="1600 sq. ft." selected>1,600 sq. ft.</option>
+                  <option value="1800 sq. ft.">1,800 sq. ft.</option>
+                  <option value="2000 sq. ft.">2,000 sq. ft.</option>
+                  <option value="2500 sq. ft.">2,500 sq. ft.</option>
+                  <option value="3000 sq. ft.">3,000 sq. ft.</option>
+                  <option value="3500 sq. ft.">3,500 sq. ft.</option>
+                  <option value="4000 sq. ft.">4,000 sq. ft.</option>
+                  <option value="5000+ sq. ft.">5,000+ sq. ft.</option>
+                </select>
               </div>
               <div>
-                <label for="buyer-req-budget-max" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Max Budget (₹) *</label>
-                <input id="buyer-req-budget-max" type="text" required placeholder="e.g. ₹1.80 Cr" value="₹2.20 Cr" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-extrabold text-emerald-600" />
+                <label for="buyer-req-area-min" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Minimum Area (sq. ft.) *</label>
+                <select id="buyer-req-area-min" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold">
+                  <option value="400 sq. ft.">400 sq. ft.</option>
+                  <option value="600 sq. ft.">600 sq. ft.</option>
+                  <option value="800 sq. ft.">800 sq. ft.</option>
+                  <option value="1000 sq. ft.">1,000 sq. ft.</option>
+                  <option value="1200 sq. ft." selected>1,200 sq. ft.</option>
+                  <option value="1400 sq. ft.">1,400 sq. ft.</option>
+                  <option value="1600 sq. ft.">1,600 sq. ft.</option>
+                  <option value="1800 sq. ft.">1,800 sq. ft.</option>
+                  <option value="2000 sq. ft.">2,000 sq. ft.</option>
+                  <option value="2500 sq. ft.">2,500 sq. ft.</option>
+                  <option value="3000 sq. ft.">3,000 sq. ft.</option>
+                  <option value="4000+ sq. ft.">4,000+ sq. ft.</option>
+                </select>
               </div>
               <div>
-                <label for="buyer-req-possession" class="block font-bold text-slate-600 dark:text-slate-300 mb-1">Possession Timeline</label>
-                <select id="buyer-req-possession" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-semibold">
-                  <option value="Ready to Move">Ready to Move In</option>
-                  <option value="Within 6 Months">Within 6 Months</option>
-                  <option value="Under Construction">Under Construction (1-2 Years)</option>
+                <label for="buyer-req-area-max" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Maximum Area (sq. ft.) *</label>
+                <select id="buyer-req-area-max" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold">
+                  <option value="800 sq. ft.">800 sq. ft.</option>
+                  <option value="1000 sq. ft.">1,000 sq. ft.</option>
+                  <option value="1200 sq. ft.">1,200 sq. ft.</option>
+                  <option value="1400 sq. ft.">1,400 sq. ft.</option>
+                  <option value="1600 sq. ft.">1,600 sq. ft.</option>
+                  <option value="1800 sq. ft.">1,800 sq. ft.</option>
+                  <option value="2000 sq. ft." selected>2,000 sq. ft.</option>
+                  <option value="2500 sq. ft.">2,500 sq. ft.</option>
+                  <option value="3000 sq. ft.">3,000 sq. ft.</option>
+                  <option value="3500 sq. ft.">3,500 sq. ft.</option>
+                  <option value="4000 sq. ft.">4,000 sq. ft.</option>
+                  <option value="5000+ sq. ft.">5,000+ sq. ft.</option>
                 </select>
               </div>
             </div>
           </div>
 
-          <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-sm sm:text-base shadow-xl transition">
-            Save Requisition & Update Smart Matches →
+          <!-- SECTION 3: BUDGET & PAYMENT DETAILS -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <span class="w-6 h-6 rounded-full bg-genriv-600 text-white inline-flex items-center justify-center text-xs font-bold">3</span>
+              <span>BUDGET &amp; PAYMENT DETAILS</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Budget Dropdowns (Requirement 3) -->
+              <div>
+                <label for="buyer-req-budget-min" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Minimum Budget (₹) *</label>
+                <select id="buyer-req-budget-min" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">
+                  <option value="₹15 Lakh">₹15 Lakh</option>
+                  <option value="₹25 Lakh">₹25 Lakh</option>
+                  <option value="₹35 Lakh">₹35 Lakh</option>
+                  <option value="₹50 Lakh">₹50 Lakh</option>
+                  <option value="₹65 Lakh">₹65 Lakh</option>
+                  <option value="₹80 Lakh">₹80 Lakh</option>
+                  <option value="₹1.00 Cr">₹1.00 Cr</option>
+                  <option value="₹1.20 Cr" selected>₹1.20 Cr</option>
+                  <option value="₹1.50 Cr">₹1.50 Cr</option>
+                  <option value="₹1.75 Cr">₹1.75 Cr</option>
+                  <option value="₹2.00 Cr">₹2.00 Cr</option>
+                  <option value="₹2.50 Cr">₹2.50 Cr</option>
+                  <option value="₹3.00 Cr">₹3.00 Cr</option>
+                  <option value="₹4.00 Cr">₹4.00 Cr</option>
+                  <option value="₹5.00 Cr">₹5.00 Cr</option>
+                  <option value="₹7.50 Cr">₹7.50 Cr</option>
+                  <option value="₹10.00 Cr+">₹10.00 Cr+</option>
+                </select>
+              </div>
+              <div>
+                <label for="buyer-req-budget-max" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Maximum Budget (₹) *</label>
+                <select id="buyer-req-budget-max" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <option value="₹25 Lakh">₹25 Lakh</option>
+                  <option value="₹35 Lakh">₹35 Lakh</option>
+                  <option value="₹50 Lakh">₹50 Lakh</option>
+                  <option value="₹65 Lakh">₹65 Lakh</option>
+                  <option value="₹80 Lakh">₹80 Lakh</option>
+                  <option value="₹1.00 Cr">₹1.00 Cr</option>
+                  <option value="₹1.20 Cr">₹1.20 Cr</option>
+                  <option value="₹1.50 Cr">₹1.50 Cr</option>
+                  <option value="₹1.75 Cr">₹1.75 Cr</option>
+                  <option value="₹2.00 Cr" selected>₹2.00 Cr</option>
+                  <option value="₹2.50 Cr">₹2.50 Cr</option>
+                  <option value="₹3.00 Cr">₹3.00 Cr</option>
+                  <option value="₹4.00 Cr">₹4.00 Cr</option>
+                  <option value="₹5.00 Cr">₹5.00 Cr</option>
+                  <option value="₹7.50 Cr">₹7.50 Cr</option>
+                  <option value="₹10.00 Cr+">₹10.00 Cr+</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Payment Preference *</label>
+                <div class="flex items-center gap-2">
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_payment_pref" value="Self-Financed" class="text-genriv-600" />
+                    <span>Self-Financed</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_payment_pref" value="Home Loan" checked class="text-genriv-600" />
+                    <span>Home Loan</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_payment_pref" value="Both" class="text-genriv-600" />
+                    <span>Both</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Loan Status *</label>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_loan_status" value="Approved" checked class="text-genriv-600" />
+                    <span>Approved</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_loan_status" value="Applied" class="text-genriv-600" />
+                    <span>Applied</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_loan_status" value="Not Applied" class="text-genriv-600" />
+                    <span>Not Applied</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_loan_status" value="Not Required" class="text-genriv-600" />
+                    <span>Not Required</span>
+                  </label>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Expected Possession *</label>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_possession" value="Immediate" checked class="text-genriv-600" />
+                    <span>Immediate</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_possession" value="Within 3 Months" class="text-genriv-600" />
+                    <span>Within 3 Months</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_possession" value="Within 6 Months" class="text-genriv-600" />
+                    <span>Within 6 Months</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                    <input type="radio" name="buyer_possession" value="Flexible" class="text-genriv-600" />
+                    <span>Flexible</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 4: PROPERTY PREFERENCES -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <span class="w-6 h-6 rounded-full bg-genriv-600 text-white inline-flex items-center justify-center text-xs font-bold">4</span>
+              <span>PROPERTY PREFERENCES</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Furnishing -->
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Furnishing *</label>
+                <div class="space-y-1.5">
+                  <label class="flex items-center gap-2 cursor-pointer text-xs">
+                    <input type="radio" name="buyer_furnishing" value="Unfurnished" class="text-genriv-600" />
+                    <span>Unfurnished</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer text-xs">
+                    <input type="radio" name="buyer_furnishing" value="Semi-Furnished" checked class="text-genriv-600" />
+                    <span>Semi-Furnished</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer text-xs">
+                    <input type="radio" name="buyer_furnishing" value="Fully Furnished" class="text-genriv-600" />
+                    <span>Fully Furnished</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Floor Preference Dropdown (Requirement 4) -->
+              <div>
+                <label for="buyer-req-floor" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Floor Preference *</label>
+                <select id="buyer-req-floor" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold">
+                  <option value="Any Floor / No Preference">Any Floor / No Preference</option>
+                  <option value="Ground Floor">Ground Floor</option>
+                  <option value="Lower Floors (1st - 4th Floor)">Lower Floors (1st - 4th Floor)</option>
+                  <option value="Middle Floors (5th - 10th Floor)" selected>Middle Floors (5th - 10th Floor)</option>
+                  <option value="Higher Floors (11th - 20th Floor)">Higher Floors (11th - 20th Floor)</option>
+                  <option value="Sky Penthouse / Top Floor">Sky Penthouse / Top Floor</option>
+                </select>
+              </div>
+
+              <!-- Amenities options -->
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Essential Amenities</label>
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between text-xs">
+                    <span>Parking:</span>
+                    <div class="flex gap-2">
+                      <label><input type="radio" name="buyer_parking" value="Required" checked /> Req</label>
+                      <label><input type="radio" name="buyer_parking" value="Not Required" /> Not Req</label>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs">
+                    <span>Lift:</span>
+                    <div class="flex gap-2">
+                      <label><input type="radio" name="buyer_lift" value="Required" checked /> Req</label>
+                      <label><input type="radio" name="buyer_lift" value="Not Required" /> Not Req</label>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs">
+                    <span>24×7 Water:</span>
+                    <div class="flex gap-2">
+                      <label><input type="radio" name="buyer_water" value="Required" checked /> Req</label>
+                      <label><input type="radio" name="buyer_water" value="Not Required" /> Not Req</label>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs">
+                    <span>Power Backup:</span>
+                    <div class="flex gap-2">
+                      <label><input type="radio" name="buyer_power" value="Required" checked /> Req</label>
+                      <label><input type="radio" name="buyer_power" value="Not Required" /> Not Req</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Property Status -->
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Property Status *</label>
+                <div class="space-y-1.5">
+                  <label class="flex items-center gap-2 cursor-pointer text-xs">
+                    <input type="radio" name="buyer_prop_status" value="Ready to Move" checked class="text-genriv-600" />
+                    <span>Ready to Move</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer text-xs">
+                    <input type="radio" name="buyer_prop_status" value="Under Construction" class="text-genriv-600" />
+                    <span>Under Construction</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Additional Requirements -->
+              <div class="sm:col-span-4">
+                <label for="buyer-req-additional" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Additional Requirements</label>
+                <input id="buyer-req-additional" type="text" placeholder="e.g. South facing balcony, Vaastu compliant, near metro station or school" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white" />
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 5: ADDITIONAL INFORMATION -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <span class="w-6 h-6 rounded-full bg-genriv-600 text-white inline-flex items-center justify-center text-xs font-bold">5</span>
+              <span>ADDITIONAL INFORMATION</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Purpose of Purchase/Rental</label>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="flex items-center gap-1.5 text-xs"><input type="radio" name="buyer_use_purpose" value="Self-Use" checked /> Self-Use</label>
+                  <label class="flex items-center gap-1.5 text-xs"><input type="radio" name="buyer_use_purpose" value="Investment" /> Investment</label>
+                  <label class="flex items-center gap-1.5 text-xs"><input type="radio" name="buyer_use_purpose" value="Business" /> Business</label>
+                </div>
+              </div>
+              <div>
+                <label for="buyer-req-visit-date" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Preferred Site Visit Date</label>
+                <input id="buyer-req-visit-date" type="date" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+              <div>
+                <label for="buyer-req-contact-time" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Preferred Contact Time</label>
+                <select id="buyer-req-contact-time" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                  <option value="Morning (10 AM - 1 PM)">Morning (10 AM - 1 PM)</option>
+                  <option value="Afternoon (2 PM - 5 PM)">Afternoon (2 PM - 5 PM)</option>
+                  <option value="Evening (5 PM - 8 PM)">Evening (5 PM - 8 PM)</option>
+                  <option value="Any Time">Any Time</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-2">Reference/Source</label>
+                <select id="buyer-req-source" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                  <option value="Website">Website</option>
+                  <option value="Social Media">Social Media</option>
+                  <option value="Referral">Referral</option>
+                  <option value="Advertisement">Advertisement</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 6: CUSTOMER DECLARATION -->
+          <div class="p-5 sm:p-6 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/30 border-2 border-indigo-200 dark:border-indigo-800 space-y-4">
+            <h4 class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-indigo-200 dark:border-indigo-800">
+              <span class="w-6 h-6 rounded-full bg-indigo-600 text-white inline-flex items-center justify-center text-xs font-bold">6</span>
+              <span>CUSTOMER DECLARATION</span>
+            </h4>
+            
+            <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic bg-white dark:bg-slate-900 p-4 rounded-xl border border-indigo-100 dark:border-indigo-900">
+              "I confirm that the information provided above is correct to the best of my knowledge. I authorize GENRIV to contact me regarding suitable property options and related services. My contact details may be used for this purpose in accordance with applicable privacy requirements."
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+              <div>
+                <label class="block font-bold text-slate-800 dark:text-slate-200 mb-1">Customer Signature (Upload Image) *</label>
+                <p class="text-[11px] text-slate-500 mb-2">Upload photo / scan of your official signature (PNG, JPG, JPEG)</p>
+                <div class="flex items-center gap-3">
+                  <input type="file" id="buyer-req-sig-file" accept="image/*" onchange="previewCustomerSignature(event)" class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-extrabold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer" />
+                </div>
+                <div id="buyer-sig-preview-wrapper" class="mt-3 p-3 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-700 bg-white dark:bg-slate-900 inline-block min-w-[200px] text-center">
+                  <img id="buyer-sig-preview-img" src="" alt="Customer Signature Preview" class="h-16 max-w-[240px] object-contain mx-auto hidden" />
+                  <span id="buyer-sig-placeholder" class="text-xs text-slate-400 italic">No signature uploaded yet</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-800 dark:text-slate-200 mb-1">Declaration Date (Auto-picked)</label>
+                <input id="buyer-req-decl-date" type="text" readonly class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-700 dark:text-slate-300 cursor-not-allowed" />
+                <p class="text-[10px] text-slate-400 mt-1">Locked to current submission timestamp</p>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-genriv-600 via-indigo-600 to-acres-500 hover:from-genriv-700 hover:to-acres-600 text-white font-extrabold text-sm sm:text-base shadow-xl transition flex items-center justify-center gap-2">
+            <span>📋</span>
+            <span>Submit Customer Requisition Form &amp; Activate Matching →</span>
           </button>
         </form>
       </div>
@@ -1050,5 +1536,42 @@
     });
   </script>
   <script src="header-nav.js"></script>
+
+  <!-- SIMULATED EMAIL NOTIFICATION MODAL -->
+  <div id="modal-simulated-email" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div class="p-5 bg-gradient-to-r from-genriv-800 to-indigo-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📩</span>
+          <h3 class="font-display font-extrabold text-base" id="sim-email-title">Official Email Confirmation</h3>
+        </div>
+        <button type="button" onclick="closeSimulatedEmailModal()" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm">
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
+          <div><strong class="text-slate-500">To:</strong> <span id="sim-email-to" class="font-mono text-slate-800 dark:text-slate-200"></span></div>
+          <div><strong class="text-slate-500">Subject:</strong> <span id="sim-email-subject" class="font-bold text-slate-900 dark:text-white"></span></div>
+        </div>
+        <div id="sim-email-body" class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed font-sans text-xs sm:text-sm border border-slate-200 dark:border-slate-700"></div>
+        <button type="button" onclick="closeSimulatedEmailModal()" class="w-full py-3 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white font-extrabold text-xs shadow-md transition">
+          Dismiss &amp; View Portal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSimulatedEmailModal(data) {
+      document.getElementById('sim-email-to').textContent = data.to;
+      document.getElementById('sim-email-subject').textContent = data.subject;
+      document.getElementById('sim-email-title').textContent = data.title || 'Official Email Notification';
+      document.getElementById('sim-email-body').innerHTML = data.body;
+      document.getElementById('modal-simulated-email').classList.remove('hidden');
+    }
+    function closeSimulatedEmailModal() {
+      document.getElementById('modal-simulated-email').classList.add('hidden');
+    }
+  </script>
+
 </body>
 </html>

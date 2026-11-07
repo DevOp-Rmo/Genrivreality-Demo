@@ -529,6 +529,7 @@
       const query = (document.getElementById('search-query')?.value || '').trim().toLowerCase();
       const bhk = document.getElementById('search-bhk')?.value || 'All';
       const maxBudget = parseFloat(document.getElementById('budget-range')?.value || '30');
+      const budgetSegment = document.getElementById('search-budget-segment')?.value || 'All';
       const postedBy = document.getElementById('posted-by-filter')?.value || 'All';
       const reraOnly = document.getElementById('rera-only-toggle')?.checked || false;
       const sortBy = document.getElementById('sort-select')?.value || 'featured';
@@ -544,6 +545,13 @@
         }
         if (bhk !== 'All' && p.bhk !== bhk) return false;
         if (p.priceCr > maxBudget) return false;
+        if (budgetSegment !== 'All') {
+          if (budgetSegment === 'under50' && p.priceCr >= 0.50) return false;
+          if (budgetSegment === '50to120' && (p.priceCr < 0.50 || p.priceCr > 1.20)) return false;
+          if (budgetSegment === '120to250' && (p.priceCr < 1.20 || p.priceCr > 2.50)) return false;
+          if (budgetSegment === '250to500' && (p.priceCr < 2.50 || p.priceCr > 5.00)) return false;
+          if (budgetSegment === 'above500' && p.priceCr < 5.00) return false;
+        }
         if (postedBy !== 'All' && p.postedBy !== postedBy) return false;
         if (reraOnly && !p.reraVerified && !p.rera) return false;
         if (query) {
@@ -1471,9 +1479,9 @@
               <a href="agents.html" class="flex-1 py-2 text-center rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition">
                 View Agency →
               </a>
-              <a href="tel:${ag.phone}" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold transition">
-                📞 Call
-              </a>
+              <button type="button" onclick="handleSecureContactClick('${ag.phone}', '${ag.name}', false)" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold transition flex items-center gap-1">
+                <span>📞</span> <span>Call</span>
+              </button>
             </div>
           </div>
         `).join('');
@@ -2565,13 +2573,24 @@
     }
     window.switchAuthTab = switchAuthTab;
 
+    // Global pending signup object for OTP flow (Requirement 6.i)
+    let pendingSignupData = null;
+
     function handleSignupSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('signup-name').value.trim();
       const email = document.getElementById('signup-email').value.trim().toLowerCase();
-      const phone = document.getElementById('signup-phone').value.trim();
+      const phoneRaw = document.getElementById('signup-phone').value.trim();
       const role = document.getElementById('signup-role').value;
       const isSeller = role === 'Seller' || role === 'Owner' || role === 'Builder' || role === 'Agent';
+
+      // Strict 10 Digits Mobile Validation (Requirement 11)
+      const cleanPhone = phoneRaw.replace(/\D/g, '').slice(-10);
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        alert('Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
+        document.getElementById('signup-phone').focus();
+        return;
+      }
 
       // Check if user already exists
       const existing = mbDatabase.users.find(u => u.email.toLowerCase() === email);
@@ -2583,12 +2602,62 @@
         return;
       }
 
+      // Store pending data and open Demo OTP modal (Requirement 6.i)
+      pendingSignupData = {
+        name,
+        email,
+        phone: cleanPhone,
+        role: isSeller ? 'Seller' : 'Buyer',
+        isSeller
+      };
+
+      const otpModal = document.getElementById('modal-signup-otp');
+      const otpDisplay = document.getElementById('otp-mobile-display');
+      if (otpDisplay) otpDisplay.textContent = `+91 ${cleanPhone}`;
+      const otpInput = document.getElementById('signup-otp-input');
+      if (otpInput) otpInput.value = '123456';
+
+      if (otpModal) {
+        otpModal.classList.remove('hidden');
+      } else {
+        // Fallback prompt if modal element isn't in current page
+        const entered = prompt(`Enter 6-digit OTP sent to +91 ${cleanPhone} (Demo OTP: 123456):`, '123456');
+        if (entered === '123456') {
+          completeSignupAfterOtp();
+        } else {
+          alert('Invalid OTP.');
+        }
+      }
+    }
+
+    function closeOtpModal() {
+      const otpModal = document.getElementById('modal-signup-otp');
+      if (otpModal) otpModal.classList.add('hidden');
+    }
+    window.closeOtpModal = closeOtpModal;
+
+    function verifySignupOtp() {
+      const otpInput = document.getElementById('signup-otp-input');
+      const val = (otpInput?.value || '').trim();
+      if (val !== '123456') {
+        alert('❌ Invalid OTP. Please enter 123456 for the demo.');
+        return;
+      }
+      closeOtpModal();
+      completeSignupAfterOtp();
+    }
+    window.verifySignupOtp = verifySignupOtp;
+
+    function completeSignupAfterOtp() {
+      if (!pendingSignupData) return;
+      const { name, email, phone, role, isSeller } = pendingSignupData;
+
       const newUser = {
         id: 'usr-' + Date.now(),
         name,
         email,
-        phone: phone || '+91 98300-12345',
-        role: isSeller ? 'Seller' : 'Buyer',
+        phone: phone,
+        role: role,
         planId: isSeller ? 'seller-free-tier' : 'buyer-free-tier',
         planName: isSeller ? 'Free Basic Tier (1 Ad / 6 Mo)' : 'Buyer Verified Explorer',
         contactCredits: isSeller ? 10 : 20,
@@ -2611,6 +2680,7 @@
 
       try {
         localStorage.setItem('genriv_active_user', JSON.stringify(newUser));
+        localStorage.setItem('genriv_current_user', JSON.stringify(newUser));
       } catch (e) {}
 
       // Post to Express backend
@@ -2625,19 +2695,19 @@
       updateHeaderAccountStatus();
       closeLoginModal();
 
-      
+      let regId = '';
       if (isSeller) {
-        const regId = 'REG-2026-' + Math.floor(1000 + Math.random() * 9000);
+        regId = 'REG-2026-' + Math.floor(1000 + Math.random() * 9000);
         const sellerProfile = {
           regId: regId,
           companyName: name,
           reraId: 'WBRERA/A/KOL/2026/' + Math.floor(100000 + Math.random() * 900000),
-          category: role === 'Builder' ? 'Builder / Developer' : (role === 'Agent' ? 'Real Estate Agent / Broker' : 'Property Owner'),
+          category: 'Builder / Developer',
           pan: 'AACCS' + Math.floor(1000 + Math.random() * 9000) + 'J',
-          gstin: role === 'Property Owner' ? '' : '19AACCS' + Math.floor(1000 + Math.random() * 9000) + 'J1ZM',
-          phone: phone || '+91 98300-12345',
+          gstin: '19AACCS' + Math.floor(1000 + Math.random() * 9000) + 'J1ZM',
+          phone: phone,
           email: email,
-          status: 'pending', // Gated until Super Admin verifies
+          status: 'pending', // Gated until verified
           reVerificationRequested: false,
           quota: 1,
           planName: 'Free Basic (1 Ad / 6 Mo)',
@@ -2655,15 +2725,16 @@
         localStorage.setItem('genriv_pending_sellers', JSON.stringify(pendingList));
       }
 
-      showToast(`🎉 Welcome, ${name}! Your ${newUser.role} account is created. Loading registration form...`);
-
-      setTimeout(() => {
-        if (newUser.role === 'Seller') {
-          window.location.href = 'seller-dashboard.html?new_signup=true';
-        } else {
-          window.location.href = 'buyer-dashboard.html?new_signup=true';
-        }
-      }, 700);
+      // Simulated Welcome Email Popup (Requirement 6.ii)
+      showWelcomeEmailModal({
+        to: email,
+        subject: isSeller ? `✅ Registration Confirmed: ${regId}` : '✅ Welcome to Genrivreality Portal',
+        title: isSeller ? 'Advertiser Registration Confirmation' : 'Buyer Registration Confirmation',
+        body: isSeller 
+          ? `Dear <strong>${name}</strong>,<br/><br/>Welcome to Genrivreality! Your Advertiser Registration ID is: <strong class="text-indigo-600">${regId}</strong>.<br/>As per real-estate platform governance, please complete your Advertiser KYC Profile with necessary documents. Once verified by Super Admin, your property posting quota will become active.`
+          : `Dear <strong>${name}</strong>,<br/><br/>Welcome to Genrivreality! Your Buyer Account is active.<br/>Please submit your <strong>Customer Requisition Form</strong> in your dashboard to view verified broker &amp; owner contact details and unlock AI-matched properties tailored to your budget.`,
+        redirectUrl: isSeller ? 'seller-dashboard.html?new_signup=true' : 'buyer-dashboard.html?new_signup=true'
+      });
     }
     window.handleSignupSubmit = handleSignupSubmit;
 
@@ -2979,7 +3050,7 @@
     function goToUserDashboard() {
       const user = getCurrentMbUser();
       if (user.role === 'Admin') {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'props.html';
       } else if (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder') {
         window.location.href = 'seller-dashboard.html';
       } else {
@@ -3059,7 +3130,7 @@
 
       if (loginBtn) {
         if (isLogged) {
-          const dashboardUrl = user.role === 'Admin' ? 'admin-dashboard.html' : (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder' ? 'seller-dashboard.html' : 'buyer-dashboard.html');
+          const dashboardUrl = user.role === 'Admin' ? 'props.html' : (user.role === 'Seller' || user.role === 'Owner' || user.role === 'Builder' ? 'seller-dashboard.html' : 'buyer-dashboard.html');
           const roleIcon = user.role === 'Admin' ? '⚡' : (user.role === 'Seller' || user.role === 'Owner' ? '🏢' : '👤');
           loginBtn.onclick = () => window.location.href = dashboardUrl;
           loginBtn.title = `Go to ${user.role} Dashboard`;
@@ -3381,6 +3452,7 @@
 
     function logoutMbUser() {
       mbDatabase.isLoggedIn = false;
+    localStorage.removeItem('genriv_is_logged_in');
       saveMbDatabase();
       updateHeaderAccountStatus();
       renderMbDashboard();
@@ -3517,7 +3589,10 @@
     function unlockOwnerContactWithBackend(propId) {
       const p = properties.find(x => x.id === propId);
       if (!p) return;
-      const user = getCurrentMbUser();
+      
+      // Requirement 5 Gating: Must be logged in & must have submitted Customer Requisition Form!
+      const user = checkBuyerContactAccess();
+      if (!user) return;
 
       if (!Array.isArray(user.unlockedPropertyIds)) {
         user.unlockedPropertyIds = [];
@@ -3561,6 +3636,9 @@
           propertyId: p.id,
           remainingCredits: user.contactCredits
         };
+
+        // Requirement 6.iii: Trigger simulated notification to seller
+        showToast(`📩 Alert to Seller (${p.builderName}): "${user.name} (${user.phone})" viewed your contact!`);
         syncPropertiesWithMbBackend();
         saveMbDatabase();
         updateHeaderAccountStatus();
@@ -4502,7 +4580,52 @@
       e.preventDefault();
       const role = document.getElementById('login-role').value;
       const userIdentifier = document.getElementById('login-identifier').value.trim();
+      const passwordInput = document.getElementById('login-password')?.value || '';
       const shortName = userIdentifier.split('@')[0].slice(0, 14) || 'Member';
+
+      // Check if logging in as Super Admin (Requirement 5 & 10)
+      if (userIdentifier === 'super_user' || (userIdentifier.toLowerCase() === 'admin@genrivreality.com' && passwordInput === 'passhrcl')) {
+        sessionStorage.setItem('genriv_super_user_auth', 'true');
+        const superUserObj = {
+          id: 'usr-super-admin',
+          name: 'Super Admin',
+          email: 'super_user',
+          phone: '+91 98000-00001',
+          role: 'Admin',
+          planName: 'Super User Root Access',
+          status: 'Active'
+        };
+        localStorage.setItem('genriv_active_user', JSON.stringify(superUserObj));
+        localStorage.setItem('genriv_current_user', JSON.stringify(superUserObj));
+        showToast('🛡️ Welcome, Super Admin! Root Real-Time Audit Log unlocked.');
+        closeLoginModal();
+        setTimeout(() => {
+          window.location.href = 'props.html';
+        }, 500);
+        return;
+      }
+
+      // If logging in as regular admin@genrivreality.com (NOT super admin)
+      if (userIdentifier.toLowerCase() === 'admin@genrivreality.com' || role === 'Admin') {
+        sessionStorage.removeItem('genriv_super_user_auth');
+        const regularAdminObj = {
+          id: 'usr-admin-regular',
+          name: 'Operations Admin',
+          email: 'admin@genrivreality.com',
+          phone: '+91 98000-00001',
+          role: 'Admin',
+          planName: 'Operations Admin Tier',
+          status: 'Active'
+        };
+        localStorage.setItem('genriv_active_user', JSON.stringify(regularAdminObj));
+        localStorage.setItem('genriv_current_user', JSON.stringify(regularAdminObj));
+        showToast('🔐 Welcome, Operations Admin! Opening inspection console...');
+        closeLoginModal();
+        setTimeout(() => {
+          window.location.href = 'props.html';
+        }, 500);
+        return;
+      }
 
       // First check if an account with this exact email or phone exists
       let matchedUser = mbDatabase.users.find(
@@ -4545,6 +4668,7 @@
 
       try {
         localStorage.setItem('genriv_active_user', JSON.stringify(matchedUser));
+      localStorage.setItem('genriv_is_logged_in', 'true');
       } catch (e) {}
 
       updateHeaderAccountStatus();
@@ -4553,7 +4677,7 @@
 
       setTimeout(() => {
         if (matchedUser.role === 'Admin') {
-          window.location.href = 'admin-dashboard.html';
+          window.location.href = 'props.html';
         } else if (matchedUser.role === 'Seller' || matchedUser.role === 'Owner' || matchedUser.role === 'Builder' || matchedUser.role === 'Agent') {
           window.location.href = 'seller-dashboard.html';
         } else {
@@ -4596,3 +4720,101 @@
     function navigateToLocality(localityName) {
       window.location.href = 'new-projects.html?city=Kolkata&locality=' + encodeURIComponent(localityName);
     }
+
+
+
+    let welcomeEmailRedirectUrl = 'index.html';
+    function showWelcomeEmailModal(data) {
+      welcomeEmailRedirectUrl = data.redirectUrl || 'index.html';
+      const modal = document.getElementById('modal-simulated-welcome-email');
+      const toEl = document.getElementById('welcome-email-to');
+      const subjEl = document.getElementById('welcome-email-subject');
+      const titleEl = document.getElementById('welcome-email-title');
+      const bodyEl = document.getElementById('welcome-email-body');
+
+      if (toEl) toEl.textContent = data.to;
+      if (subjEl) subjEl.textContent = data.subject;
+      if (titleEl) titleEl.textContent = data.title;
+      if (bodyEl) bodyEl.innerHTML = data.body;
+
+      if (modal) {
+        modal.classList.remove('hidden');
+      } else {
+        alert(`${data.title}\n\nTo: ${data.to}\nSubject: ${data.subject}\n\n${data.body.replace(/<[^>]+>/g, '')}`);
+        window.location.href = welcomeEmailRedirectUrl;
+      }
+    }
+    window.showWelcomeEmailModal = showWelcomeEmailModal;
+
+    function closeWelcomeEmailModal() {
+      const modal = document.getElementById('modal-simulated-welcome-email');
+      if (modal) modal.classList.add('hidden');
+      window.location.href = welcomeEmailRedirectUrl;
+    }
+    window.closeWelcomeEmailModal = closeWelcomeEmailModal;
+
+    // Contact Details Gating (Requirement 5) & Seller Notification (Requirement 6.iii)
+    function checkBuyerContactAccess() {
+      let user = null;
+      try {
+        const raw = localStorage.getItem('genriv_current_user') || localStorage.getItem('genriv_active_user');
+        if (raw) user = JSON.parse(raw);
+      } catch (e) {}
+
+      if (!user || user.name === 'Guest User' || user.id === 'usr-guest') {
+        openLoginModal('signin');
+        showToast('🔒 Please sign in to view broker & owner contact details.');
+        return null;
+      }
+
+      if (user.role === 'Seller' || user.role === 'Admin') {
+        return user;
+      }
+
+      // Check Customer Requisition Form submission
+      let reqs = [];
+      try {
+        reqs = JSON.parse(localStorage.getItem('genriv_requisitions_v1') || '[]');
+      } catch (e) {}
+
+      const hasReq = reqs.some(r => 
+        (r.customerEmail && r.customerEmail.toLowerCase() === user.email.toLowerCase()) ||
+        (r.email && r.email.toLowerCase() === user.email.toLowerCase()) ||
+        (user.lastRequisitionId && r.id === user.lastRequisitionId)
+      );
+
+      if (!hasReq) {
+        showToast('⚠️ Please fill your Customer Requisition Form first to view contact details.');
+        setTimeout(() => {
+          window.location.href = 'buyer-dashboard.html';
+        }, 800);
+        return null;
+      }
+
+      return user;
+    }
+    window.checkBuyerContactAccess = checkBuyerContactAccess;
+
+    function handleAgentContactClick(agentPhone, agentName) {
+      const user = checkBuyerContactAccess();
+      if (!user) return;
+
+      // Trigger notification to seller/agent (Requirement 6.iii)
+      showToast(`📩 Alert to Agent (${agentName}): "${user.name} (${user.phone})" viewed your contact!`);
+
+      // Register Lead in Seller Leads CRM
+      if (window.GenrivDB) {
+        GenrivDB.addLead({
+          id: 'LEAD-' + Math.floor(100 + Math.random() * 900),
+          propertyTitle: `Inquiry for Agent: ${agentName}`,
+          buyerName: user.name,
+          buyerPhone: user.phone,
+          buyerEmail: user.email,
+          status: 'New Lead',
+          timestamp: new Date().toISOString().slice(0, 16).replace('T', ' ')
+        });
+      }
+
+      alert(`Verified Contact: ${agentName}\nPhone: ${agentPhone}\n\nAgent has been notified of your interest.`);
+    }
+    window.handleAgentContactClick = handleAgentContactClick;

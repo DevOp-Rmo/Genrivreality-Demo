@@ -28,7 +28,8 @@ function writeDB(data) {
 // Dedicated Role Dashboards
 app.get('/buyer-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'buyer-dashboard.html')));
 app.get('/seller-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'seller-dashboard.html')));
-app.get('/admin-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'admin-dashboard.html')));
+app.get('/props', (req, res) => res.sendFile(path.join(__dirname, 'props.html')));
+app.get('/admin-dashboard', (req, res) => res.redirect('/props'));
 
 // 1. Health & Status Check
 app.get('/api/health', (req, res) => {
@@ -145,6 +146,42 @@ app.patch('/api/seller/leads/:id', (req, res) => {
   lead.status = req.body.status || lead.status;
   writeDB(db);
   res.json({ success: true, lead });
+});
+
+
+// --- PAYMENTS & REVENUE DATABASE API ---
+const PAYMENTS_PATH = path.join(__dirname, 'db', 'payments.json');
+
+function readPayments() {
+  try {
+    if (!fs.existsSync(PAYMENTS_PATH)) return [];
+    return JSON.parse(fs.readFileSync(PAYMENTS_PATH, 'utf8'));
+  } catch (e) {
+    return [];
+  }
+}
+
+function writePayments(payments) {
+  try {
+    fs.writeFileSync(PAYMENTS_PATH, JSON.stringify(payments, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Error writing payments.json:', e);
+  }
+}
+
+app.get('/api/payments', (req, res) => {
+  res.json({ success: true, payments: readPayments() });
+});
+
+app.post('/api/payments', (req, res) => {
+  const newPayment = req.body;
+  if (!newPayment || !newPayment.amount) {
+    return res.status(400).json({ error: 'Invalid payment payload' });
+  }
+  const payments = readPayments();
+  payments.unshift(newPayment);
+  writePayments(payments);
+  res.status(201).json({ success: true, payment: newPayment });
 });
 
 // 5. Subscriptions: List Plans & Process Instant Checkout

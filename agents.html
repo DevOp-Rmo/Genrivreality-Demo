@@ -8,6 +8,7 @@
   <title>Top Real Estate Agents in Kolkata — Verified RERA Brokers | Genriv Reality</title>
   <meta name="description" content="Find top verified real estate agents, property dealers, and RERA certified brokers in Kolkata (New Town, Salt Lake, Alipore, Rajarhat, EM Bypass) on Genriv Reality." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="db-manager.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -757,7 +758,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('genriv_theme');
-      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+      if (savedTheme === 'dark') { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark'); }
       renderAgents();
     });
 
@@ -925,12 +926,12 @@
           </div>
 
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
-            <a href="tel:${a.phone}" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white font-bold text-xs transition flex items-center gap-1">
+            <button type="button" onclick="handleSecureContactClick('${localStorage.getItem('genriv_is_logged_in') === 'true' ? a.phone : '+91 98300-•••••'}', '${a.name}')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white font-bold text-xs transition flex items-center gap-1">
               <span>📞</span> <span>Call</span>
-            </a>
-            <a href="https://wa.me/${(a.phone||'').replace(/[^0-9]/g, '')}" target="_blank" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1">
+            </button>
+            <button type="button" onclick="handleSecureContactClick('${a.phone}', '${a.name}', true)" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1">
               <span>💬</span> <span>WhatsApp</span>
-            </a>
+            </button>
             <a href="properties.html?agent=${encodeURIComponent(a.name)}" class="flex-1 py-2 text-center rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-extrabold text-xs transition">
               View Listings (${a.activeListings || 12}) →
             </a>
@@ -959,5 +960,67 @@
     }
   </script>
   <script src="header-nav.js"></script>
+  <script>
+    function callAgentPhone(phone, name, isWa = false) {
+      let user = null;
+      try {
+        const raw = localStorage.getItem('genriv_current_user') || localStorage.getItem('genriv_active_user');
+        if (raw) user = JSON.parse(raw);
+      } catch (e) {}
+
+      // Requirement 5: Without login and fillup Customer Requisition Form no one can see or call contact details
+      if (!user || user.name === 'Guest User' || user.id === 'usr-guest') {
+        showToast('🔒 Please sign in to view and call broker contact numbers.');
+        setTimeout(() => {
+          window.location.href = 'index.html?action=login';
+        }, 600);
+        return;
+      }
+
+      if (user.role !== 'Seller' && user.role !== 'Admin') {
+        let reqs = [];
+        try {
+          reqs = JSON.parse(localStorage.getItem('genriv_requisitions_v1') || '[]');
+        } catch (e) {}
+
+        const hasReq = reqs.some(r => 
+          (r.customerEmail && r.customerEmail.toLowerCase() === user.email.toLowerCase()) ||
+          (r.email && r.email.toLowerCase() === user.email.toLowerCase()) ||
+          (user.lastRequisitionId && r.id === user.lastRequisitionId)
+        );
+
+        if (!hasReq) {
+          showToast('⚠️ Please complete your Customer Requisition Form first to unlock broker contacts.');
+          setTimeout(() => {
+            window.location.href = 'buyer-dashboard.html';
+          }, 700);
+          return;
+        }
+      }
+
+      // Requirement 6.iii: Trigger simulated notification to seller/agent & register in CRM
+      showToast(`📩 Alert to Broker (${name}): "${user.name} (${user.phone})" is interested in your services!`);
+
+      if (window.GenrivDB) {
+        GenrivDB.addLead({
+          id: 'LEAD-' + Math.floor(100 + Math.random() * 900),
+          propertyTitle: `Broker Inquiry: ${name}`,
+          buyerName: user.name,
+          buyerPhone: user.phone,
+          buyerEmail: user.email,
+          status: 'Contacted',
+          timestamp: new Date().toISOString().slice(0, 16).replace('T', ' ')
+        });
+      }
+
+      if (isWa) {
+        window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=Hi%20${encodeURIComponent(name)},%20I%20saw%20your%20profile%20on%20Genrivreality.`, '_blank');
+      } else {
+        window.location.href = `tel:${phone}`;
+      }
+    }
+    window.callAgentPhone = callAgentPhone;
+
+</script>
 </body>
 </html>

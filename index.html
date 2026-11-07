@@ -506,17 +506,17 @@
               <label for="search-city" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">City / Metro Corridor</label>
               <select id="search-city" onchange="syncCityFilter(this.value)" class="w-full bg-transparent font-bold text-sm sm:text-base text-slate-900 dark:text-white focus:outline-none cursor-pointer">
                 <option value="All">All Cities (Pan-India)</option>
-                <option value="Mumbai">Mumbai (Worli, Bandra, Powai)</option>
-                <option value="Bengaluru">Bengaluru (Whitefield, Indiranagar)</option>
-                <option value="Gurugram">Gurugram (Golf Course Rd, DLF)</option>
-                <option value="Hyderabad">Hyderabad (HITEC City, Gachibowli)</option>
-                <option value="Kolkata">Kolkata (New Town, Salt Lake)</option>
-                <option value="Pune">Pune (Koregaon Park, Baner)</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Delhi / NCR">Delhi / NCR</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
               </select>
             </div>
 
             <!-- Locality / Project Search Input + Voice Search -->
-            <div class="md:col-span-5 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-3 md:pb-0 md:pr-3">
+            <div class="md:col-span-3 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-3 md:pb-0 md:pr-3">
               <label for="search-query" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Locality, Builder, Project or Landmark</label>
               <div class="flex items-center gap-2">
                 <svg class="w-5 h-5 text-genriv-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -532,6 +532,17 @@
             </div>
 
             <!-- Configuration & Max Budget -->
+            <div class="md:col-span-2 pb-2 md:pb-0 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 md:pr-3">
+              <label for="search-budget-segment" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Budget Segment</label>
+              <select id="search-budget-segment" onchange="applyFilters()" class="w-full bg-transparent font-bold text-sm sm:text-base text-slate-900 dark:text-white focus:outline-none cursor-pointer">
+                <option value="All">All Budgets</option>
+                <option value="under50">Under ₹50 L (Affordable)</option>
+                <option value="50to120">₹50 L – ₹1.2 Cr (Mid-Segment)</option>
+                <option value="120to250">₹1.2 Cr – ₹2.5 Cr (Premium)</option>
+                <option value="250to500">₹2.5 Cr – ₹5 Cr (Luxury)</option>
+                <option value="above500">Above ₹5 Cr (Ultra-Luxury)</option>
+              </select>
+            </div>
             <div class="md:col-span-2 pb-2 md:pb-0">
               <label for="search-bhk" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Configuration</label>
               <select id="search-bhk" onchange="applyFilters()" class="w-full bg-transparent font-bold text-sm sm:text-base text-slate-900 dark:text-white focus:outline-none cursor-pointer">
@@ -2625,10 +2636,6 @@
           <select id="login-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
             <option value="Buyer">Buyer Account (MB Prime / Contact Unlocks)</option>
             <option value="Seller">Seller Account (Listings, Lead CRM &amp; Boost)</option>
-            <option value="Admin">Admin Account (RERA Moderation, Users &amp; Revenue)</option>
-            <option value="Owner">Property / Venue Owner Account</option>
-            <option value="Tenant">Tenant Account</option>
-            <option value="Builder / Partner">RERA Builder / Channel Partner</option>
           </select>
         </div>
         <div>
@@ -2659,7 +2666,7 @@
           <label for="signup-role" class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1">Select Account Type *</label>
           <select id="signup-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
             <option value="Buyer">Buyer Account (AI Smart Matching + 3 Free Unlocks)</option>
-            <option value="Seller">Seller / Owner Account (1 Free Property Ad / 6 Months)</option>
+            <option value="Seller">Seller Account (1 Free Property Ad / 6 Months)</option>
           </select>
         </div>
 
@@ -2804,10 +2811,61 @@
   <!-- Main Application External Script -->
   <script src="properties-data.js"></script>
   <script src="script.js"></script>
-
-  <script>
-    
-
   <script src="header-nav.js"></script>
+
+  <!-- DEMO SIGNUP OTP MODAL (Requirement 6.i) -->
+  <div id="modal-signup-otp" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full border border-indigo-500/40 shadow-2xl p-6 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+      <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-500 text-2xl flex items-center justify-center mx-auto">
+        📱
+      </div>
+      <div>
+        <h3 class="font-display font-extrabold text-lg text-slate-900 dark:text-white">Verify Mobile Number</h3>
+        <p class="text-xs text-slate-500 mt-1">
+          A 6-digit OTP code has been dispatched to <strong id="otp-mobile-display" class="text-indigo-600 dark:text-indigo-400">+91 98300-12345</strong>
+        </p>
+      </div>
+
+      <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-200 font-mono font-bold">
+        ⚡ Demo OTP: <span class="text-base text-amber-600 dark:text-amber-400 underline">123456</span>
+      </div>
+
+      <div class="space-y-2">
+        <input id="signup-otp-input" type="text" maxlength="6" placeholder="123456" class="w-full text-center tracking-widest text-2xl font-mono font-extrabold py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border-2 border-indigo-500/50 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-600" />
+      </div>
+
+      <button type="button" onclick="verifySignupOtp()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-genriv-600 hover:from-indigo-700 hover:to-genriv-700 text-white font-extrabold text-xs sm:text-sm shadow-lg transition">
+        Verify OTP &amp; Create Account →
+      </button>
+
+      <button type="button" onclick="closeOtpModal()" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">
+        Cancel &amp; Change Number
+      </button>
+    </div>
+  </div>
+
+  <!-- SIMULATED WELCOME EMAIL MODAL (Requirement 6.ii) -->
+  <div id="modal-simulated-welcome-email" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div class="p-5 bg-gradient-to-r from-genriv-800 to-indigo-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📩</span>
+          <h3 class="font-display font-extrabold text-base" id="welcome-email-title">Official Registration Confirmation</h3>
+        </div>
+        <button type="button" onclick="closeWelcomeEmailModal()" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm">
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
+          <div><strong class="text-slate-500">To:</strong> <span id="welcome-email-to" class="font-mono text-slate-800 dark:text-slate-200"></span></div>
+          <div><strong class="text-slate-500">Subject:</strong> <span id="welcome-email-subject" class="font-bold text-slate-900 dark:text-white"></span></div>
+        </div>
+        <div id="welcome-email-body" class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed font-sans text-xs sm:text-sm border border-slate-200 dark:border-slate-700"></div>
+        <button type="button" id="btn-proceed-dashboard" onclick="closeWelcomeEmailModal()" class="w-full py-3 rounded-xl bg-genriv-600 hover:bg-genriv-700 text-white font-extrabold text-xs shadow-md transition">
+          Proceed to Dashboard →
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
