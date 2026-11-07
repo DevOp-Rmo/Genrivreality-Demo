@@ -906,6 +906,23 @@
       const sellerName = currentProp ? (currentProp.sellerName || 'Advertiser') : 'Advertiser';
       showToast(`📩 Alert to Seller (${sellerName}): "${user.name} (${user.phone})" is interested in your property!`);
 
+      try {
+        fetch('/api/notifications/whatsapp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sellerPhone: currentProp ? (currentProp.sellerPhone || '+91 98310-77890') : '+91 98310-77890',
+            sellerName: sellerName,
+            buyerName: user.name,
+            buyerPhone: user.phone,
+            buyerEmail: user.email,
+            propertyTitle: sellerTitle,
+            propertyId: currentProp ? currentProp.id : 'prop-view',
+            budget: currentProp ? (currentProp.priceLabel || 'Verified') : 'Verified Inquiry'
+          })
+        }).catch(() => {});
+      } catch(e) {}
+
       if (window.GenrivDB) {
         GenrivDB.addLead({
           id: 'LEAD-' + Math.floor(100 + Math.random() * 900),

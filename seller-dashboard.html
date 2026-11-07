@@ -1842,12 +1842,16 @@
       allPayments.unshift(paymentRecord);
       localStorage.setItem('genriv_payments_v1', JSON.stringify(allPayments));
 
-      // 2. Save to Server Database via API (db/payments.json)
+      // 2. Save to Server Database via API (db/payments.json & audit ledger)
       try {
-        fetch('/api/payments', {
+        fetch('/api/payments/verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(paymentRecord)
+          body: JSON.stringify({
+            paymentRecord: paymentRecord,
+            razorpayOrderId: 'order_test_' + Date.now(),
+            razorpayPaymentId: paymentId
+          })
         }).catch(() => {});
       } catch(e) {}
 

@@ -177,6 +177,10 @@
         <span>👥</span>
         <span>User Accounts & Roles (<span id="admin-users-count">4</span>)</span>
       </button>
+      <button type="button" onclick="switchAdminTab('integrations')" id="btn-admin-tab-integrations" class="admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-slate-800 flex items-center gap-2 whitespace-nowrap">
+        <span>⚡</span>
+        <span>API &amp; Test Kit Logs</span>
+      </button>
       <button type="button" onclick="switchAdminTab('audit')" id="btn-admin-tab-audit" style="display: none;" class="admin-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-rose-300 dark:border-rose-700/60 items-center gap-2 whitespace-nowrap">
         <span>🛡️</span>
         <span>Real-Time Audit Log</span>
@@ -352,6 +356,87 @@
 
       <div id="admin-audit-log-container" class="space-y-3 font-mono text-xs">
         <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: API & TEST KIT INTEGRATION HUB -->
+    <!-- ============================================================== -->
+    <section id="section-admin-integrations" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 text-xs font-extrabold uppercase">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="admin-integration-mode-badge">Active Test Kit Mode [Running]</span>
+          </div>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white mt-1">
+            Live Gateway &amp; Test Kit Dispatches Ledger
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Real-time audit log of SMS OTPs, transactional emails, WhatsApp lead alerts, and payment events.
+          </p>
+        </div>
+        <button type="button" onclick="loadAdminNotifications()" class="px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold transition shadow-sm flex items-center gap-2">
+          <span>🔄</span> <span>Reload API Logs</span>
+        </button>
+      </div>
+
+      <!-- Provider Status Overview -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase">Payment Gateway</span>
+            <span class="px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 text-[10px] font-bold">Razorpay</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">Active Test Kit</h4>
+          <p class="text-[11px] text-slate-400">Simulates checkout &amp; logs to DB</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase">SMS &amp; Mobile OTP</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 text-[10px] font-bold">Fast2SMS</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">Demo OTP: 123456</h4>
+          <p class="text-[11px] text-slate-400">Instant test verification active</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase">Transactional Email</span>
+            <span class="px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-600 text-[10px] font-bold">Hostinger SMTP</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">Simulated Delivery</h4>
+          <p class="text-[11px] text-slate-400">Logs registration &amp; requisitions</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase">WhatsApp Messaging</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 text-[10px] font-bold">Meta Cloud API</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">Lead Auto-Dispatch</h4>
+          <p class="text-[11px] text-slate-400">Feeds directly to Seller CRM</p>
+        </div>
+      </div>
+
+      <!-- Logs Table -->
+      <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-500 uppercase text-[10px] font-extrabold tracking-wider border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th class="p-4">Notification ID</th>
+                <th class="p-4">Timestamp</th>
+                <th class="p-4">Channel &amp; Mode</th>
+                <th class="p-4">Type / Event</th>
+                <th class="p-4">Recipient</th>
+                <th class="p-4">Subject / Details</th>
+                <th class="p-4">Delivery Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-notifications-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 font-semibold text-slate-700 dark:text-slate-300">
+              <!-- Populated via loadAdminNotifications() -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -634,6 +719,48 @@
     }
     window.loadAdminPayments = loadAdminPayments;
   
+    
+    async function loadAdminNotifications() {
+      try {
+        const res = await fetch('/api/notifications');
+        const data = await res.json();
+        const notifs = data.notifications || [];
+        const tbody = document.getElementById('admin-notifications-table-body');
+        if (!tbody) return;
+
+        if (notifs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">No integration events logged yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = notifs.map(n => {
+          const isSuccess = n.status === 'DELIVERED' || n.status === 'RECORDED' || n.status === 'VERIFIED_SUCCESS';
+          return `
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+              <td class="p-4 font-mono font-bold text-indigo-600 dark:text-indigo-400">${n.id}</td>
+              <td class="p-4 text-slate-500 whitespace-nowrap">${n.dateStr || n.timestamp}</td>
+              <td class="p-4">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold ${n.mode === 'live' ? 'bg-rose-500/15 text-rose-600' : 'bg-emerald-500/15 text-emerald-600'}">
+                  ${n.channel || 'SYSTEM'} (${(n.mode || 'test_kit').toUpperCase()})
+                </span>
+              </td>
+              <td class="p-4 font-bold text-slate-900 dark:text-white">${n.type}</td>
+              <td class="p-4 font-mono text-xs">${n.recipient || 'N/A'}</td>
+              <td class="p-4 max-w-xs truncate text-slate-600 dark:text-slate-300">${n.subject || n.details || 'Event recorded'}</td>
+              <td class="p-4">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold ${isSuccess ? 'bg-emerald-500/15 text-emerald-600' : 'bg-rose-500/15 text-rose-600'}">
+                  ${n.status}
+                </span>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        console.error('Error loading notifications:', e);
+      }
+    }
+    window.loadAdminNotifications = loadAdminNotifications;
+
     function initAdminDashboard() {
       loadAdminPayments();
       // Load Database from localStorage
@@ -1077,14 +1204,19 @@
         'submissions': document.getElementById('section-admin-submissions'),
         'payments': document.getElementById('section-admin-payments'),
         'users': document.getElementById('section-admin-users'),
-        'audit': document.getElementById('section-admin-audit')
+        'audit': document.getElementById('section-admin-audit'),
+        'integrations': document.getElementById('section-admin-integrations')
       };
       const buttons = {
         'submissions': document.getElementById('btn-admin-tab-submissions'),
         'payments': document.getElementById('btn-admin-tab-payments'),
         'users': document.getElementById('btn-admin-tab-users'),
-        'audit': document.getElementById('btn-admin-tab-audit')
+        'audit': document.getElementById('btn-admin-tab-audit'),
+        'integrations': document.getElementById('btn-admin-tab-integrations')
       };
+      if (tabKey === 'integrations') {
+        loadAdminNotifications();
+      }
 
       Object.keys(sections).forEach(k => {
         if (k === tabKey) {

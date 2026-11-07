@@ -460,6 +460,23 @@ function handleSecureContactClick(targetPhone, targetName, isWhatsApp = false) {
   // Trigger simulated notification to seller/broker (Requirement 6.iii)
   showToast(`📩 Alert sent to ${targetName}: "${user.name} (${user.phone})" viewed your contact!`);
 
+  // Dispatch API Lead & WhatsApp Notification
+  try {
+    fetch('/api/notifications/whatsapp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sellerPhone: targetPhone,
+        sellerName: targetName,
+        buyerName: user.name,
+        buyerPhone: user.phone,
+        buyerEmail: user.email,
+        propertyTitle: `Broker & Property Inquiry: ${targetName}`,
+        budget: 'Verified Inquiry'
+      })
+    }).catch(() => {});
+  } catch(e) {}
+
   // Register in Seller Leads CRM
   if (window.GenrivDB && typeof window.GenrivDB.addLead === 'function') {
     window.GenrivDB.addLead({

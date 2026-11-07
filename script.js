@@ -2735,6 +2735,21 @@
           : `Dear <strong>${name}</strong>,<br/><br/>Welcome to Genrivreality! Your Buyer Account is active.<br/>Please submit your <strong>Customer Requisition Form</strong> in your dashboard to view verified broker &amp; owner contact details and unlock AI-matched properties tailored to your budget.`,
         redirectUrl: isSeller ? 'seller-dashboard.html?new_signup=true' : 'buyer-dashboard.html?new_signup=true'
       });
+
+      // Dispatch API Email Notification (Requirement 6.ii)
+      try {
+        fetch('/api/notifications/email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: email,
+            userName: name,
+            role: isSeller ? 'Seller' : 'Buyer',
+            regId: isSeller ? regId : null,
+            subject: isSeller ? `✅ Registration Confirmed: ${regId}` : '✅ Welcome to Genrivreality Portal'
+          })
+        }).catch(() => {});
+      } catch(e) {}
     }
     window.handleSignupSubmit = handleSignupSubmit;
 
