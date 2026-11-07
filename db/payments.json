@@ -1,0 +1,102 @@
+[
+  {
+    "paymentId": "PAY-2026-17324",
+    "transactionRef": "TXN-UAQVMDK1",
+    "date": "7 Nov 2026, 3:28 pm",
+    "timestamp": "2026-11-07T09:58:12.295Z",
+    "user": {
+      "id": "REG-2026-9041",
+      "name": "Curated Proper",
+      "email": "curated.proper@genrivreality.com",
+      "phone": "+91 98300-99110",
+      "pan": "AACCS5489J",
+      "gstin": "19AACCS5489J1ZM"
+    },
+    "planName": "Titanium Builder Pro ⭐",
+    "quota": 25,
+    "validityDays": 180,
+    "baseAmount": 3999,
+    "gstAmount": 720,
+    "amount": 4719,
+    "paymentMethod": "UPI Instant / Net Banking",
+    "status": "SUCCESS",
+    "returnStatus": "PAID_VERIFIED",
+    "returnRef": "RET-CONF-286336",
+    "invoiceNumber": "INV-2026-17324"
+  },
+  {
+    "paymentId": "PAY-2026-49331",
+    "transactionRef": "TXN-DIU42HE6",
+    "date": "7 Nov 2026, 3:27 pm",
+    "timestamp": "2026-11-07T09:57:04.441Z",
+    "user": {
+      "id": "REG-2026-9041",
+      "name": "Curated Proper",
+      "email": "curated.proper@genrivreality.com",
+      "phone": "+91 98300-99110",
+      "pan": "AACCS5489J",
+      "gstin": "19AACCS5489J1ZM"
+    },
+    "planName": "Titanium Builder Pro ⭐",
+    "quota": 25,
+    "validityDays": 180,
+    "baseAmount": 3999,
+    "gstAmount": 720,
+    "amount": 4719,
+    "paymentMethod": "UPI Instant / Net Banking",
+    "status": "SUCCESS",
+    "returnStatus": "PAID_VERIFIED",
+    "returnRef": "RET-CONF-892178",
+    "invoiceNumber": "INV-2026-49331"
+  },
+  {
+    "paymentId": "PAY-2026-88102",
+    "transactionRef": "TXN-UPI-884920193",
+    "date": "2026-11-05 11:24:10",
+    "user": {
+      "id": "usr-seller-1",
+      "name": "Debashis Sen",
+      "companyName": "Sen Estates Advisory",
+      "email": "debashis.seller@genrivreality.com",
+      "phone": "+91 98310-77890",
+      "pan": "AACCS5489J",
+      "gstin": "19AACCS5489J1ZM"
+    },
+    "planName": "Titanium Builder Pro ⭐",
+    "quota": 25,
+    "validityDays": 180,
+    "baseAmount": 3999,
+    "gstAmount": 720,
+    "amount": 4719,
+    "paymentMethod": "UPI Instant (Auto-Verify)",
+    "status": "SUCCESS",
+    "returnStatus": "PAID_VERIFIED",
+    "returnRef": "RET-CONF-88102-GENRIV",
+    "invoiceNumber": "INV-2026-00881"
+  },
+  {
+    "paymentId": "PAY-2026-74912",
+    "transactionRef": "TXN-CARD-99201415",
+    "date": "2026-10-28 14:15:30",
+    "user": {
+      "id": "usr-agent-1",
+      "name": "Rajiv Khanna",
+      "companyName": "Prime Habitat Realty",
+      "email": "rajiv.khanna@genrivreality.com",
+      "phone": "+91 98300-11223",
+      "pan": "ABCPK8812D",
+      "gstin": "19ABCPK8812D1Z5"
+    },
+    "planName": "Silver Boost Pack",
+    "quota": 5,
+    "validityDays": 90,
+    "baseAmount": 1499,
+    "gstAmount": 270,
+    "amount": 1769,
+    "paymentMethod": "Credit Card (HDFC Visa)",
+    "status": "SUCCESS",
+    "returnStatus": "PAID_VERIFIED",
+    "returnRef": "RET-CONF-74912-GENRIV",
+    "invoiceNumber": "INV-2026-00749"
+  }
+]
